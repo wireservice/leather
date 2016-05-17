@@ -10,7 +10,7 @@ class Line(Shape):
     """
     Render a series of data as a line.
     """
-    def __init__(self, width=2, color='blue'):
+    def __init__(self, width='2px', color='blue'):
         self.width = width
         self.color = color
 
@@ -19,6 +19,7 @@ class Line(Shape):
             stroke=self.color,
             fill='none'
         )
+        path.set('stroke-width', self.width)
 
         d = []
 

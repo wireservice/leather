@@ -5,9 +5,9 @@ import xml.etree.ElementTree as ET
 
 import six
 
-from leather.axes.x import XAxis
-from leather.axes.y import YAxis
+from leather.axis import Axis
 from leather.scales.linear import LinearScale
+from leather.scales.ordinal import OrdinalScale
 from leather.series import Series
 from leather.shapes.dot import Dot
 from leather.shapes.line import Line
@@ -59,44 +59,36 @@ class Chart(object):
         """
         self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_DOT)
 
-    def _validate_x_axis(self):
-        if not self.x_axis:
-            if not self.x_scale:
-                x_min = 0
-                x_max = 0
+    def _validate_dimension(self, scale, axis, orient, data_index):
+        if not axis:
+            if not scale:
+                try:
+                    data_min = 0
+                    data_max = 0
 
-                for series, shape in self.layers:
-                    for d in series.data:
-                        x_min = min(x_min, d[0])
-                        x_max = max(x_max, d[0])
+                    for series, shape in self.layers:
+                        sample = self.layers[0][0].data[0][data_index]
 
-                scale = LinearScale([x_min, x_max])
+                        if not isinstance(sample, float) and not isinstance(sample, int):
+                            raise ValueError()
+
+                        for d in series.data:
+                            data_min = min(data_min, d[data_index])
+                            data_max = max(data_max, d[data_index])
+
+                    scale = LinearScale([data_min, data_max])
+                except ValueError:
+                    scale_values = [d[0] for d in self.layers[0][0].data]
+
+                    for series, shape in self.layers:
+                        if [d[0] for d in series.data] != scale_values:
+                            raise ValueError('Mismatched series scales')
+
+                    scale = OrdinalScale(scale_values)
             else:
-                scale = self.x_scale
+                scale = scale
 
-            axis = XAxis(scale)
-        # Verify data are within bounds
-        else:
-            pass
-
-        return (scale, axis)
-
-    def _validate_y_axis(self):
-        if not self.y_axis:
-            if not self.y_scale:
-                y_min = 0
-                y_max = 0
-
-                for series, shape in self.layers:
-                    for d in series.data:
-                        y_min = min(y_min, d[1])
-                        y_max = max(y_max, d[1])
-
-                scale = LinearScale([y_min, y_max])
-            else:
-                scale = self.y_scale
-
-            axis = YAxis(scale)
+            axis = Axis(scale, orient)
         # Verify data are within bounds
         else:
             pass
@@ -111,8 +103,8 @@ class Chart(object):
             left=self.margin.left
         )
 
-        x_scale, x_axis = self._validate_x_axis()
-        y_scale, y_axis = self._validate_y_axis()
+        x_scale, x_axis = self._validate_dimension(self.x_scale, self.x_axis, 'bottom', 0)
+        y_scale, y_axis = self._validate_dimension(self.y_scale, self.y_axis, 'left', 1)
 
         svg = ET.Element('svg',
             width=six.text_type(self.width),

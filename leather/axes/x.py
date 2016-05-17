@@ -13,12 +13,11 @@ class XAxis(Axis):
     def to_svg(self, bbox):
         group = ET.Element('g')
 
-        tick_increment = int((self.scale.domain[1] - self.scale.domain[0]) / self.ticks)
         label_x = bbox.left - (self.tick_size * 2)
         x1 = bbox.left - self.tick_size
         x2 = bbox.right
 
-        for value in range(self.scale.domain[0], self.scale.domain[1] + tick_increment, tick_increment):
+        for value in self.scale.ticks(self.ticks):
             y = self.scale.project(value, [bbox.bottom, bbox.top])
 
             if value == self.scale.domain[0]:

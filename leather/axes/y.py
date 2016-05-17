@@ -13,12 +13,11 @@ class YAxis(Axis):
     def to_svg(self, bbox):
         group = ET.Element('g')
 
-        tick_increment = int((self.scale.domain[1] - self.scale.domain[0]) / self.ticks)
         label_y = bbox.bottom + (self.tick_size * 2)
         y1 = bbox.top
         y2 = bbox.bottom + self.tick_size
 
-        for value in range(self.scale.domain[0], self.scale.domain[1] + tick_increment, tick_increment):
+        for value in self.scale.ticks(self.ticks):
             x = self.scale.project(value, [bbox.left, bbox.right])
 
             if value == self.scale.domain[0]:
