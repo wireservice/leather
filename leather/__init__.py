@@ -6,5 +6,6 @@ from leather.grid import Grid
 from leather.legend import Legend
 from leather.scales.linear import LinearScale
 from leather.scales.ordinal import OrdinalScale
+from leather.shapes.column import Column
 from leather.shapes.dot import Dot
 from leather.shapes.line import Line

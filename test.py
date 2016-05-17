@@ -37,6 +37,6 @@ line_data = [
 ]
 
 chart = leather.Chart()
+chart.add_column(line_data)
 chart.add_dot(dot_data)
-chart.add_line(line_data)
 chart.to_svg('test.svg')

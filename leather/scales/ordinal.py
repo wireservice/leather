@@ -19,9 +19,15 @@ class OrdinalScale(Scale):
 
         return pos
 
-    def project_interval(self, value, range, interval):
-        # TKTK
-        pass
+    def project_interval(self, value, range):
+        segments = len(self.domain)
+        segment_size = (range[1] - range[0]) / segments
+        gap = segment_size * 0.05
+
+        a = range[0] + (self.domain.index(value) * segment_size) + gap
+        b = range[0] + ((self.domain.index(value) + 1) * segment_size) - gap
+
+        return (a, b)
 
     def ticks(self, count):
         return self.domain

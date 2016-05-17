@@ -17,14 +17,15 @@ class Column(Shape):
         group = ET.Element('g')
 
         for x, y in series.data:
-            proj_x = x_scale.project(x, [bbox.left, bbox.right])
+            x1, x2 = x_scale.project_interval(x, [bbox.left, bbox.right])
             proj_y = y_scale.project(y, [bbox.bottom, bbox.top])
 
             # TKTK
-            group.append(ET.Element('circle',
-                cx=six.text_type(proj_x),
-                cy=six.text_type(proj_y),
-                r=six.text_type(self.radius),
+            group.append(ET.Element('rect',
+                x=six.text_type(x1),
+                y=six.text_type(proj_y),
+                width=six.text_type(x2 - x1),
+                height=six.text_type(bbox.bottom - proj_y),
                 fill=self.color
             ))
 

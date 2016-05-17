@@ -9,12 +9,14 @@ from leather.axis import Axis
 from leather.scales.linear import LinearScale
 from leather.scales.ordinal import OrdinalScale
 from leather.series import Series
+from leather.shapes.column import Column
 from leather.shapes.dot import Dot
 from leather.shapes.line import Line
 from leather.utils import Box
 
 DEFAULT_DOT = Dot()
 DEFAULT_LINE = Line()
+DEFAULT_COLUMN = Column()
 
 class Chart(object):
     """
@@ -47,17 +49,23 @@ class Chart(object):
         # Validate added series has same scale types as other series?
         #if x_datum isinstance(number)
 
+    def add_dot(self, data, name=None, id=None, classes=None):
+        """
+        Shortcut method for adding a dotted series to the chart.
+        """
+        self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_DOT)
+
     def add_line(self, data, name=None, id=None, classes=None):
         """
         Shortcut method for adding a line series to the chart.
         """
         self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_LINE)
 
-    def add_dot(self, data, name=None, id=None, classes=None):
+    def add_column(self, data, name=None, id=None, classes=None):
         """
-        Shortcut method for adding a dotted series to the chart.
+        Shortcut method for adding a column series to the chart.
         """
-        self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_DOT)
+        self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_COLUMN)
 
     def _validate_dimension(self, scale, axis, orient, data_index):
         if not axis:
