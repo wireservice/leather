@@ -18,7 +18,7 @@ class YAxis(Axis):
         y1 = bbox.bottom - (self.tick_size / 2)
         y2 = bbox.bottom + (self.tick_size / 2)
 
-        for value in range(self.scale.domain[0], self.scale.domain[1], tick_increment):
+        for value in range(self.scale.domain[0], self.scale.domain[1] + tick_increment, tick_increment):
             x = self.scale.project(value, [bbox.left, bbox.right])
 
             tick = ET.Element('line',
@@ -32,10 +32,10 @@ class YAxis(Axis):
             label = ET.Element('text',
                 x=six.text_type(x),
                 y=six.text_type(label_y),
+                dy='1.3em',
                 fill=self.color
             )
             label.set('text-anchor', 'middle')
-            label.set('dominant-baseline', 'hanging')
             label.text = six.text_type(value)
 
             group.append(tick)
