@@ -23,7 +23,7 @@ class Chart(object):
     def __init__(self):
         self.width = 800
         self.height = 400
-        self.margins = Box(
+        self.margin = Box(
             top=20,
             right=20,
             bottom=20,
@@ -105,10 +105,10 @@ class Chart(object):
 
     def to_svg(self, path):
         canvas_bbox = Box(
-            top=self.margins.top,
-            right=self.width - self.margins.right,
-            bottom=self.height - self.margins.bottom,
-            left=self.margins.left
+            top=self.margin.top,
+            right=self.width - self.margin.right,
+            bottom=self.height - self.margin.bottom,
+            left=self.margin.left
         )
 
         x_scale, x_axis = self._validate_x_axis()

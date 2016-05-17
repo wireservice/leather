@@ -2,4 +2,5 @@
 
 from collections import namedtuple
 
-Box = namedtuple('Bounds', ['top', 'right', 'bottom', 'left'])
+Point = namedtuple('Point', ['x', 'y'])
+Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
