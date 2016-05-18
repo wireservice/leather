@@ -19,6 +19,9 @@ class Lines(Shape):
         """
         Render lines to SVG elements.
         """
+        group = ET.Element('g')
+        group.set('class', 'series lines')
+
         path = ET.Element('path',
             stroke=self.color,
             fill='none'
@@ -44,4 +47,6 @@ class Lines(Shape):
 
         path.set('d', ','.join(d))
 
-        return path
+        group.append(path)
+
+        return group

@@ -210,7 +210,6 @@ class Chart(object):
 
             f.write(svg.HEADER)
             f.write(ET.tostring(root, encoding='unicode'))
-            f.close()
         finally:
             if close and f is not None:
                 f.close()

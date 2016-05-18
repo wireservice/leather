@@ -19,6 +19,7 @@ class Columns(Shape):
         Render columns to SVG elements.
         """
         group = ET.Element('g')
+        group.set('class', 'series columns')
 
         for x, y in series.data:
             x1, x2 = x_scale.project_interval(x, [0, width])

@@ -20,6 +20,7 @@ class Dots(Shape):
         Render dots to SVG elements.
         """
         group = ET.Element('g')
+        group.set('class', 'series dots')
 
         for x, y in series.data:
             proj_x = x_scale.project(x, [0, width])
