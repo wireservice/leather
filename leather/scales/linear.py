@@ -26,15 +26,6 @@ class Linear(Scale):
         """
         Return a sequence of :code:`count` ticks based on this scale.
         """
-        i = float(self.max - self.min) / (count - 1)
-        t = self.min
+        size = float(self.max - self.min) / (count - 1)
 
-        yield t
-
-        while t < self.max:
-            t += i
-
-            if int(t) == t:
-                t = int(t)
-
-            yield t
+        return [self.min + (size * i) for i in range(count)]

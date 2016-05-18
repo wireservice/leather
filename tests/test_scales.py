@@ -41,5 +41,5 @@ class TestLinear(XMLTest):
     def test_ticks(self):
         scale = leather.Linear(0, 10)
 
-        self.assertEqual(list(scale.ticks(5)), [0, 2.5, 5, 7.5, 10])
-        self.assertEqual(list(scale.ticks(6)), [0, 2, 4, 6, 8, 10])
+        self.assertEqual(scale.ticks(5), [0, 2.5, 5, 7.5, 10])
+        self.assertEqual(scale.ticks(6), [0, 2, 4, 6, 8, 10])

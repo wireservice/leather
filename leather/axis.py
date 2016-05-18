@@ -11,7 +11,7 @@ class Axis(Renderable):
     """
     A horizontal or vertical chart axis.
     """
-    def __init__(self, orient='bottom', ticks=5, tick_width='1px', tick_size=4, tick_color='#eee', label_color='#9c9c9c', zero_color='#a8a8a8'):
+    def __init__(self, ticks=5, tick_width='1px', tick_size=4, tick_color='#eee', label_color='#9c9c9c', zero_color='#a8a8a8'):
         self.ticks = ticks
         self.tick_width = tick_width
         self.tick_size = tick_size

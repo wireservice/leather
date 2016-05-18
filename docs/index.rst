@@ -24,7 +24,16 @@ Show me code
 
 .. code-block:: python
 
-    TKTK
+    data = [
+        (0, 3),
+        (4, 5),
+        (7, 9),
+        (8, 4)
+    ]
+
+    chart = leather.Chart()
+    chart.add_dots(dot_data)
+    chart.to_svg('example.svg')
 
 Join us
 =======
