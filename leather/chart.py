@@ -145,17 +145,24 @@ class Chart(object):
         elif not isinstance(margin, Box):
             margin = Box(*margin)
 
-        canvas_width = width - (margin.left + margin.right)
-        canvas_height = height - (margin.top + margin.bottom)
+        root_width = width - (margin.left + margin.right)
+        root_height = height - (margin.top + margin.bottom)
 
         root_group = ET.Element('g')
         root_group.set('transform', svg.translate(margin.left, margin.top))
 
         # Axes
-        axes_group = ET.Element('g')
-
         x_scale, x_axis = self._validate_dimension(X)
         y_scale, y_axis = self._validate_dimension(Y)
+
+        bottom_margin = x_axis.compute_text_margin(x_scale, 'bottom')
+        left_margin = y_axis.compute_text_margin(y_scale, 'left')
+
+        canvas_width = root_width - left_margin
+        canvas_height = root_height - bottom_margin
+
+        axes_group = ET.Element('g')
+        axes_group.set('transform', svg.translate(left_margin, 0))
 
         axes_group.append(x_axis.to_svg(canvas_width, canvas_height, x_scale, 'bottom'))
         axes_group.append(y_axis.to_svg(canvas_width, canvas_height, y_scale, 'left'))
@@ -166,8 +173,8 @@ class Chart(object):
         for series in self._layers:
             series_group.append(series.to_svg(canvas_width, canvas_height, x_scale, y_scale))
 
+        axes_group.append(series_group)
         root_group.append(axes_group)
-        root_group.append(series_group)
 
         return root_group
 

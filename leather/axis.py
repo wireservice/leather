@@ -19,6 +19,18 @@ class Axis(Renderable):
         self.label_color = label_color
         self.zero_color = zero_color
 
+        self.label_font_family = 'Monaco'
+        self.label_font_size = '14px'
+        self.label_font_char_height = 14
+        self.label_font_char_width = 8
+
+    def compute_text_margin(self, scale, orient):
+        if orient == 'left':
+            max_len = max(len(six.text_type(t)) for t in scale.ticks(self.ticks))
+            return max_len * self.label_font_char_width
+        elif orient == 'bottom':
+            return self.label_font_char_height
+
     def to_svg(self, width, height, scale, orient):
         """
         Render this axis to SVG elements.
@@ -84,8 +96,8 @@ class Axis(Renderable):
                 dy=dy,
                 fill=self.label_color
             )
-
             label.set('text-anchor', text_anchor)
+            label.set('font-family', 'Monaco')
             label.text = six.text_type(value)
 
             tick_group.append(tick)
