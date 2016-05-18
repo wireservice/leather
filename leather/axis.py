@@ -11,9 +11,7 @@ class Axis(Renderable):
     """
     A horizontal or vertical chart axis.
     """
-    def __init__(self, scale, orient='bottom', ticks=5, tick_width='1px', tick_size=4, tick_color='#eee', label_color='#9c9c9c', zero_color='#a8a8a8'):
-        self.scale = scale
-        self.orient = orient
+    def __init__(self, orient='bottom', ticks=5, tick_width='1px', tick_size=4, tick_color='#eee', label_color='#9c9c9c', zero_color='#a8a8a8'):
         self.ticks = ticks
         self.tick_width = tick_width
         self.tick_size = tick_size
@@ -21,36 +19,40 @@ class Axis(Renderable):
         self.label_color = label_color
         self.zero_color = zero_color
 
-    def to_svg(self, width, height):
+    def to_svg(self, width, height, scale, orient):
         """
         Render this axis to SVG elements.
         """
         group = ET.Element('g')
+        group.set('class', 'axis ' + orient)
 
-        if self.orient == 'left':
+        if orient == 'left':
             label_x = -(self.tick_size * 2)
             x1 = -self.tick_size
             x2 = width
             project_range = [height, 0]
-        elif self.orient == 'bottom':
+        elif orient == 'bottom':
             label_y = height + (self.tick_size * 2)
             y1 = 0
             y2 = height + self.tick_size
             project_range = [0, width]
 
-        for value in self.scale.ticks(self.ticks):
-            projected_value = self.scale.project(value, project_range)
+        for value in scale.ticks(self.ticks):
+            tick_group = ET.Element('g')
+            tick_group.set('class', 'tick')
+
+            projected_value = scale.project(value, project_range)
 
             if value == 0:
                 tick_color = self.zero_color
             else:
                 tick_color = self.tick_color
 
-            if self.orient == 'left':
+            if orient == 'left':
                 y1 = projected_value
                 y2 = projected_value
 
-            elif self.orient == 'bottom':
+            elif orient == 'bottom':
                 x1 = projected_value
                 x2 = projected_value
 
@@ -61,15 +63,14 @@ class Axis(Renderable):
                 y2=six.text_type(y2),
                 stroke=tick_color
             )
-
             tick.set('stroke-width', self.tick_width)
 
-            if self.orient == 'left':
+            if orient == 'left':
                 x = label_x
                 y = projected_value
                 dy = '0.32em'
                 text_anchor = 'end'
-            elif self.orient == 'bottom':
+            elif orient == 'bottom':
                 x = projected_value
                 y = label_y
                 dy = '1em'
@@ -85,7 +86,9 @@ class Axis(Renderable):
             label.set('text-anchor', text_anchor)
             label.text = six.text_type(value)
 
-            group.append(tick)
-            group.append(label)
+            tick_group.append(tick)
+            tick_group.append(label)
+
+            group.append(tick_group)
 
         return group

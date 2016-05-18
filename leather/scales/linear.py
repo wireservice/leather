@@ -26,6 +26,6 @@ class Linear(Scale):
         """
         Return a sequence of :code:`count` ticks based on this scale.
         """
-        i = int((self.max - self.min) / count)
+        i = int((self.max - self.min) / (count - 1))
 
         return range(self.min, self.max + i, i)

@@ -111,20 +111,14 @@ class Chart(object):
         """
         scale = self._scales[dimension]
         axis = self._axes[dimension]
-        data_type = self._types[dimension]
 
         if not axis:
             if not scale:
-                scale = Scale.infer(self._layers, dimension, data_type)
+                scale = Scale.infer(self._layers, dimension, self._types[dimension])
             else:
                 scale = scale
 
-            if dimension == X:
-                orient = 'bottom'
-            elif dimension == Y:
-                orient = 'left'
-
-            axis = Axis(scale, orient)
+            axis = Axis()
         # Verify data are within bounds
         else:
             pass
@@ -163,8 +157,8 @@ class Chart(object):
         x_scale, x_axis = self._validate_dimension(X)
         y_scale, y_axis = self._validate_dimension(Y)
 
-        axes_group.append(x_axis.to_svg(canvas_width, canvas_height))
-        axes_group.append(y_axis.to_svg(canvas_width, canvas_height))
+        axes_group.append(x_axis.to_svg(canvas_width, canvas_height, x_scale, 'bottom'))
+        axes_group.append(y_axis.to_svg(canvas_width, canvas_height, y_scale, 'left'))
 
         # Series
         series_group = ET.Element('g')
