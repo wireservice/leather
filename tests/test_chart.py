@@ -49,7 +49,7 @@ class TestChart(XMLTest):
         self.assertElementCount(svg, '.dots', 2)
         self.assertElementCount(svg, 'circle', 9)
 
-    def test_custom_scale(self):
+    def test_custom_scales(self):
         chart = leather.Chart()
         chart.set_x_scale(leather.Linear(0, 20))
         chart.set_x_axis(leather.Axis(ticks=5))
