@@ -18,6 +18,9 @@ class LinearScale(Scale):
 
         return ((target_range[1] - target_range[0]) * pos) + target_range[0]
 
+    def project_interval(self, value, target_range):
+        raise NotImplementedError
+
     def ticks(self, count):
         """
         Return a sequence of :code:`count` ticks based on this scale.
