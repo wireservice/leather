@@ -19,24 +19,52 @@ DEFAULT_DOT = Dot()
 DEFAULT_LINE = Line()
 DEFAULT_COLUMN = Column()
 
+
 class Chart(object):
     """
     Container for all chart types.
     """
-    def __init__(self, width=800, height=400):
-        self._width = width
-        self._height = height
-        self._margin = Box(
-            top=20,
-            right=20,
-            bottom=20,
-            left=20
-        )
-
+    def __init__(self):
         self._layers = []
         self._types = [None, None]
         self._scales = [None, None]
         self._axes = [None, None]
+
+    def _set_scale(self, dimension, scale):
+        """
+        Set a new scale for this chart.
+        """
+        self._scales[dimension] = scale
+
+    def set_x_scale(self, scale):
+        """
+        Set the X scale for this chart.
+        """
+        self._set_scale(X, scale)
+
+    def set_y_scale(self, scale):
+        """
+        Set the Y scale for this chart.
+        """
+        self._set_scale(Y, scale)
+
+    def _set_axis(self, dimension, axis):
+        """
+        Set a new axis for this chart.
+        """
+        self._axes[dimension] = axis
+
+    def set_x_axis(self, axis):
+        """
+        Set the X axis for this chart.
+        """
+        self._set_axis(X, axis)
+
+    def set_y_axis(self, axis):
+        """
+        Set the Y axis for this chart.
+        """
+        self._set_axis(Y, axis)
 
     def add_series(self, series, shape):
         """
@@ -85,7 +113,7 @@ class Chart(object):
                     data_min = min([series.min(dimension) for series, shape in self._layers])
                     data_max = max([series.max(dimension) for series, shape in self._layers])
 
-                    scale = LinearScale([data_min, data_max])
+                    scale = LinearScale(data_min, data_max)
                 # Default Text scale is Ordinal
                 elif data_type is Text:
                     scale_values = None
@@ -114,7 +142,7 @@ class Chart(object):
 
         return (scale, axis)
 
-    def to_svg(self, path):
+    def to_svg(self, path, width=600, height=600, margin=None):
         """
         Render this chart to an SVG document.
 
@@ -124,19 +152,31 @@ class Chart(object):
         if not self._layers:
             raise ValueError('You must add at least one series to the chart before rendering.')
 
+        if not margin:
+            default_margin = width * 0.05
+
+            margin = Box(
+                top=default_margin,
+                right=default_margin,
+                bottom=default_margin,
+                left=default_margin
+            )
+        elif not isinstance(margin, Box):
+            margin = Box(*margin)
+
         canvas_bbox = Box(
-            top=self._margin.top,
-            right=self._width - self._margin.right,
-            bottom=self._height - self._margin.bottom,
-            left=self._margin.left
+            top=margin.top,
+            right=width - margin.right,
+            bottom=height - margin.bottom,
+            left=margin.left
         )
 
         x_scale, x_axis = self._validate_dimension(X)
         y_scale, y_axis = self._validate_dimension(Y)
 
         svg = ET.Element('svg',
-            width=six.text_type(self._width),
-            height=six.text_type(self._height),
+            width=six.text_type(width),
+            height=six.text_type(height),
             version='1.1',
             xmlns='http://www.w3.org/2000/svg'
         )

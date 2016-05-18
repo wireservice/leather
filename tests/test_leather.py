@@ -9,24 +9,6 @@ import six
 
 import leather
 
-dot_data = [
-    ('foo', 3),
-    ('bing', 5),
-    ('baz', 9),
-    ('blurg', 4)
-]
-
-line_data = [
-    ('foo', 7),
-    ('bing', 2),
-    ('baz', 3),
-    ('blurg', 4)
-]
-
-chart = leather.Chart()
-chart.add_column(line_data)
-chart.add_dot(dot_data)
-chart.to_svg('test.svg')
 
 class TestLinearScale(unittest.TestCase):
     def setUp(self):
@@ -84,6 +66,24 @@ class TestLinearScale(unittest.TestCase):
 
         output = six.StringIO()
         chart.to_svg(output)
+
+    def test_force_scale(self):
+        data = [
+            (1, 2),
+            (3, 1),
+            (5, 1),
+            (9, 5)
+        ]
+
+        chart = leather.Chart()
+        chart.set_x_scale(leather.LinearScale(0, 20))
+        chart.add_line(data)
+        chart.add_dot(data)
+        chart.add_column(data)
+
+        output = six.StringIO()
+        chart.to_svg(output)
+
 
 class TestOrdinalScale(unittest.TestCase):
     def setUp(self):

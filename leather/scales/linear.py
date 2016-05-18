@@ -6,9 +6,9 @@ class LinearScale(Scale):
     """
     A scale that linearly maps values from a domain to a range.
     """
-    def __init__(self, domain):
-        self.min = domain[0]
-        self.max = domain[1]
+    def __init__(self, domain_min, domain_max):
+        self.min = domain_min
+        self.max = domain_max
 
     def project(self, value, target_range):
         """
