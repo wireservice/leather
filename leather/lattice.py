@@ -19,8 +19,10 @@ class Lattice(object):
         self._shape = shape
 
     def _validate_dimension(self, dimension, chart_series):
-        scale = None
-
+        """
+        Verify all series have the same data types and generate a scale to fit
+        all the data.
+        """
         data_type = chart_series[0].types[dimension]
 
         for series in chart_series[1:]:

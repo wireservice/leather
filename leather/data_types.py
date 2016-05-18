@@ -18,11 +18,13 @@ class DataType(object):
 
         raise TypeError('No data type available for %s' % type(v))
 
+
 class Number(DataType):
     """
     Data representing numbers.
     """
     types = (int, float, Decimal)
+
 
 class Text(DataType):
     """
