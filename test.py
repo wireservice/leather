@@ -42,6 +42,28 @@ import leather
 # chart.add_dot(dot_data)
 # chart.to_svg('test.svg')
 
+# data = [[
+#     (0, 3),
+#     (4, 5),
+#     (7, 9),
+#     (8, 4)
+# ], [
+#     (0, 4),
+#     (1, 3),
+#     (2, 5),
+#     (5, 6),
+#     (9, 10)
+# ]]
+#
+# grid = leather.Grid()
+#
+# for series in data:
+#     chart = leather.Chart()
+#     chart.add_line(series)
+#     grid.add_chart(chart)
+#
+# grid.to_svg('test.svg', 1200, 600)
+
 data = [[
     (0, 3),
     (4, 5),
@@ -50,16 +72,23 @@ data = [[
 ], [
     (0, 4),
     (1, 3),
-    (2, 5),
-    (5, 6),
-    (9, 10)
+    (2, 3),
+    (10, 7),
+    (15, 5)
+], [
+    (0, 4),
+    (5, 5),
+    (6, 6),
+    (7, 7),
+    (8, 8)
+], [
+    (4, 4),
+    (6, 3),
+    (7, 5),
+    (8, 6),
+    (12, 10)
 ]]
 
-grid = leather.Grid()
+lattice = leather.Lattice(data, leather.Line())
 
-for series in data:
-    chart = leather.Chart()
-    chart.add_line(series)
-    grid.add_chart(chart)
-
-grid.to_svg('test.svg', 1200, 600)
+lattice.to_svg('test.svg', 1200, 600)

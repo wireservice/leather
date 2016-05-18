@@ -26,9 +26,11 @@ NO:
 * Maps
 * No ticks/grid
 * 3D / multi-dimensional charts
+* Annotations
 
 MAYBE:
 
 * Side-by-side bars
 * Stacked bars
 * Curved lines
+* Wrapping labels
