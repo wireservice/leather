@@ -22,10 +22,10 @@ class Chart(object):
     """
     Container for all chart types.
     """
-    def __init__(self):
-        self.width = 800
-        self.height = 400
-        self.margin = Box(
+    def __init__(self, width=800, height=400):
+        self._width = width
+        self._height = height
+        self._margin = Box(
             top=20,
             right=20,
             bottom=20,
@@ -68,6 +68,11 @@ class Chart(object):
         self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_COLUMN)
 
     def _validate_dimension(self, scale, axis, orient, data_index):
+        """
+        Validates that the current scale and axis are valid for the data that
+        has been added to this chart. If a scale or axis has not been set,
+        generates automated ones.
+        """
         if not axis:
             if not scale:
                 try:
@@ -104,19 +109,25 @@ class Chart(object):
         return (scale, axis)
 
     def to_svg(self, path):
+        """
+        Render this chart to an SVG document.
+
+        :param path:
+            Filepath or file-like object to write to.
+        """
         canvas_bbox = Box(
-            top=self.margin.top,
-            right=self.width - self.margin.right,
-            bottom=self.height - self.margin.bottom,
-            left=self.margin.left
+            top=self._margin.top,
+            right=self._width - self._margin.right,
+            bottom=self._height - self._margin.bottom,
+            left=self._margin.left
         )
 
         x_scale, x_axis = self._validate_dimension(self.x_scale, self.x_axis, 'bottom', 0)
         y_scale, y_axis = self._validate_dimension(self.y_scale, self.y_axis, 'left', 1)
 
         svg = ET.Element('svg',
-            width=six.text_type(self.width),
-            height=six.text_type(self.height),
+            width=six.text_type(self._width),
+            height=six.text_type(self._height),
             version='1.1',
             xmlns='http://www.w3.org/2000/svg'
         )

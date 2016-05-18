@@ -24,3 +24,8 @@ NO:
 * Maps
 * No ticks/grid
 * 3D / multi-dimensional charts
+
+MAYBE:
+
+* Side-by-side bars
+* Stacked bars

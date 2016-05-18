@@ -15,6 +15,9 @@ class Dot(Shape):
         self.color = color
 
     def to_svg(self, bbox, x_scale, y_scale, series):
+        """
+        Render dots to SVG elements.
+        """
         group = ET.Element('g')
 
         for x, y in series.data:

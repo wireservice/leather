@@ -14,6 +14,9 @@ class Column(Shape):
         self.color = color
 
     def to_svg(self, bbox, x_scale, y_scale, series):
+        """
+        Render columns to SVG elements.
+        """
         group = ET.Element('g')
 
         for x, y in series.data:

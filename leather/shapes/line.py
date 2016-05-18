@@ -15,6 +15,9 @@ class Line(Shape):
         self.color = color
 
     def to_svg(self, bbox, x_scale, y_scale, series):
+        """
+        Render lines to SVG elements.
+        """
         path = ET.Element('path',
             stroke=self.color,
             fill='none'

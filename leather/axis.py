@@ -21,6 +21,9 @@ class Axis(Renderable):
         self.zero_color = zero_color
 
     def to_svg(self, bbox):
+        """
+        Render this axis to SVG elements.
+        """
         group = ET.Element('g')
 
         if self.orient == 'left':

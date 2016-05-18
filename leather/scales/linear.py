@@ -7,17 +7,21 @@ class LinearScale(Scale):
     A scale that linearly maps values from a domain to a range.
     """
     def __init__(self, domain):
-        self.domain = domain
+        self.min = domain[0]
+        self.max = domain[1]
 
-    def project(self, value, range):
+    def project(self, value, target_range):
         """
         Project a value to the given range.
         """
-        pos = (value - self.domain[0]) / (self.domain[1] - self.domain[0])
+        pos = (value - self.min) / (self.max - self.min)
 
-        return ((range[1] - range[0]) * pos) + range[0]
+        return ((target_range[1] - target_range[0]) * pos) + target_range[0]
 
     def ticks(self, count):
-        i = int((self.domain[1] - self.domain[0]) / count)
+        """
+        Return a sequence of :code:`count` ticks based on this scale.
+        """
+        i = int((self.max - self.min) / count)
 
-        return range(self.domain[0], self.domain[1] + i, i)
+        return range(self.min, self.max + i, i)

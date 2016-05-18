@@ -9,25 +9,32 @@ class OrdinalScale(Scale):
     def __init__(self, domain):
         self.domain = domain
 
-    def project(self, value, range):
+    def project(self, value, target_range):
         """
         Project a value to a point in the given range.
         """
         segments = len(self.domain)
-        segment_size = (range[1] - range[0]) / segments
-        pos = range[0] + (self.domain.index(value) * segment_size) + (segment_size / 2)
+        segment_size = (target_range[1] - target_range[0]) / segments
+        pos = target_range[0] + (self.domain.index(value) * segment_size) + (segment_size / 2)
 
         return pos
 
-    def project_interval(self, value, range):
+    def project_interval(self, value, target_range):
+        """
+        Project a value to a segment of the given range (for columns/bars).
+        """
         segments = len(self.domain)
-        segment_size = (range[1] - range[0]) / segments
+        segment_size = (target_range[1] - target_range[0]) / segments
         gap = segment_size * 0.05
 
-        a = range[0] + (self.domain.index(value) * segment_size) + gap
-        b = range[0] + ((self.domain.index(value) + 1) * segment_size) - gap
+        a = target_range[0] + (self.domain.index(value) * segment_size) + gap
+        b = target_range[0] + ((self.domain.index(value) + 1) * segment_size) - gap
 
         return (a, b)
 
     def ticks(self, count):
+        """
+        Return a sequence of ticks for this scale. This will always be the
+        complete domain, regardless of :code:`count`.
+        """
         return self.domain
