@@ -13,7 +13,7 @@ from leather.series import Series
 from leather.shapes.column import Column
 from leather.shapes.dot import Dot
 from leather.shapes.line import Line
-from leather.utils import X, Y, DIMENSIONS, Box
+from leather.utils import X, Y, DIMENSIONS, Box, svg_translate
 
 DEFAULT_DOT = Dot()
 DEFAULT_LINE = Line()
@@ -142,7 +142,11 @@ class Chart(object):
 
         return (scale, axis)
 
-    def to_svg_group(self, width=300, height=300, margin=None):
+    def to_svg_group(self, width, height, margin=None):
+        """
+        Render the completechart to an SVG group element that can be placed
+        inside an :code:`<svg>` tag.
+        """
         if not self._layers:
             raise ValueError('You must add at least one series to the chart before rendering.')
 
@@ -158,25 +162,31 @@ class Chart(object):
         elif not isinstance(margin, Box):
             margin = Box(*margin)
 
-        canvas_bbox = Box(
-            top=margin.top,
-            right=width - margin.right,
-            bottom=height - margin.bottom,
-            left=margin.left
-        )
+        canvas_width = width - (margin.left + margin.right)
+        canvas_height = height - (margin.top + margin.bottom)
+
+        root_group = ET.Element('g')
+        root_group.set('transform', svg_translate(margin.left, margin.top))
+
+        # Axes
+        axes_group = ET.Element('g')
 
         x_scale, x_axis = self._validate_dimension(X)
         y_scale, y_axis = self._validate_dimension(Y)
 
-        group = ET.Element('g')
+        axes_group.append(x_axis.to_svg(canvas_width, canvas_height))
+        axes_group.append(y_axis.to_svg(canvas_width, canvas_height))
 
-        group.append(x_axis.to_svg(canvas_bbox))
-        group.append(y_axis.to_svg(canvas_bbox))
+        # Series
+        series_group = ET.Element('g')
 
         for series, shape in self._layers:
-            group.append(shape.to_svg(canvas_bbox, x_scale, y_scale, series))
+            series_group.append(shape.to_svg(canvas_width, canvas_height, x_scale, y_scale, series))
 
-        return group
+        root_group.append(axes_group)
+        root_group.append(series_group)
+
+        return root_group
 
     def to_svg(self, path, width=600, height=600, margin=None):
         """

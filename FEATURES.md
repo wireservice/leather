@@ -15,6 +15,7 @@ YES:
 * Date scales
 * Color
 * Null handling
+* Tick formatting
 
 NO:
 
@@ -30,3 +31,4 @@ MAYBE:
 
 * Side-by-side bars
 * Stacked bars
+* Curved lines

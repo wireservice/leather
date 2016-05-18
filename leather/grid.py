@@ -6,6 +6,8 @@ import xml.etree.ElementTree as ET
 
 import six
 
+from leather.utils import svg_translate
+
 
 class Grid(object):
     """
@@ -41,8 +43,12 @@ class Grid(object):
             x = (i % grid_width) * chart_width
             y = math.floor(i / grid_width) * chart_height
 
-            group = chart.to_svg_group(chart_width, chart_height)
-            group.set('transform', 'translate(%i %i)' % (x, y))
+            group = ET.Element('g')
+            group.set('transform', svg_translate(x, y))
+
+            chart = chart.to_svg_group(chart_width, chart_height)
+            group.append(chart)
+            
             svg.append(group)
 
         close = True

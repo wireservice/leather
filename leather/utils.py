@@ -13,3 +13,6 @@ DIMENSIONS = [X, Y]
 
 #: Data structure for representing margins or other CSS-edge like properties
 Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
+
+def svg_translate(x, y):
+    return 'translate(%i %i)' % (x, y)

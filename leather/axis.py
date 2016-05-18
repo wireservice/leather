@@ -6,6 +6,7 @@ import six
 
 from leather.renderable import Renderable
 
+
 class Axis(Renderable):
     """
     A horizontal or vertical chart axis.
@@ -20,22 +21,22 @@ class Axis(Renderable):
         self.label_color = label_color
         self.zero_color = zero_color
 
-    def to_svg(self, bbox):
+    def to_svg(self, width, height):
         """
         Render this axis to SVG elements.
         """
         group = ET.Element('g')
 
         if self.orient == 'left':
-            label_x = bbox.left - (self.tick_size * 2)
-            x1 = bbox.left - self.tick_size
-            x2 = bbox.right
-            project_range = [bbox.bottom, bbox.top]
+            label_x = -(self.tick_size * 2)
+            x1 = -self.tick_size
+            x2 = width
+            project_range = [height, 0]
         elif self.orient == 'bottom':
-            label_y = bbox.bottom + (self.tick_size * 2)
-            y1 = bbox.top
-            y2 = bbox.bottom + self.tick_size
-            project_range = [bbox.left, bbox.right]
+            label_y = height + (self.tick_size * 2)
+            y1 = 0
+            y2 = height + self.tick_size
+            project_range = [0, width]
 
         for value in self.scale.ticks(self.ticks):
             projected_value = self.scale.project(value, project_range)

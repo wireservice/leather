@@ -14,7 +14,7 @@ class Line(Shape):
         self.width = width
         self.color = color
 
-    def to_svg(self, bbox, x_scale, y_scale, series):
+    def to_svg(self, width, height, x_scale, y_scale, series):
         """
         Render lines to SVG elements.
         """
@@ -27,8 +27,8 @@ class Line(Shape):
         d = []
 
         for x, y in series.data:
-            proj_x = x_scale.project(x, [bbox.left, bbox.right])
-            proj_y = y_scale.project(y, [bbox.bottom, bbox.top])
+            proj_x = x_scale.project(x, [0, width])
+            proj_y = y_scale.project(y, [height, 0])
 
             if not d:
                 command = 'M'
