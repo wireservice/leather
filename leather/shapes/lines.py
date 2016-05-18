@@ -45,7 +45,7 @@ class Lines(Shape):
                 six.text_type(proj_y)
             ])
 
-        path.set('d', ','.join(d))
+        path.set('d', ' '.join(d))
 
         group.append(path)
 

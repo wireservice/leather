@@ -32,8 +32,11 @@ Show me code
     ]
 
     chart = leather.Chart()
-    chart.add_dots(dot_data)
+    chart.add_lines(data)
+    chart.add_dots(data)
     chart.to_svg('example.svg')
+
+.. figure:: example.svg
 
 Join us
 =======
