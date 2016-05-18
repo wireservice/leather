@@ -6,7 +6,8 @@ import six
 
 from leather.shapes.base import Shape
 
-class Line(Shape):
+
+class Lines(Shape):
     """
     Render a series of data as a line.
     """

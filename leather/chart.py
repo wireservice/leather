@@ -10,15 +10,17 @@ from leather.data_types import Number, Text
 from leather.scales.linear import LinearScale
 from leather.scales.ordinal import OrdinalScale
 from leather.series import Series
-from leather.shapes.column import Column
-from leather.shapes.dot import Dot
-from leather.shapes.line import Line
+from leather.shapes.bars import Bars
+from leather.shapes.columns import Columns
+from leather.shapes.dots import Dots
+from leather.shapes.lines import Lines
 import leather.svg as svg
 from leather.utils import X, Y, DIMENSIONS, Box
 
-DEFAULT_DOT = Dot()
-DEFAULT_LINE = Line()
-DEFAULT_COLUMN = Column()
+DEFAULT_BARS = Bars()
+DEFAULT_COLUMNS = Columns()
+DEFAULT_DOTS = Dots()
+DEFAULT_LINES = Lines()
 
 
 class Chart(object):
@@ -79,23 +81,29 @@ class Chart(object):
 
         self._layers.append((series, shape))
 
-    def add_dot(self, data, name=None):
+    def add_bars(self, data, name=None):
         """
-        Shortcut method for adding a dotted series to the chart.
+        Shortcut method for adding a bar series to the chart.
         """
-        self.add_series(Series(data, name=name), DEFAULT_DOT)
+        self.add_series(Series(data, name=name), DEFAULT_BARS)
 
-    def add_line(self, data, name=None):
-        """
-        Shortcut method for adding a line series to the chart.
-        """
-        self.add_series(Series(data, name=name), DEFAULT_LINE)
-
-    def add_column(self, data, name=None):
+    def add_columns(self, data, name=None):
         """
         Shortcut method for adding a column series to the chart.
         """
-        self.add_series(Series(data, name=name), DEFAULT_COLUMN)
+        self.add_series(Series(data, name=name), DEFAULT_COLUMNS)
+
+    def add_dots(self, data, name=None):
+        """
+        Shortcut method for adding a dotted series to the chart.
+        """
+        self.add_series(Series(data, name=name), DEFAULT_DOTS)
+
+    def add_lines(self, data, name=None):
+        """
+        Shortcut method for adding a line series to the chart.
+        """
+        self.add_series(Series(data, name=name), DEFAULT_LINES)
 
     def _validate_dimension(self, dimension):
         """

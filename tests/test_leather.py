@@ -33,36 +33,36 @@ class TestLinearScale(unittest.TestCase):
 
     def test_line(self):
         chart = leather.Chart()
-        chart.add_line(self.data1)
-        chart.add_line(self.data2)
-        chart.add_line(self.data3)
+        chart.add_lines(self.data1)
+        chart.add_lines(self.data2)
+        chart.add_lines(self.data3)
 
         output = six.StringIO()
         chart.to_svg(output)
 
     def test_dot(self):
         chart = leather.Chart()
-        chart.add_dot(self.data1)
-        chart.add_dot(self.data2)
-        chart.add_dot(self.data3)
+        chart.add_dots(self.data1)
+        chart.add_dots(self.data2)
+        chart.add_dots(self.data3)
 
         output = six.StringIO()
         chart.to_svg(output)
 
     def test_column(self):
         chart = leather.Chart()
-        chart.add_column(self.data1)
-        chart.add_column(self.data2)
-        chart.add_column(self.data3)
+        chart.add_columns(self.data1)
+        chart.add_columns(self.data2)
+        chart.add_columns(self.data3)
 
         output = six.StringIO()
         chart.to_svg(output)
 
     def test_mixed(self):
         chart = leather.Chart()
-        chart.add_line(self.data1)
-        chart.add_dot(self.data2)
-        chart.add_column(self.data3)
+        chart.add_lines(self.data1)
+        chart.add_dots(self.data2)
+        chart.add_columns(self.data3)
 
         output = six.StringIO()
         chart.to_svg(output)
@@ -77,9 +77,9 @@ class TestLinearScale(unittest.TestCase):
 
         chart = leather.Chart()
         chart.set_x_scale(leather.LinearScale(0, 20))
-        chart.add_line(data)
-        chart.add_dot(data)
-        chart.add_column(data)
+        chart.add_lines(data)
+        chart.add_dots(data)
+        chart.add_columns(data)
 
         output = six.StringIO()
         chart.to_svg(output)
@@ -110,36 +110,36 @@ class TestOrdinalScale(unittest.TestCase):
 
     def test_line(self):
         chart = leather.Chart()
-        chart.add_line(self.data1)
-        chart.add_line(self.data2)
-        chart.add_line(self.data3)
+        chart.add_lines(self.data1)
+        chart.add_lines(self.data2)
+        chart.add_lines(self.data3)
 
         output = six.StringIO()
         chart.to_svg(output)
 
     def test_dot(self):
         chart = leather.Chart()
-        chart.add_dot(self.data1)
-        chart.add_dot(self.data2)
-        chart.add_dot(self.data3)
+        chart.add_dots(self.data1)
+        chart.add_dots(self.data2)
+        chart.add_dots(self.data3)
 
         output = six.StringIO()
         chart.to_svg(output)
 
     def test_column(self):
         chart = leather.Chart()
-        chart.add_column(self.data1)
-        chart.add_column(self.data2)
-        chart.add_column(self.data3)
+        chart.add_columns(self.data1)
+        chart.add_columns(self.data2)
+        chart.add_columns(self.data3)
 
         output = six.StringIO()
         chart.to_svg(output)
 
     def test_mixed(self):
         chart = leather.Chart()
-        chart.add_line(self.data1)
-        chart.add_dot(self.data2)
-        chart.add_column(self.data3)
+        chart.add_lines(self.data1)
+        chart.add_dots(self.data2)
+        chart.add_columns(self.data3)
 
         output = six.StringIO()
         chart.to_svg(output)
