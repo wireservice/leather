@@ -6,13 +6,14 @@ import xml.etree.ElementTree as ET
 import six
 
 from leather.axis import Axis
+from leather.data_types import Number, Text
 from leather.scales.linear import LinearScale
 from leather.scales.ordinal import OrdinalScale
 from leather.series import Series
 from leather.shapes.column import Column
 from leather.shapes.dot import Dot
 from leather.shapes.line import Line
-from leather.utils import Box
+from leather.utils import X, Y, DIMENSIONS, Box
 
 DEFAULT_DOT = Dot()
 DEFAULT_LINE = Line()
@@ -32,74 +33,79 @@ class Chart(object):
             left=20
         )
 
-        self.x_scale = None
-        self.y_scale = None
-
-        self.x_axis = None
-        self.y_axis = None
-
-        self.layers = []
+        self._layers = []
+        self._types = [None, None]
+        self._scales = [None, None]
+        self._axes = [None, None]
 
     def add_series(self, series, shape):
         """
         Add a data :class:`.Series` to the chart.
         """
-        self.layers.append((series, shape))
+        for dim in DIMENSIONS:
+            if not self._types[dim]:
+                self._types[dim] = series.types[dim]
+            elif series.types[dim] is not self._types[dim]:
+                raise TypeError('Can\'t mix axis-data types: %s and %s' % (series.types[dim], self._types[dim]))
 
-        # Validate added series has same scale types as other series?
-        #if x_datum isinstance(number)
+        self._layers.append((series, shape))
 
-    def add_dot(self, data, name=None, id=None, classes=None):
+    def add_dot(self, data, name=None):
         """
         Shortcut method for adding a dotted series to the chart.
         """
-        self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_DOT)
+        self.add_series(Series(data, name=name), DEFAULT_DOT)
 
-    def add_line(self, data, name=None, id=None, classes=None):
+    def add_line(self, data, name=None):
         """
         Shortcut method for adding a line series to the chart.
         """
-        self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_LINE)
+        self.add_series(Series(data, name=name), DEFAULT_LINE)
 
-    def add_column(self, data, name=None, id=None, classes=None):
+    def add_column(self, data, name=None):
         """
         Shortcut method for adding a column series to the chart.
         """
-        self.add_series(Series(data, name=name, id=id, classes=classes), DEFAULT_COLUMN)
+        self.add_series(Series(data, name=name), DEFAULT_COLUMN)
 
-    def _validate_dimension(self, scale, axis, orient, data_index):
+    def _validate_dimension(self, dimension):
         """
-        Validates that the current scale and axis are valid for the data that
+        Validates that the given scale and axis are valid for the data that
         has been added to this chart. If a scale or axis has not been set,
         generates automated ones.
         """
+        scale = self._scales[dimension]
+        axis = self._axes[dimension]
+        data_type = self._types[dimension]
+
         if not axis:
             if not scale:
-                try:
-                    data_min = 0
-                    data_max = 0
-
-                    for series, shape in self.layers:
-                        sample = self.layers[0][0].data[0][data_index]
-
-                        if not isinstance(sample, float) and not isinstance(sample, int):
-                            raise ValueError()
-
-                        for d in series.data:
-                            data_min = min(data_min, d[data_index])
-                            data_max = max(data_max, d[data_index])
+                # Default Number scale is Linear
+                if data_type is Number:
+                    data_min = min([series.min(dimension) for series, shape in self._layers])
+                    data_max = max([series.max(dimension) for series, shape in self._layers])
 
                     scale = LinearScale([data_min, data_max])
-                except ValueError:
-                    scale_values = [d[0] for d in self.layers[0][0].data]
+                # Default Text scale is Ordinal
+                elif data_type is Text:
+                    scale_values = None
 
-                    for series, shape in self.layers:
-                        if [d[0] for d in series.data] != scale_values:
+                    for series, shape in self._layers:
+                        if not scale_values:
+                            scale_values = series.values(dimension)
+                            continue
+
+                        if series.values(dimension) != scale_values:
                             raise ValueError('Mismatched series scales')
 
                     scale = OrdinalScale(scale_values)
             else:
                 scale = scale
+
+            if dimension == X:
+                orient = 'bottom'
+            elif dimension == Y:
+                orient = 'left'
 
             axis = Axis(scale, orient)
         # Verify data are within bounds
@@ -115,6 +121,9 @@ class Chart(object):
         :param path:
             Filepath or file-like object to write to.
         """
+        if not self._layers:
+            raise ValueError('You must add at least one series to the chart before rendering.')
+
         canvas_bbox = Box(
             top=self._margin.top,
             right=self._width - self._margin.right,
@@ -122,8 +131,8 @@ class Chart(object):
             left=self._margin.left
         )
 
-        x_scale, x_axis = self._validate_dimension(self.x_scale, self.x_axis, 'bottom', 0)
-        y_scale, y_axis = self._validate_dimension(self.y_scale, self.y_axis, 'left', 1)
+        x_scale, x_axis = self._validate_dimension(X)
+        y_scale, y_axis = self._validate_dimension(Y)
 
         svg = ET.Element('svg',
             width=six.text_type(self._width),
@@ -135,7 +144,7 @@ class Chart(object):
         svg.append(x_axis.to_svg(canvas_bbox))
         svg.append(y_axis.to_svg(canvas_bbox))
 
-        for series, shape in self.layers:
+        for series, shape in self._layers:
             svg.append(shape.to_svg(canvas_bbox, x_scale, y_scale, series))
 
         close = True

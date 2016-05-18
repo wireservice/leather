@@ -14,6 +14,7 @@ YES:
 * Ordinal scales
 * Date scales
 * Color
+* Null handling
 
 NO:
 
