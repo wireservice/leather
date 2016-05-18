@@ -16,7 +16,7 @@ leather |release|
 Show me docs
 ============
 
-* `About <about.html>`_ - why you should use agate and the principles that guide its development
+* `About <about.html>`_ - why you should use leather and the principles that guide its development
 * `Install <install.html>`_ - how to install for users and developers
 
 Show me code
@@ -42,7 +42,7 @@ Join us
 =======
 
 * `Release process <release_process.html>`_ - the process for maintainers to publish new releases
-* `License <license.html>`_ - a copy of the MIT open source license covering agate
+* `License <license.html>`_ - a copy of the MIT open source license covering leather
 
 Who we are
 ==========
