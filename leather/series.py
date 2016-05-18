@@ -14,8 +14,9 @@ class Series(object):
     :param name:
         An optional name to be used in labeling this series.
     """
-    def __init__(self, data, name=None):
+    def __init__(self, data, shape, name=None):
         self.data = data
+        self.shape = shape
         self.name = name
 
         self.types = [None, None]
@@ -48,3 +49,9 @@ class Series(object):
         Compute the minimum value of a given dimension.
         """
         return max(self.values(dimension))
+
+    def to_svg(self, width, height, x_scale, y_scale):
+        """
+        Render this series to SVG elements using it's assigned shape.
+        """
+        return self.shape.to_svg(width, height, x_scale, y_scale, self)

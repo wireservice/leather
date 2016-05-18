@@ -6,9 +6,7 @@ import xml.etree.ElementTree as ET
 import six
 
 from leather.axis import Axis
-from leather.data_types import Number, Text
-from leather.scales.linear import LinearScale
-from leather.scales.ordinal import OrdinalScale
+from leather.scales import Scale
 from leather.series import Series
 from leather.shapes.bars import Bars
 from leather.shapes.columns import Columns
@@ -69,7 +67,7 @@ class Chart(object):
         """
         self._set_axis(Y, axis)
 
-    def add_series(self, series, shape):
+    def add_series(self, series):
         """
         Add a data :class:`.Series` to the chart.
         """
@@ -79,31 +77,31 @@ class Chart(object):
             elif series.types[dim] is not self._types[dim]:
                 raise TypeError('Can\'t mix axis-data types: %s and %s' % (series.types[dim], self._types[dim]))
 
-        self._layers.append((series, shape))
+        self._layers.append(series)
 
     def add_bars(self, data, name=None):
         """
         Shortcut method for adding a bar series to the chart.
         """
-        self.add_series(Series(data, name=name), DEFAULT_BARS)
+        self.add_series(Series(data, DEFAULT_BARS, name=name))
 
     def add_columns(self, data, name=None):
         """
         Shortcut method for adding a column series to the chart.
         """
-        self.add_series(Series(data, name=name), DEFAULT_COLUMNS)
+        self.add_series(Series(data, DEFAULT_COLUMNS, name=name))
 
     def add_dots(self, data, name=None):
         """
         Shortcut method for adding a dotted series to the chart.
         """
-        self.add_series(Series(data, name=name), DEFAULT_DOTS)
+        self.add_series(Series(data, DEFAULT_DOTS, name=name))
 
     def add_lines(self, data, name=None):
         """
         Shortcut method for adding a line series to the chart.
         """
-        self.add_series(Series(data, name=name), DEFAULT_LINES)
+        self.add_series(Series(data, DEFAULT_LINES, name=name))
 
     def _validate_dimension(self, dimension):
         """
@@ -117,25 +115,7 @@ class Chart(object):
 
         if not axis:
             if not scale:
-                # Default Number scale is Linear
-                if data_type is Number:
-                    data_min = min([series.min(dimension) for series, shape in self._layers])
-                    data_max = max([series.max(dimension) for series, shape in self._layers])
-
-                    scale = LinearScale(data_min, data_max)
-                # Default Text scale is Ordinal
-                elif data_type is Text:
-                    scale_values = None
-
-                    for series, shape in self._layers:
-                        if not scale_values:
-                            scale_values = series.values(dimension)
-                            continue
-
-                        if series.values(dimension) != scale_values:
-                            raise ValueError('Mismatched series scales')
-
-                    scale = OrdinalScale(scale_values)
+                scale = Scale.infer(self._layers, dimension, data_type)
             else:
                 scale = scale
 
@@ -189,8 +169,8 @@ class Chart(object):
         # Series
         series_group = ET.Element('g')
 
-        for series, shape in self._layers:
-            series_group.append(shape.to_svg(canvas_width, canvas_height, x_scale, y_scale, series))
+        for series in self._layers:
+            series_group.append(series.to_svg(canvas_width, canvas_height, x_scale, y_scale))
 
         root_group.append(axes_group)
         root_group.append(series_group)

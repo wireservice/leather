@@ -4,9 +4,6 @@ from decimal import Decimal
 
 import six
 
-from leather.scales.linear import LinearScale
-from leather.scales.ordinal import OrdinalScale
-
 
 class DataType(object):
     """

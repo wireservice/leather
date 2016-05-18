@@ -2,7 +2,8 @@
 
 from leather.scales.base import Scale
 
-class LinearScale(Scale):
+
+class Linear(Scale):
     """
     A scale that linearly maps values from a domain to a range.
     """
