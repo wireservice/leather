@@ -23,8 +23,8 @@ class Dots(Shape):
         group.set('class', 'series dots')
 
         for x, y in series.data:
-            proj_x = x_scale.project(x, [0, width])
-            proj_y = y_scale.project(y, [height, 0])
+            proj_x = x_scale.project(x, 0, width)
+            proj_y = y_scale.project(y, height, 0)
 
             group.append(ET.Element('circle',
                 cx=six.text_type(proj_x),

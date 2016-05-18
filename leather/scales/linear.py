@@ -11,21 +11,30 @@ class Linear(Scale):
         self.min = domain_min
         self.max = domain_max
 
-    def project(self, value, target_range):
+    def project(self, value, range_min, range_max):
         """
         Project a value to the given range.
         """
-        pos = (value - self.min) / (self.max - self.min)
+        pos = float(value - self.min) / (self.max - self.min)
 
-        return ((target_range[1] - target_range[0]) * pos) + target_range[0]
+        return ((range_max - range_min) * pos) + range_min
 
-    def project_interval(self, value, target_range):
+    def project_interval(self, value, range_min, range_max):
         raise NotImplementedError
 
     def ticks(self, count):
         """
         Return a sequence of :code:`count` ticks based on this scale.
         """
-        i = int((self.max - self.min) / (count - 1))
+        i = float(self.max - self.min) / (count - 1)
+        t = self.min
 
-        return range(self.min, self.max + i, i)
+        yield t
+
+        while t < self.max:
+            t += i
+
+            if int(t) == t:
+                t = int(t)
+
+            yield t

@@ -203,7 +203,11 @@ class Chart(object):
                 f = open(path, 'w')
 
             f.write(svg.HEADER)
-            f.write(ET.tostring(root, encoding='unicode'))
+
+            if six.PY3:
+                f.write(ET.tostring(root, encoding='unicode'))
+            else:
+                f.write(ET.tostring(root, encoding='utf-8'))
         finally:
             if close and f is not None:
                 f.close()

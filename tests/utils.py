@@ -28,3 +28,7 @@ class XMLTest(unittest.TestCase):
     def assertElementCount(self, svg, selector, count):
         series = svg.cssselect(selector)
         self.assertEqual(len(series), count)
+
+    def assertTickLabels(self, svg, orient, cmp):
+        ticks = [t.text for t in svg.cssselect('.%s .tick text' % orient)]
+        self.assertSequenceEqual(ticks, cmp)

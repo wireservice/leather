@@ -22,8 +22,8 @@ class Bars(Shape):
         group.set('class', 'series bars')
 
         for x, y in series.data:
-            proj_x = x_scale.project(x, [0, width])
-            y1, y2 = y_scale.project_interval(y, [height, 0])
+            proj_x = x_scale.project(x, 0, width)
+            y1, y2 = y_scale.project_interval(y, height, 0)
 
             print(proj_x, y1, y2)
 

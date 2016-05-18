@@ -31,8 +31,8 @@ class Lines(Shape):
         d = []
 
         for x, y in series.data:
-            proj_x = x_scale.project(x, [0, width])
-            proj_y = y_scale.project(y, [height, 0])
+            proj_x = x_scale.project(x, 0, width)
+            proj_y = y_scale.project(y, height, 0)
 
             if not d:
                 command = 'M'

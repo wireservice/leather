@@ -30,18 +30,20 @@ class Axis(Renderable):
             label_x = -(self.tick_size * 2)
             x1 = -self.tick_size
             x2 = width
-            project_range = [height, 0]
+            range_min = height
+            range_max = 0
         elif orient == 'bottom':
             label_y = height + (self.tick_size * 2)
             y1 = 0
             y2 = height + self.tick_size
-            project_range = [0, width]
+            range_min = 0
+            range_max = width
 
         for value in scale.ticks(self.ticks):
             tick_group = ET.Element('g')
             tick_group.set('class', 'tick')
 
-            projected_value = scale.project(value, project_range)
+            projected_value = scale.project(value, range_min, range_max)
 
             if value == 0:
                 tick_color = self.zero_color

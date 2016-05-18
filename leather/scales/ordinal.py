@@ -9,26 +9,26 @@ class Ordinal(Scale):
     def __init__(self, domain):
         self.domain = domain
 
-    def project(self, value, target_range):
+    def project(self, value, range_min, range_max):
         """
         Project a value to a point in the given range.
         """
         segments = len(self.domain)
-        segment_size = (target_range[1] - target_range[0]) / segments
-        pos = target_range[0] + (self.domain.index(value) * segment_size) + (segment_size / 2)
+        segment_size = (range_max - range_min) / segments
+        pos = range_min + (self.domain.index(value) * segment_size) + (segment_size / 2)
 
         return pos
 
-    def project_interval(self, value, target_range):
+    def project_interval(self, value, range_min, range_max):
         """
         Project a value to a segment of the given range (for columns/bars).
         """
         segments = len(self.domain)
-        segment_size = (target_range[1] - target_range[0]) / segments
+        segment_size = (range_max - range_min) / segments
         gap = segment_size * 0.05
 
-        a = target_range[0] + (self.domain.index(value) * segment_size) + gap
-        b = target_range[0] + ((self.domain.index(value) + 1) * segment_size) - gap
+        a = range_min + (self.domain.index(value) * segment_size) + gap
+        b = range_min + ((self.domain.index(value) + 1) * segment_size) - gap
 
         return (a, b)
 

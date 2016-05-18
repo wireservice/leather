@@ -22,8 +22,8 @@ class Columns(Shape):
         group.set('class', 'series columns')
 
         for x, y in series.data:
-            x1, x2 = x_scale.project_interval(x, [0, width])
-            proj_y = y_scale.project(y, [height, 0])
+            x1, x2 = x_scale.project_interval(x, 0, width)
+            proj_y = y_scale.project(y, height, 0)
 
             group.append(ET.Element('rect',
                 x=six.text_type(x1),
