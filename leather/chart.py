@@ -13,7 +13,8 @@ from leather.series import Series
 from leather.shapes.column import Column
 from leather.shapes.dot import Dot
 from leather.shapes.line import Line
-from leather.utils import X, Y, DIMENSIONS, Box, svg_translate
+import leather.svg as svg
+from leather.utils import X, Y, DIMENSIONS, Box
 
 DEFAULT_DOT = Dot()
 DEFAULT_LINE = Line()
@@ -166,7 +167,7 @@ class Chart(object):
         canvas_height = height - (margin.top + margin.bottom)
 
         root_group = ET.Element('g')
-        root_group.set('transform', svg_translate(margin.left, margin.top))
+        root_group.set('transform', svg.translate(margin.left, margin.top))
 
         # Axes
         axes_group = ET.Element('g')
@@ -195,7 +196,7 @@ class Chart(object):
         :param path:
             Filepath or file-like object to write to.
         """
-        svg = ET.Element('svg',
+        root = ET.Element('svg',
             width=six.text_type(width),
             height=six.text_type(height),
             version='1.1',
@@ -203,7 +204,7 @@ class Chart(object):
         )
 
         group = self.to_svg_group(width, height, margin)
-        svg.append(group)
+        root.append(group)
 
         close = True
 
@@ -219,10 +220,8 @@ class Chart(object):
 
                 f = open(path, 'w')
 
-            f.write('<?xml version="1.0" standalone="no"?>\n')
-            f.write('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"\n')
-            f.write('"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n')
-            f.write(ET.tostring(svg, encoding='unicode'))
+            f.write(svg.HEADER)
+            f.write(ET.tostring(root, encoding='unicode'))
             f.close()
         finally:
             if close and f is not None:

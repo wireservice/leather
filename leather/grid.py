@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 
 import six
 
-from leather.utils import svg_translate
+import leather.svg as svg
 
 
 class Grid(object):
@@ -26,7 +26,7 @@ class Grid(object):
         """
         Render the grid to an SVG.
         """
-        svg = ET.Element('svg',
+        root = ET.Element('svg',
             width=six.text_type(width),
             height=six.text_type(height),
             version='1.1',
@@ -44,12 +44,12 @@ class Grid(object):
             y = math.floor(i / grid_width) * chart_height
 
             group = ET.Element('g')
-            group.set('transform', svg_translate(x, y))
+            group.set('transform', svg.translate(x, y))
 
             chart = chart.to_svg_group(chart_width, chart_height)
             group.append(chart)
-            
-            svg.append(group)
+
+            root.append(group)
 
         close = True
 
@@ -65,10 +65,8 @@ class Grid(object):
 
                 f = open(path, 'w')
 
-            f.write('<?xml version="1.0" standalone="no"?>\n')
-            f.write('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"\n')
-            f.write('"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n')
-            f.write(ET.tostring(svg, encoding='unicode'))
+            f.write(svg.HEADER)
+            f.write(ET.tostring(root, encoding='unicode'))
             f.close()
         finally:
             if close and f is not None:
