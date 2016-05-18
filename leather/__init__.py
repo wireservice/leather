@@ -7,6 +7,5 @@ from leather.grid import Grid
 from leather.lattice import Lattice
 from leather.legend import Legend
 from leather.scales import Linear, Ordinal
-from leather.shapes.columns import Columns
-from leather.shapes.dots import Dots
-from leather.shapes.lines import Lines
+from leather.series import Series
+from leather.shapes import Bars, Columns, Dots, Lines

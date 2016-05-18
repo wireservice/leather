@@ -25,8 +25,6 @@ class Bars(Shape):
             proj_x = x_scale.project(x, 0, width)
             y1, y2 = y_scale.project_interval(y, height, 0)
 
-            print(proj_x, y1, y2)
-
             group.append(ET.Element('rect',
                 x=six.text_type(0),
                 y=six.text_type(y2),
