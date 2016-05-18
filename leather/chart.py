@@ -142,13 +142,7 @@ class Chart(object):
 
         return (scale, axis)
 
-    def to_svg(self, path, width=600, height=600, margin=None):
-        """
-        Render this chart to an SVG document.
-
-        :param path:
-            Filepath or file-like object to write to.
-        """
+    def to_svg_group(self, width=300, height=300, margin=None):
         if not self._layers:
             raise ValueError('You must add at least one series to the chart before rendering.')
 
@@ -174,6 +168,23 @@ class Chart(object):
         x_scale, x_axis = self._validate_dimension(X)
         y_scale, y_axis = self._validate_dimension(Y)
 
+        group = ET.Element('g')
+
+        group.append(x_axis.to_svg(canvas_bbox))
+        group.append(y_axis.to_svg(canvas_bbox))
+
+        for series, shape in self._layers:
+            group.append(shape.to_svg(canvas_bbox, x_scale, y_scale, series))
+
+        return group
+
+    def to_svg(self, path, width=600, height=600, margin=None):
+        """
+        Render this chart to an SVG document.
+
+        :param path:
+            Filepath or file-like object to write to.
+        """
         svg = ET.Element('svg',
             width=six.text_type(width),
             height=six.text_type(height),
@@ -181,11 +192,8 @@ class Chart(object):
             xmlns='http://www.w3.org/2000/svg'
         )
 
-        svg.append(x_axis.to_svg(canvas_bbox))
-        svg.append(y_axis.to_svg(canvas_bbox))
-
-        for series, shape in self._layers:
-            svg.append(shape.to_svg(canvas_bbox, x_scale, y_scale, series))
+        group = self.to_svg_group(width, height, margin)
+        svg.append(group)
 
         close = True
 
