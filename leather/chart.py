@@ -176,8 +176,11 @@ class Chart(object):
         margin_width = width - (margin.left + margin.right)
         margin_height = height - (margin.top + margin.bottom)
 
+        root_group.append(margin_group)
+
         # Header
         header_group = ET.Element('g')
+
         header_margin = 0
 
         if self._title:
@@ -193,12 +196,16 @@ class Chart(object):
             header_group.append(label)
             header_margin += theme.title_font_char_height
 
+        margin_group.append(header_group)
+
         # Body
         body_group = ET.Element('g')
         body_group.set('transform', svg.translate(0, header_margin))
 
         body_width = margin_width
         body_height = margin_height - header_margin
+
+        margin_group.append(body_group)
 
         # Axes
         x_scale, x_axis = self._validate_dimension(X)
@@ -218,6 +225,8 @@ class Chart(object):
 
         header_group.set('transform', svg.translate(left_margin, 0))
 
+        body_group.append(axes_group)
+
         # Series
         series_group = ET.Element('g')
 
@@ -225,12 +234,6 @@ class Chart(object):
             series_group.append(series.to_svg(canvas_width, canvas_height, x_scale, y_scale))
 
         axes_group.append(series_group)
-        body_group.append(axes_group)
-
-        margin_group.append(header_group)
-        margin_group.append(body_group)
-
-        root_group.append(margin_group)
 
         return root_group
 

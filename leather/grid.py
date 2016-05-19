@@ -44,6 +44,22 @@ class Grid(object):
             xmlns='http://www.w3.org/2000/svg'
         )
 
+        # Root /  background
+        root_group = ET.Element('g')
+
+        root_group.append(ET.Element('rect',
+            x=six.text_type(0),
+            y=six.text_type(0),
+            width=six.text_type(width),
+            height=six.text_type(height),
+            fill=theme.background_color
+        ))
+
+        root.append(root_group)
+
+        # Charts
+        grid_group = ET.Element('g')
+
         chart_count = len(self._charts)
         grid_width = math.ceil(math.sqrt(chart_count))
         grid_height = math.ceil(chart_count / grid_width)
@@ -60,7 +76,9 @@ class Grid(object):
             chart = chart.to_svg_group(chart_width, chart_height)
             group.append(chart)
 
-            root.append(group)
+            grid_group.append(group)
+
+        root_group.append(grid_group)
 
         svg_text = svg.stringify(root)
         close = True
