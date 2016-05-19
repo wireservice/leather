@@ -42,13 +42,13 @@ class Series(object):
         """
         Compute the minimum value of a given dimension.
         """
-        return min(self.values(dimension))
+        return min(v for v in self.values(dimension) if v is not None)
 
     def max(self, dimension):
         """
         Compute the minimum value of a given dimension.
         """
-        return max(self.values(dimension))
+        return max(v for v in self.values(dimension) if v is not None)
 
     def to_svg(self, width, height, x_scale, y_scale):
         """

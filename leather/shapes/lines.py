@@ -16,6 +16,15 @@ class Lines(Shape):
         self.color = color
         self.width = width or theme.line_width
 
+    def _new_path(self):
+        path = ET.Element('path',
+            stroke=self.color,
+            fill='none'
+        )
+        path.set('stroke-width', six.text_type(self.width))
+
+        return path
+
     def to_svg(self, width, height, x_scale, y_scale, series):
         """
         Render lines to SVG elements.
@@ -23,15 +32,21 @@ class Lines(Shape):
         group = ET.Element('g')
         group.set('class', 'series lines')
 
-        path = ET.Element('path',
-            stroke=self.color,
-            fill='none'
-        )
-        path.set('stroke-width', six.text_type(self.width))
+        path = self._new_path()
 
         d = []
 
         for x, y in series.data:
+            if x is None or y is None:
+                if d:
+                    path.set('d', ' '.join(d))
+                    group.append(path)
+
+                d = []
+                path = self._new_path()
+
+                continue
+
             proj_x = x_scale.project(x, 0, width)
             proj_y = y_scale.project(y, height, 0)
 
@@ -46,8 +61,8 @@ class Lines(Shape):
                 six.text_type(proj_y)
             ])
 
-        path.set('d', ' '.join(d))
-
-        group.append(path)
+        if d:
+            path.set('d', ' '.join(d))
+            group.append(path)
 
         return group

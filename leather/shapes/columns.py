@@ -22,6 +22,9 @@ class Columns(Shape):
         group.set('class', 'series columns')
 
         for x, y in series.data:
+            if x is None or y is None:
+                continue
+
             x1, x2 = x_scale.project_interval(x, 0, width)
             proj_y = y_scale.project(y, height, 0)
 

@@ -24,6 +24,9 @@ class Dots(Shape):
         group.set('class', 'series dots')
 
         for x, y in series.data:
+            if x is None or y is None:
+                continue
+                
             proj_x = x_scale.project(x, 0, width)
             proj_y = y_scale.project(y, height, 0)
 
