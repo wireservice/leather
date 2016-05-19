@@ -11,16 +11,26 @@ from leather import theme
 class Axis(Renderable):
     """
     A horizontal or vertical chart axis.
+
+    :param ticks:
+        The number of ticks to display for this axis.
+    :param tick_formatter:
+        An optional function to call on every tick. The function must take
+        three arguments: :code:`(value, index, count)` where :code:`value` is
+        the tick, :code:`index` is the index of the tick, and :code:`count`
+        is the total number of ticks. The return value of the function will
+        be used for display instead of the original tick value.
     """
-    def __init__(self, ticks=5):
-        self.ticks = ticks
+    def __init__(self, ticks=5, tick_formatter=None):
+        self._ticks = ticks
+        self._tick_formatter = tick_formatter
 
     def estimate_label_margin(self, scale, orient):
         """
         Estimate the space needed for the tick labels.
         """
         if orient == 'left':
-            max_len = max(len(six.text_type(t)) for t in scale.ticks(self.ticks))
+            max_len = max(len(six.text_type(t)) for t in scale.ticks(self._ticks))
             return max_len * theme.tick_font_char_width
         elif orient == 'bottom':
             return theme.tick_font_char_height
@@ -45,10 +55,16 @@ class Axis(Renderable):
             range_min = 0
             range_max = width
 
-        for value in scale.ticks(self.ticks):
+        tick_values = scale.ticks(self._ticks)
+        tick_count = len(tick_values)
+
+        for i, value in enumerate(tick_values):
+            # Tick group
             tick_group = ET.Element('g')
             tick_group.set('class', 'tick')
+            group.append(tick_group)
 
+            # Tick line
             projected_value = scale.project(value, range_min, range_max)
 
             if value == 0:
@@ -73,6 +89,9 @@ class Axis(Renderable):
             )
             tick.set('stroke-width', six.text_type(theme.tick_width))
 
+            tick_group.append(tick)
+
+            # Tick label
             if orient == 'left':
                 x = label_x
                 y = projected_value
@@ -91,12 +110,13 @@ class Axis(Renderable):
                 fill=theme.label_color
             )
             label.set('text-anchor', text_anchor)
-            label.set('font-family', theme.tick_font_family)    
+            label.set('font-family', theme.tick_font_family)
+
+            if self._tick_formatter:
+                value = self._tick_formatter(value, i, tick_count)
+
             label.text = six.text_type(value)
 
-            tick_group.append(tick)
             tick_group.append(label)
-
-            group.append(tick_group)
 
         return group

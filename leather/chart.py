@@ -121,16 +121,13 @@ class Chart(object):
         scale = self._scales[dimension]
         axis = self._axes[dimension]
 
-        if not axis:
-            if not scale:
-                scale = Scale.infer(self._layers, dimension, self._types[dimension])
-            else:
-                scale = scale
-
-            axis = Axis()
-        # Verify data are within bounds
+        if not scale:
+            scale = Scale.infer(self._layers, dimension, self._types[dimension])
         else:
-            pass
+            scale = scale
+
+        if not axis:
+            axis = Axis()
 
         return (scale, axis)
 

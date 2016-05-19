@@ -6,7 +6,6 @@ except ImportError:
     import unittest
 
 from lxml import etree
-import six
 
 
 class XMLTest(unittest.TestCase):
