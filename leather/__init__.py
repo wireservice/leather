@@ -9,3 +9,4 @@ from leather.legend import Legend
 from leather.scales import Linear, Ordinal
 from leather.series import Series
 from leather.shapes import Bars, Columns, Dots, Lines
+from leather import theme

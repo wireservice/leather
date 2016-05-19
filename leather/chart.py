@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from copy import copy
 import os
 import xml.etree.ElementTree as ET
 
@@ -8,29 +9,19 @@ import six
 from leather.axis import Axis
 from leather.scales import Scale
 from leather.series import Series
-from leather.shapes.bars import Bars
-from leather.shapes.columns import Columns
-from leather.shapes.dots import Dots
-from leather.shapes.lines import Lines
+from leather.shapes import Bars, Columns, Dots, Lines
 import leather.svg as svg
-from leather.theme import Theme
+from leather import theme
 from leather.utils import X, Y, DIMENSIONS, Box
-
-DEFAULT_BARS = Bars()
-DEFAULT_COLUMNS = Columns()
-DEFAULT_DOTS = Dots()
-DEFAULT_LINES = Lines()
-
-DEFAULT_THEME = Theme()
 
 
 class Chart(object):
     """
     Container for all chart types.
     """
-    def __init__(self, title=None, theme=DEFAULT_THEME):
+    def __init__(self, title=None):
         self._title = title
-        self._theme = theme
+        self._series_colors = copy(theme.series_colors)
 
         self._layers = []
         self._types = [None, None]
@@ -85,29 +76,41 @@ class Chart(object):
 
         self._layers.append(series)
 
-    def add_bars(self, data, name=None):
+    def add_bars(self, data, name=None, color=None):
         """
         Shortcut method for adding a bar series to the chart.
         """
-        self.add_series(Series(data, DEFAULT_BARS, name=name))
+        if not color:
+            color = self._series_colors.pop(0)
 
-    def add_columns(self, data, name=None):
+        self.add_series(Series(data, Bars(color), name=name))
+
+    def add_columns(self, data, name=None, color=None):
         """
         Shortcut method for adding a column series to the chart.
         """
-        self.add_series(Series(data, DEFAULT_COLUMNS, name=name))
+        if not color:
+            color = self._series_colors.pop(0)
 
-    def add_dots(self, data, name=None):
+        self.add_series(Series(data, Columns(color), name=name))
+
+    def add_dots(self, data, name=None, color=None):
         """
         Shortcut method for adding a dotted series to the chart.
         """
-        self.add_series(Series(data, DEFAULT_DOTS, name=name))
+        if not color:
+            color = self._series_colors.pop(0)
 
-    def add_lines(self, data, name=None):
+        self.add_series(Series(data, Dots(color), name=name))
+
+    def add_lines(self, data, name=None, color=None):
         """
         Shortcut method for adding a line series to the chart.
         """
-        self.add_series(Series(data, DEFAULT_LINES, name=name))
+        if not color:
+            color = self._series_colors.pop(0)
+
+        self.add_series(Series(data, Lines(color), name=name))
 
     def _validate_dimension(self, dimension):
         """
@@ -169,14 +172,14 @@ class Chart(object):
             label = ET.Element('text',
                 x=six.text_type(0),
                 y=six.text_type(0),
-                fill=self._theme.title_color
+                fill=theme.title_color
             )
-            label.set('font-family', self._theme.title_font_family)
-            label.set('font-size', self._theme.title_font_size)
+            label.set('font-family', theme.title_font_family)
+            label.set('font-size', theme.title_font_size)
             label.text = six.text_type(self._title)
 
             header_group.append(label)
-            header_margin += self._theme.title_font_char_height
+            header_margin += theme.title_font_char_height
 
         body_group = ET.Element('g')
         body_group.set('transform', svg.translate(0, header_margin))
@@ -188,8 +191,8 @@ class Chart(object):
         x_scale, x_axis = self._validate_dimension(X)
         y_scale, y_axis = self._validate_dimension(Y)
 
-        bottom_margin = x_axis.estimate_label_margin(x_scale, 'bottom', self._theme)
-        left_margin = y_axis.estimate_label_margin(y_scale, 'left', self._theme)
+        bottom_margin = x_axis.estimate_label_margin(x_scale, 'bottom')
+        left_margin = y_axis.estimate_label_margin(y_scale, 'left')
 
         canvas_width = body_width - left_margin
         canvas_height = body_height - bottom_margin
@@ -197,8 +200,8 @@ class Chart(object):
         axes_group = ET.Element('g')
         axes_group.set('transform', svg.translate(left_margin, 0))
 
-        axes_group.append(x_axis.to_svg(canvas_width, canvas_height, x_scale, 'bottom', self._theme))
-        axes_group.append(y_axis.to_svg(canvas_width, canvas_height, y_scale, 'left', self._theme))
+        axes_group.append(x_axis.to_svg(canvas_width, canvas_height, x_scale, 'bottom'))
+        axes_group.append(y_axis.to_svg(canvas_width, canvas_height, y_scale, 'left'))
 
         # Series
         series_group = ET.Element('g')

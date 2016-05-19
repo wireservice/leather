@@ -11,7 +11,7 @@ class Bars(Shape):
     """
     Render a series of data as columns.
     """
-    def __init__(self, color='green'):
+    def __init__(self, color):
         self.color = color
 
     def to_svg(self, width, height, x_scale, y_scale, series):

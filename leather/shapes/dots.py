@@ -5,15 +5,16 @@ import xml.etree.ElementTree as ET
 import six
 
 from leather.shapes.base import Shape
+from leather import theme
 
 
 class Dots(Shape):
     """
     Render a series of data as dots.
     """
-    def __init__(self, radius=3, color='red'):
-        self.radius = radius
+    def __init__(self, color, radius=None):
         self.color = color
+        self.radius = radius or theme.dot_radius
 
     def to_svg(self, width, height, x_scale, y_scale, series):
         """

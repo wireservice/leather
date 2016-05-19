@@ -10,7 +10,7 @@ import leather
 
 class TestBars(unittest.TestCase):
     def setUp(self):
-        self.shape = leather.Bars()
+        self.shape = leather.Bars('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
 
@@ -31,7 +31,7 @@ class TestBars(unittest.TestCase):
 
 class TestColumns(unittest.TestCase):
     def setUp(self):
-        self.shape = leather.Columns()
+        self.shape = leather.Columns('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
 
@@ -52,7 +52,7 @@ class TestColumns(unittest.TestCase):
 
 class TestDots(unittest.TestCase):
     def setUp(self):
-        self.shape = leather.Dots()
+        self.shape = leather.Dots('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
 
@@ -87,7 +87,7 @@ class TestDots(unittest.TestCase):
 
 class TestLines(unittest.TestCase):
     def setUp(self):
-        self.shape = leather.Lines()
+        self.shape = leather.Lines('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
 

@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 import six
 
 from leather.renderable import Renderable
+from leather import theme
 
 
 class Axis(Renderable):
@@ -14,7 +15,7 @@ class Axis(Renderable):
     def __init__(self, ticks=5):
         self.ticks = ticks
 
-    def estimate_label_margin(self, scale, orient, theme):
+    def estimate_label_margin(self, scale, orient):
         """
         Estimate the space needed for the tick labels.
         """
@@ -24,7 +25,7 @@ class Axis(Renderable):
         elif orient == 'bottom':
             return theme.tick_font_char_height
 
-    def to_svg(self, width, height, scale, orient, theme):
+    def to_svg(self, width, height, scale, orient):
         """
         Render this axis to SVG elements.
         """

@@ -5,15 +5,16 @@ import xml.etree.ElementTree as ET
 import six
 
 from leather.shapes.base import Shape
+from leather import theme
 
 
 class Lines(Shape):
     """
     Render a series of data as a line.
     """
-    def __init__(self, width='2px', color='blue'):
-        self.width = width
+    def __init__(self, color, width=None):
         self.color = color
+        self.width = width or theme.line_width
 
     def to_svg(self, width, height, x_scale, y_scale, series):
         """
@@ -26,7 +27,7 @@ class Lines(Shape):
             stroke=self.color,
             fill='none'
         )
-        path.set('stroke-width', self.width)
+        path.set('stroke-width', six.text_type(self.width))
 
         d = []
 
