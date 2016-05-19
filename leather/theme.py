@@ -8,7 +8,7 @@ Visual options for all chart elements.
 title_color = '#333'
 title_font_family = 'Monaco'
 title_font_size = 16
-title_font_char_height = 20
+title_font_char_height = 18
 title_font_char_width = 9
 
 # Tick lines

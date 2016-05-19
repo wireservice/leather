@@ -91,7 +91,7 @@ class Axis(Renderable):
                 fill=theme.label_color
             )
             label.set('text-anchor', text_anchor)
-            label.set('font-family', 'Monaco')
+            label.set('font-family', theme.tick_font_family)    
             label.text = six.text_type(value)
 
             tick_group.append(tick)

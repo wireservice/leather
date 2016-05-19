@@ -203,6 +203,8 @@ class Chart(object):
         axes_group.append(x_axis.to_svg(canvas_width, canvas_height, x_scale, 'bottom'))
         axes_group.append(y_axis.to_svg(canvas_width, canvas_height, y_scale, 'left'))
 
+        header_group.set('transform', svg.translate(left_margin, 0))
+
         # Series
         series_group = ET.Element('g')
 
