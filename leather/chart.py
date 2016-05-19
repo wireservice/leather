@@ -175,7 +175,7 @@ class Chart(object):
                 fill=theme.title_color
             )
             label.set('font-family', theme.title_font_family)
-            label.set('font-size', theme.title_font_size)
+            label.set('font-size', six.text_type(theme.title_font_size))
             label.text = six.text_type(self._title)
 
             header_group.append(label)
@@ -221,9 +221,9 @@ class Chart(object):
         """
         Render this chart to an SVG document.
 
-        Technically, :code:`width` and :code:`height` are specified in SVG
-        "unitless" units, however, because font sizes resolve to pixels, it is
-        usually best to think of these as pixels.
+        Note: :code:`width` and :code:`height` are specified in SVG's
+        "unitless" units, however, it is usually convenient to specify them
+        as though they were pixels.
 
         :param path:
             Filepath or file-like object to write to.

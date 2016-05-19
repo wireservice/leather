@@ -71,7 +71,7 @@ class Axis(Renderable):
                 y2=six.text_type(y2),
                 stroke=tick_color
             )
-            tick.set('stroke-width', theme.tick_width)
+            tick.set('stroke-width', six.text_type(theme.tick_width))
 
             if orient == 'left':
                 x = label_x
