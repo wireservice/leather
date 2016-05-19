@@ -14,9 +14,10 @@ class Lattice(object):
     :param data:
          A sequence of chart data sequences.
     """
-    def __init__(self, data, shape):
+    def __init__(self, data, shape, titles=None):
         self._data = data
         self._shape = shape
+        self._titles = titles
 
     def _validate_dimension(self, dimension, chart_series):
         """
@@ -45,8 +46,13 @@ class Lattice(object):
 
         grid = Grid()
 
-        for series in chart_series:
-            chart = Chart()
+        for i, series in enumerate(chart_series):
+            if self._titles:
+                title = self._titles[i]
+            else:
+                title = None
+
+            chart = Chart(title)
             chart.set_x_scale(x_scale)
             chart.set_y_scale(y_scale)
             chart.add_series(series)
