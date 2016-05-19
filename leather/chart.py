@@ -134,7 +134,7 @@ class Chart(object):
 
         return (scale, axis)
 
-    def to_svg_group(self, width, height, margin=None):
+    def to_svg_group(self, width, height):
         """
         Render the completechart to an SVG group element that can be placed
         inside an :code:`<svg>` tag.
@@ -144,8 +144,8 @@ class Chart(object):
         if not self._layers:
             raise ValueError('You must add at least one series to the chart before rendering.')
 
-        if not margin:
-            default_margin = width * 0.05
+        if isinstance(theme.margin, float):
+            default_margin = width * theme.margin
 
             margin = Box(
                 top=default_margin,
@@ -158,16 +158,28 @@ class Chart(object):
         elif not isinstance(margin, Box):
             margin = Box(*margin)
 
-        root_width = width - (margin.left + margin.right)
-        root_height = height - (margin.top + margin.bottom)
-
+        # Root / background
         root_group = ET.Element('g')
-        root_group.set('transform', svg.translate(margin.left, margin.top))
 
+        root_group.append(ET.Element('rect',
+            x=six.text_type(0),
+            y=six.text_type(0),
+            width=six.text_type(width),
+            height=six.text_type(height),
+            fill=theme.background_color
+        ))
+
+        # Margins
+        margin_group = ET.Element('g')
+        margin_group.set('transform', svg.translate(margin.left, margin.top))
+
+        margin_width = width - (margin.left + margin.right)
+        margin_height = height - (margin.top + margin.bottom)
+
+        # Header
         header_group = ET.Element('g')
         header_margin = 0
 
-        # Title
         if self._title:
             label = ET.Element('text',
                 x=six.text_type(0),
@@ -181,11 +193,12 @@ class Chart(object):
             header_group.append(label)
             header_margin += theme.title_font_char_height
 
+        # Body
         body_group = ET.Element('g')
         body_group.set('transform', svg.translate(0, header_margin))
 
-        body_width = root_width
-        body_height = root_height - header_margin
+        body_width = margin_width
+        body_height = margin_height - header_margin
 
         # Axes
         x_scale, x_axis = self._validate_dimension(X)
@@ -214,12 +227,14 @@ class Chart(object):
         axes_group.append(series_group)
         body_group.append(axes_group)
 
-        root_group.append(header_group)
-        root_group.append(body_group)
+        margin_group.append(header_group)
+        margin_group.append(body_group)
+
+        root_group.append(margin_group)
 
         return root_group
 
-    def to_svg(self, path, width=600, height=600, margin=None):
+    def to_svg(self, path, width=None, height=None):
         """
         Render this chart to an SVG document.
 
@@ -233,12 +248,10 @@ class Chart(object):
             The output width, in SVG user units.
         :param height:
             The output height, in SVG user units.
-        :param margin:
-            An instance of :class:`.Box`, a sequence of offsets in the format
-            :code:`(top, right, bottom, left)` or a single :code:`int` to be
-            used for all sides. Or, :code:`None`, in which case a default offset
-            equal to 5% of :code:`width`.
         """
+        width = width or theme.default_width
+        height = height or theme.default_height
+
         root = ET.Element('svg',
             width=six.text_type(width),
             height=six.text_type(height),
@@ -246,7 +259,7 @@ class Chart(object):
             xmlns='http://www.w3.org/2000/svg'
         )
 
-        group = self.to_svg_group(width, height, margin)
+        group = self.to_svg_group(width, height)
         root.append(group)
 
         close = True

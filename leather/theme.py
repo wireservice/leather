@@ -4,6 +4,12 @@
 Visual options for all chart elements.
 """
 
+# Chart
+default_width = 800
+default_height = 400
+background_color = '#f9f9f9'
+margin = 0.05
+
 # Chart title
 title_color = '#333'
 title_font_family = 'Monaco'
