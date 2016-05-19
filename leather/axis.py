@@ -11,20 +11,23 @@ class Axis(Renderable):
     """
     A horizontal or vertical chart axis.
     """
-    def __init__(self, ticks=5, tick_width='1px', tick_size=4, tick_color='#eee', label_color='#9c9c9c', zero_color='#a8a8a8'):
+    def __init__(self, ticks=5):
         self.ticks = ticks
-        self.tick_width = tick_width
-        self.tick_size = tick_size
-        self.tick_color = tick_color
-        self.label_color = label_color
-        self.zero_color = zero_color
+        self.tick_width = '1px'
+        self.tick_size = 4
+        self.tick_color = '#eee'
+        self.label_color = '#9c9c9c'
+        self.zero_color = '#a8a8a8'
 
         self.label_font_family = 'Monaco'
         self.label_font_size = '14px'
         self.label_font_char_height = 14
         self.label_font_char_width = 8
 
-    def compute_text_margin(self, scale, orient):
+    def estimate_label_margin(self, scale, orient):
+        """
+        Estimate the space needed for the tick labels.
+        """
         if orient == 'left':
             max_len = max(len(six.text_type(t)) for t in scale.ticks(self.ticks))
             return max_len * self.label_font_char_width

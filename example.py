@@ -10,7 +10,7 @@ data = [
     (8, 4)
 ]
 
-chart = leather.Chart()
+chart = leather.Chart('Example chart')
 chart.add_lines(data)
 chart.add_dots(data)
 chart.to_svg('docs/example.svg')
