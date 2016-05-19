@@ -2,6 +2,13 @@
 
 from collections import namedtuple
 
+try:
+    __IPYTHON__
+    from IPython.display import SVG as IPythonSVG
+except (NameError, ImportError):
+    IPythonSVG = lambda x: x
+
+
 #: X data dimension index
 X = 0
 

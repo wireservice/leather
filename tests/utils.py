@@ -6,6 +6,7 @@ except ImportError:
     import unittest
 
 from lxml import etree
+import six
 
 
 class XMLTest(unittest.TestCase):
@@ -17,6 +18,7 @@ class XMLTest(unittest.TestCase):
         Verify the column names in the given table match what is expected.
         """
         text = chart.to_svg()
+        print(dir(text))
         text = text.replace(' xmlns="http://www.w3.org/2000/svg"', '')
 
         return etree.fromstring(text)

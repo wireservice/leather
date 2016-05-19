@@ -8,6 +8,7 @@ import six
 
 import leather.svg as svg
 from leather import theme
+from leather.utils import IPythonSVG
 
 
 class Grid(object):
@@ -83,4 +84,4 @@ class Grid(object):
                 if close and f is not None:
                     f.close()
         else:
-            return svg_text
+            return IPythonSVG(svg_text)

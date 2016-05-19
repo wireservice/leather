@@ -12,7 +12,7 @@ from leather.series import Series
 from leather.shapes import Bars, Columns, Dots, Lines
 import leather.svg as svg
 from leather import theme
-from leather.utils import X, Y, DIMENSIONS, Box
+from leather.utils import X, Y, DIMENSIONS, Box, IPythonSVG
 
 
 class Chart(object):
@@ -243,8 +243,9 @@ class Chart(object):
         as though they were pixels.
 
         :param path:
-            Filepath or file-like object to write to. If not specified then
-            the SVG will be returned as a string.
+            Filepath or file-like object to write to. If omitted then the SVG
+            will be returned as a string. If running within IPython, then this
+            will return a SVG object to be displayed.
         :param width:
             The output width, in SVG user units.
         :param height:
@@ -285,4 +286,4 @@ class Chart(object):
                 if close and f is not None:
                     f.close()
         else:
-            return svg_text
+            return IPythonSVG(svg_text)
