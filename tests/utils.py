@@ -6,7 +6,6 @@ except ImportError:
     import unittest
 
 from lxml import etree
-import six
 
 
 class XMLTest(unittest.TestCase):
@@ -17,10 +16,7 @@ class XMLTest(unittest.TestCase):
         """
         Verify the column names in the given table match what is expected.
         """
-        output = six.StringIO()
-        chart.to_svg(output)
-        text = output.getvalue()
-
+        text = chart.to_svg()
         text = text.replace(' xmlns="http://www.w3.org/2000/svg"', '')
 
         return etree.fromstring(text)
@@ -29,6 +25,6 @@ class XMLTest(unittest.TestCase):
         series = svg.cssselect(selector)
         self.assertEqual(len(series), count)
 
-    def assertTickLabels(self, svg, orient, cmp):
+    def assertTickLabels(self, svg, orient, compare):
         ticks = [t.text for t in svg.cssselect('.%s .tick text' % orient)]
-        self.assertSequenceEqual(ticks, cmp)
+        self.assertSequenceEqual(ticks, compare)

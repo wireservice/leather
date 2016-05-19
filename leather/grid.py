@@ -23,7 +23,7 @@ class Grid(object):
         """
         self._charts.append(chart)
 
-    def to_svg(self, path, width=None, height=None):
+    def to_svg(self, path=None, width=None, height=None):
         """
         Render the grid to an SVG.
         """
@@ -61,23 +61,26 @@ class Grid(object):
 
             root.append(group)
 
+        svg_text = svg.stringify(root)
         close = True
 
-        try:
-            if hasattr(path, 'write'):
-                f = path
-                close = False
-            else:
-                dirpath = os.path.dirname(path)
+        if path:
+            try:
+                if hasattr(path, 'write'):
+                    f = path
+                    close = False
+                else:
+                    dirpath = os.path.dirname(path)
 
-                if dirpath and not os.path.exists(dirpath):
-                    os.makedirs(dirpath)
+                    if dirpath and not os.path.exists(dirpath):
+                        os.makedirs(dirpath)
 
-                f = open(path, 'w')
+                    f = open(path, 'w')
 
-            f.write(svg.HEADER)
-            f.write(ET.tostring(root, encoding='unicode'))
-            f.close()
-        finally:
-            if close and f is not None:
-                f.close()
+                f.write(svg.HEADER)
+                f.write(svg_text)
+            finally:
+                if close and f is not None:
+                    f.close()
+        else:
+            return svg_text

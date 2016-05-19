@@ -234,7 +234,7 @@ class Chart(object):
 
         return root_group
 
-    def to_svg(self, path, width=None, height=None):
+    def to_svg(self, path=None, width=None, height=None):
         """
         Render this chart to an SVG document.
 
@@ -243,7 +243,8 @@ class Chart(object):
         as though they were pixels.
 
         :param path:
-            Filepath or file-like object to write to.
+            Filepath or file-like object to write to. If not specified then
+            the SVG will be returned as a string.
         :param width:
             The output width, in SVG user units.
         :param height:
@@ -262,26 +263,26 @@ class Chart(object):
         group = self.to_svg_group(width, height)
         root.append(group)
 
+        svg_text = svg.stringify(root)
         close = True
 
-        try:
-            if hasattr(path, 'write'):
-                f = path
-                close = False
-            else:
-                dirpath = os.path.dirname(path)
+        if path:
+            try:
+                if hasattr(path, 'write'):
+                    f = path
+                    close = False
+                else:
+                    dirpath = os.path.dirname(path)
 
-                if dirpath and not os.path.exists(dirpath):
-                    os.makedirs(dirpath)
+                    if dirpath and not os.path.exists(dirpath):
+                        os.makedirs(dirpath)
 
-                f = open(path, 'w')
+                    f = open(path, 'w')
 
-            f.write(svg.HEADER)
-
-            if six.PY3:
-                f.write(ET.tostring(root, encoding='unicode'))
-            else:
-                f.write(ET.tostring(root, encoding='utf-8'))
-        finally:
-            if close and f is not None:
-                f.close()
+                f.write(svg.HEADER)
+                f.write(svg_text)
+            finally:
+                if close and f is not None:
+                    f.close()
+        else:
+            return svg_text
