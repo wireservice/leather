@@ -13,6 +13,7 @@ from leather.shapes.columns import Columns
 from leather.shapes.dots import Dots
 from leather.shapes.lines import Lines
 import leather.svg as svg
+from leather.theme import Theme
 from leather.utils import X, Y, DIMENSIONS, Box
 
 DEFAULT_BARS = Bars()
@@ -20,19 +21,16 @@ DEFAULT_COLUMNS = Columns()
 DEFAULT_DOTS = Dots()
 DEFAULT_LINES = Lines()
 
+DEFAULT_THEME = Theme()
+
 
 class Chart(object):
     """
     Container for all chart types.
     """
-    def __init__(self, title=None):
+    def __init__(self, title=None, theme=DEFAULT_THEME):
         self._title = title
-
-        self.title_color = '#333'
-        self.title_font_family = 'Monaco'
-        self.title_font_size = '16px'
-        self.title_font_char_height = 20
-        self.title_font_char_width = 9
+        self._theme = theme
 
         self._layers = []
         self._types = [None, None]
@@ -171,14 +169,14 @@ class Chart(object):
             label = ET.Element('text',
                 x=six.text_type(0),
                 y=six.text_type(0),
-                fill=self.title_color
+                fill=self._theme.title_color
             )
-            label.set('font-family', self.title_font_family)
-            label.set('font-size', self.title_font_size)
+            label.set('font-family', self._theme.title_font_family)
+            label.set('font-size', self._theme.title_font_size)
             label.text = six.text_type(self._title)
 
             header_group.append(label)
-            header_margin += self.title_font_char_height
+            header_margin += self._theme.title_font_char_height
 
         body_group = ET.Element('g')
         body_group.set('transform', svg.translate(0, header_margin))
@@ -190,8 +188,8 @@ class Chart(object):
         x_scale, x_axis = self._validate_dimension(X)
         y_scale, y_axis = self._validate_dimension(Y)
 
-        bottom_margin = x_axis.estimate_label_margin(x_scale, 'bottom')
-        left_margin = y_axis.estimate_label_margin(y_scale, 'left')
+        bottom_margin = x_axis.estimate_label_margin(x_scale, 'bottom', self._theme)
+        left_margin = y_axis.estimate_label_margin(y_scale, 'left', self._theme)
 
         canvas_width = body_width - left_margin
         canvas_height = body_height - bottom_margin
@@ -199,8 +197,8 @@ class Chart(object):
         axes_group = ET.Element('g')
         axes_group.set('transform', svg.translate(left_margin, 0))
 
-        axes_group.append(x_axis.to_svg(canvas_width, canvas_height, x_scale, 'bottom'))
-        axes_group.append(y_axis.to_svg(canvas_width, canvas_height, y_scale, 'left'))
+        axes_group.append(x_axis.to_svg(canvas_width, canvas_height, x_scale, 'bottom', self._theme))
+        axes_group.append(y_axis.to_svg(canvas_width, canvas_height, y_scale, 'left', self._theme))
 
         # Series
         series_group = ET.Element('g')
@@ -219,6 +217,10 @@ class Chart(object):
     def to_svg(self, path, width=600, height=600, margin=None):
         """
         Render this chart to an SVG document.
+
+        Technically, :code:`width` and :code:`height` are specified in SVG
+        "unitless" units, however, because font sizes resolve to pixels, it is
+        usually best to think of these as pixels.
 
         :param path:
             Filepath or file-like object to write to.

@@ -13,28 +13,18 @@ class Axis(Renderable):
     """
     def __init__(self, ticks=5):
         self.ticks = ticks
-        self.tick_width = '1px'
-        self.tick_size = 4
-        self.tick_color = '#eee'
-        self.label_color = '#9c9c9c'
-        self.zero_color = '#a8a8a8'
 
-        self.label_font_family = 'Monaco'
-        self.label_font_size = '14px'
-        self.label_font_char_height = 14
-        self.label_font_char_width = 8
-
-    def estimate_label_margin(self, scale, orient):
+    def estimate_label_margin(self, scale, orient, theme):
         """
         Estimate the space needed for the tick labels.
         """
         if orient == 'left':
             max_len = max(len(six.text_type(t)) for t in scale.ticks(self.ticks))
-            return max_len * self.label_font_char_width
+            return max_len * theme.tick_font_char_width
         elif orient == 'bottom':
-            return self.label_font_char_height
+            return theme.tick_font_char_height
 
-    def to_svg(self, width, height, scale, orient):
+    def to_svg(self, width, height, scale, orient, theme):
         """
         Render this axis to SVG elements.
         """
@@ -42,15 +32,15 @@ class Axis(Renderable):
         group.set('class', 'axis ' + orient)
 
         if orient == 'left':
-            label_x = -(self.tick_size * 2)
-            x1 = -self.tick_size
+            label_x = -(theme.tick_size * 2)
+            x1 = -theme.tick_size
             x2 = width
             range_min = height
             range_max = 0
         elif orient == 'bottom':
-            label_y = height + (self.tick_size * 2)
+            label_y = height + (theme.tick_size * 2)
             y1 = 0
-            y2 = height + self.tick_size
+            y2 = height + theme.tick_size
             range_min = 0
             range_max = width
 
@@ -61,9 +51,9 @@ class Axis(Renderable):
             projected_value = scale.project(value, range_min, range_max)
 
             if value == 0:
-                tick_color = self.zero_color
+                tick_color = theme.zero_color
             else:
-                tick_color = self.tick_color
+                tick_color = theme.tick_color
 
             if orient == 'left':
                 y1 = projected_value
@@ -80,7 +70,7 @@ class Axis(Renderable):
                 y2=six.text_type(y2),
                 stroke=tick_color
             )
-            tick.set('stroke-width', self.tick_width)
+            tick.set('stroke-width', theme.tick_width)
 
             if orient == 'left':
                 x = label_x
@@ -97,7 +87,7 @@ class Axis(Renderable):
                 x=six.text_type(x),
                 y=six.text_type(y),
                 dy=dy,
-                fill=self.label_color
+                fill=theme.label_color
             )
             label.set('text-anchor', text_anchor)
             label.set('font-family', 'Monaco')
