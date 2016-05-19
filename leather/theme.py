@@ -6,7 +6,7 @@ Visual options for all chart elements.
 
 # Chart
 default_width = 800
-default_height = 400
+default_height = 600
 background_color = '#f9f9f9'
 margin = 0.05
 

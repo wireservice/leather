@@ -32,7 +32,7 @@ class Lattice(object):
 
         return Scale.infer(chart_series, dimension, data_type)
 
-    def to_svg(self, path, width=1200, height=1200):
+    def to_svg(self, path, width=None, height=None):
         """
         Render the grid to an SVG.
         """

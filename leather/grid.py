@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 import six
 
 import leather.svg as svg
+from leather import theme
 
 
 class Grid(object):
@@ -22,10 +23,19 @@ class Grid(object):
         """
         self._charts.append(chart)
 
-    def to_svg(self, path, width=1200, height=1200):
+    def to_svg(self, path, width=None, height=None):
         """
         Render the grid to an SVG.
         """
+        if not width or not height:
+            count = len(self._charts)
+
+            columns = math.ceil(math.sqrt(count))
+            rows = math.ceil(count / columns)
+
+            width = columns * theme.default_width
+            height = rows * theme.default_height
+
         root = ET.Element('svg',
             width=six.text_type(width),
             height=six.text_type(height),

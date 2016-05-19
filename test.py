@@ -42,31 +42,6 @@ import leather
 # chart.add_dot(dot_data)
 # chart.to_svg('test.svg')
 
-# data = [[
-#     (0, 3),
-#     (4, 5),
-#     (7, 9),
-#     (8, 4)
-# ], [
-#     (0, 4),
-#     (1, 3),
-#     (2, 5),
-#     (5, 6),
-#     (9, 10)
-# ]]
-#
-# grid = leather.Grid()
-#
-# chart = leather.Chart('Chart A')
-# chart.add_lines(data[0])
-# grid.add_chart(chart)
-#
-# chart = leather.Chart('Chart B')
-# chart.add_dots(data[1])
-# grid.add_chart(chart)
-#
-# grid.to_svg('test.svg', 1200, 600)
-
 data = [[
     (0, 3),
     (4, 5),
@@ -75,26 +50,61 @@ data = [[
 ], [
     (0, 4),
     (1, 3),
-    (2, 3),
-    (10, 7),
-    (15, 5)
-], [
+    (2, 5),
+    (5, 6),
+    (9, 10)
+],[
     (0, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8)
-], [
-    (4, 4),
-    (6, 3),
-    (7, 5),
-    (8, 6),
-    (12, 10)
+    (1, 3),
+    (2, 5),
+    (5, 6),
+    (9, 10)
 ]]
 
-lattice = leather.Lattice(data, leather.Lines('purple'), ['A', 'B', 'C', 'D'])
+grid = leather.Grid()
 
-lattice.to_svg('test.svg', 1200, 600)
+chart = leather.Chart('Chart A')
+chart.add_lines(data[0])
+grid.add_chart(chart)
+
+chart = leather.Chart('Chart B')
+chart.add_dots(data[1])
+grid.add_chart(chart)
+
+chart = leather.Chart('Chart C')
+chart.add_dots(data[2])
+grid.add_chart(chart)
+
+grid.to_svg('test.svg')
+
+# data = [[
+#     (0, 3),
+#     (4, 5),
+#     (7, 9),
+#     (8, 4)
+# ], [
+#     (0, 4),
+#     (1, 3),
+#     (2, 3),
+#     (10, 7),
+#     (15, 5)
+# ], [
+#     (0, 4),
+#     (5, 5),
+#     (6, 6),
+#     (7, 7),
+#     (8, 8)
+# ], [
+#     (4, 4),
+#     (6, 3),
+#     (7, 5),
+#     (8, 6),
+#     (12, 10)
+# ]]
+#
+# lattice = leather.Lattice(data, leather.Lines('purple'), ['A', 'B', 'C', 'D'])
+#
+# lattice.to_svg('test.svg', 1200, 600)
 
 # data = [
 #     (3, 1),
