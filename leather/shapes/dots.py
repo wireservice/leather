@@ -26,9 +26,11 @@ class Dots(Shape):
         for x, y in series.data:
             if x is None or y is None:
                 continue
-                
+
             proj_x = x_scale.project(x, 0, width)
             proj_y = y_scale.project(y, height, 0)
+
+            print(x, proj_x)
 
             group.append(ET.Element('circle',
                 cx=six.text_type(proj_x),

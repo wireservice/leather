@@ -14,7 +14,7 @@ class Ordinal(Scale):
         Project a value to a point in the given range.
         """
         segments = len(self.domain)
-        segment_size = (range_max - range_min) / segments
+        segment_size = float(range_max - range_min) / segments
         pos = range_min + (self.domain.index(value) * segment_size) + (segment_size / 2)
 
         return pos
