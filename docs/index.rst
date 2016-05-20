@@ -28,11 +28,6 @@ Show me docs
 Show me code
 ============
 
-.. literalinclude:: ../examples/lines.py
-    :language: python
-
-.. figure:: ../examples/charts/lines.svg
-
 .. literalinclude:: ../examples/colorized_dots.py
     :language: python
 

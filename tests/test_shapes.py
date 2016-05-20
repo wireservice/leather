@@ -40,7 +40,7 @@ class TestBars(unittest.TestCase):
 
         self.assertEqual(len(rects), 2)
         self.assertEqual(float(rects[1].get('x')), 0)
-        self.assertEqual(float(rects[1].get('width')), 200)
+        self.assertEqual(float(rects[1].get('width')), 0)
 
 
 class TestColumns(unittest.TestCase):
