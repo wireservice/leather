@@ -31,10 +31,33 @@ title_font_family = 'Monaco'
 title_font_size = 16
 
 #: Approximate glyph height of the title font
-title_font_char_height = 18
+title_font_char_height = 16
 
 #: Approximate glyph width of the title font
 title_font_char_width = 9
+
+#: Gap between title and rest of chart
+title_gap = 4
+
+# AXIS
+
+#: Axis title text color
+axis_title_color = '#333'
+
+#: Axis title font
+axis_title_font_family = 'Monaco'
+
+#: Axis title font size
+axis_title_font_size = 14
+
+#: Approximate glyph height of the axis title font
+axis_title_font_char_height = 14
+
+#: Approximate glyph width of the axis title font
+axis_title_font_char_width = 8
+
+#: Gap between axis title and rest of chart
+axis_title_gap = 8
 
 # TICKS
 

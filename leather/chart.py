@@ -31,41 +31,45 @@ class Chart(object):
         self._scales = [None, None]
         self._axes = [None, None]
 
-    def _set_scale(self, dimension, scale):
-        """
-        Set a new :class:`.Scale` for this chart.
-        """
-        self._scales[dimension] = scale
-
     def set_x_scale(self, scale):
         """
         Set the X :class:`.Scale` for this chart.
         """
-        self._set_scale(X, scale)
+        self._scales[X] = scale
 
     def set_y_scale(self, scale):
         """
         Set the Y :class:`.Scale` for this chart.
         """
-        self._set_scale(Y, scale)
-
-    def _set_axis(self, dimension, axis):
-        """
-        Set a new :class:`.Axis` for this chart.
-        """
-        self._axes[dimension] = axis
+        self._scales[Y] = scale
 
     def set_x_axis(self, axis):
         """
-        Set the X :class:`.Axis` for this chart.
+        Set a new :class:`.Axis` class for this chart.
         """
-        self._set_axis(X, axis)
+        self._axes[X] = axis
 
     def set_y_axis(self, axis):
         """
-        Set the Y :class:`.Axis` for this chart.
+        Set the Y :class:`.Axis` class for this chart.
         """
-        self._set_axis(Y, axis)
+        self._axes[Y] = axis
+
+    def add_x_axis(self, ticks=None, tick_formatter=None, name=None):
+        """
+        Create and add an X :class:`.Axis`.
+
+        If you want to use a custom axis class use :meth:`.set_x_axis` instead.
+        """
+        self._axes[X] = Axis(ticks, tick_formatter, name)
+
+    def add_y_axis(self, ticks=None, tick_formatter=None, name=None):
+        """
+        Create and add an Y :class:`.Axis`.
+
+        If you want to use a custom axis class use :meth:`.set_y_axis` instead.
+        """
+        self._axes[Y] = Axis(ticks, tick_formatter, name)
 
     def add_series(self, series):
         """
@@ -200,7 +204,7 @@ class Chart(object):
             label.text = six.text_type(self._title)
 
             header_group.append(label)
-            header_margin += theme.title_font_char_height
+            header_margin += theme.title_font_char_height + theme.title_gap
 
         margin_group.append(header_group)
 

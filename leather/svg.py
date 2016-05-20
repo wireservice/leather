@@ -34,3 +34,10 @@ def translate(x, y):
     Generate an SVG transform statement representing a simple translation.
     """
     return 'translate(%i %i)' % (x, y)
+
+def rotate(deg, x, y):
+    """
+    Generate an SVG transform statement representing rotation around a given
+    point.
+    """
+    return 'rotate(%i %i %i)' % (deg, x, y)

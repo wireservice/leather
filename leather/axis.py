@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 
 import six
 
+from leather import svg
 from leather import theme
 
 
@@ -21,19 +22,39 @@ class Axis(object):
         is the total number of ticks. The return value of the function will
         be used for display instead of the original tick value.
     """
-    def __init__(self, ticks=None, tick_formatter=None):
+    def __init__(self, ticks=None, tick_formatter=None, name=None):
         self._ticks = ticks or theme.default_ticks
-        self._tick_formatter = tick_formatter
+        self._tick_formatter = tick_formatter or (lambda value, i, tick_count: value)
+        self._name = name
+
+    def _estimate_left_tick_width(self, scale):
+        """
+        Estimate the y axis space used by tick labels.
+        """
+        ticks = scale.ticks(self._ticks)
+        tick_count = len(ticks)
+        max_len = 0
+
+        for i, value in enumerate(ticks):
+            max_len = max(max_len, len(self._tick_formatter(value, i, tick_count)))
+
+        return max_len * theme.tick_font_char_width
 
     def estimate_label_margin(self, scale, orient):
         """
         Estimate the space needed for the tick labels.
         """
+        margin = 0
+
         if orient == 'left':
-            max_len = max(len(six.text_type(t)) for t in scale.ticks(self._ticks))
-            return max_len * theme.tick_font_char_width
+            margin += self._estimate_left_tick_width(scale) + (theme.tick_size * 2)
         elif orient == 'bottom':
-            return theme.tick_font_char_height
+            margin += theme.tick_font_char_height + (theme.tick_size * 2)
+
+        if self._name:
+            margin += theme.axis_title_font_char_height + theme.axis_title_gap
+
+        return margin
 
     def to_svg(self, width, height, scale, orient):
         """
@@ -42,6 +63,32 @@ class Axis(object):
         group = ET.Element('g')
         group.set('class', 'axis ' + orient)
 
+        # Axis title
+        if orient == 'left':
+            title_x = -(self._estimate_left_tick_width(scale) + theme.axis_title_gap)
+            title_y = height / 2
+            dy=''
+            transform = svg.rotate(270, title_x, title_y)
+        elif orient == 'bottom':
+            title_x = width / 2
+            title_y = height + theme.tick_font_char_height + (theme.tick_size * 2) + theme.axis_title_gap
+            dy='1em'
+            transform = ''
+
+        title = ET.Element('text',
+            x=six.text_type(title_x),
+            y=six.text_type(title_y),
+            dy=dy,
+            fill=theme.axis_title_color,
+            transform=transform
+        )
+        title.set('text-anchor', 'middle')
+        title.set('font-family', theme.axis_title_font_family)
+        title.text = self._name
+
+        group.append(title)
+
+        # Ticks
         if orient == 'left':
             label_x = -(theme.tick_size * 2)
             x1 = -theme.tick_size
@@ -112,9 +159,7 @@ class Axis(object):
             label.set('text-anchor', text_anchor)
             label.set('font-family', theme.tick_font_family)
 
-            if self._tick_formatter:
-                value = self._tick_formatter(value, i, tick_count)
-
+            value = self._tick_formatter(value, i, tick_count)
             label.text = six.text_type(value)
 
             tick_group.append(label)
