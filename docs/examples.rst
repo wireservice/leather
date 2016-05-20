@@ -16,7 +16,9 @@ Simple pairs
 Table from csv.reader
 ---------------------
 
-Leather does not automatically convert numerical strings, such as those stored in a CSV. If you want that you'll need to use a smarter table reader, such as `agate <http://agate.rtfd.io/>`_
+Sequence row data, such as is returned by :func:`csv.reader` can be accessed by specifying the indices of the columns containing the :code:`x` and :code:`y` values.
+
+Note that leather does not automatically convert numerical strings, such as those stored in a CSV. If you want that you'll need to use a smarter table reader, such as `agate <http://agate.rtfd.io/>`_
 
 .. literalinclude:: ../examples/csv_reader.py
     :language: python
@@ -25,6 +27,8 @@ Leather does not automatically convert numerical strings, such as those stored i
 
 Table from csv.DictReader
 -------------------------
+
+Dict row data, such as is returned by :class:`csv.DictReader` can be accessed by specifying the indices of the columns containing the :code:`x` and :code:`y` values.
 
 See previous example for note on strings from CSVs.
 
@@ -67,18 +71,49 @@ Lines
 Scales
 ======
 
+Linear
+------
+
+TKTK
+
+Ordinal
+-------
+
+TKTK
+
+Temporal
+--------
+
 TKTK
 
 Axes
 ====
+
+Changing tick count
+-------------------
+
+TKTK
+
+Customizing tick format
+-----------------------
 
 TKTK
 
 Styling
 =======
 
+Changing theme values
+---------------------
+
 TKTK
 
+Changing chart defaults
+-----------------------
+
+TKTK
+
+Styling data based on value
+---------------------------
 
 .. literalinclude:: ../examples/colorized_dots.py
     :language: python
