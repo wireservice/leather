@@ -98,23 +98,23 @@ class Chart(object):
 
         self.add_series(Series(data, Columns(color), name=name))
 
-    def add_dots(self, data, name=None, color=None):
+    def add_dots(self, data, name=None, color=None, radius=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Dots`.
         """
         if not color:
             color = self._series_colors.pop(0)
 
-        self.add_series(Series(data, Dots(color), name=name))
+        self.add_series(Series(data, Dots(color, radius), name=name))
 
-    def add_lines(self, data, name=None, color=None):
+    def add_lines(self, data, name=None, color=None, width=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Lines`.
         """
         if not color:
             color = self._series_colors.pop(0)
 
-        self.add_series(Series(data, Lines(color), name=name))
+        self.add_series(Series(data, Lines(color, width), name=name))
 
     def _validate_dimension(self, dimension):
         """

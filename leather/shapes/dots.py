@@ -18,7 +18,9 @@ class Dots(Shape):
         color.
     :param radius:
         The radius of the rendered dots. Defaults to
-        :data:`.theme.default_dot_radius`.
+        :data:`.theme.default_dot_radius`. You may also specify a function,
+        which will be called with the arguments :code:`(x, y, index)` and
+        should return a radius.
     """
     def __init__(self, fill_color, radius=None):
         self._fill_color = fill_color
@@ -43,10 +45,15 @@ class Dots(Shape):
             else:
                 fill_color = self._fill_color
 
+            if callable(self._radius):
+                radius = self._radius(x, y, i)
+            else:
+                radius = self._radius
+
             group.append(ET.Element('circle',
                 cx=six.text_type(proj_x),
                 cy=six.text_type(proj_y),
-                r=six.text_type(self._radius),
+                r=six.text_type(radius),
                 fill=fill_color
             ))
 
