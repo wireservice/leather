@@ -13,7 +13,7 @@ setup(
     long_description=open('README.rst').read(),
     author='Christopher Groskopf',
     author_email='chrisgroskopf@gmail.com',
-    # url='http://agate.readthedocs.org/',
+    url='http://leather.readthedocs.io/',
     license='MIT',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',

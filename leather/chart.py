@@ -80,41 +80,41 @@ class Chart(object):
 
         self._layers.append(series)
 
-    def add_bars(self, data, name=None, color=None):
+    def add_bars(self, data, x=None, y=None, name=None, color=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Bars`.
         """
         if not color:
             color = self._series_colors.pop(0)
 
-        self.add_series(Series(data, Bars(color), name=name))
+        self.add_series(Series(data, Bars(color), x=x, y=y, name=name))
 
-    def add_columns(self, data, name=None, color=None):
+    def add_columns(self, data, x=None, y=None, name=None, color=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Columns`.
         """
         if not color:
             color = self._series_colors.pop(0)
 
-        self.add_series(Series(data, Columns(color), name=name))
+        self.add_series(Series(data, Columns(color), x=x, y=y, name=name))
 
-    def add_dots(self, data, name=None, color=None, radius=None):
+    def add_dots(self, data, x=None, y=None, name=None, color=None, radius=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Dots`.
         """
         if not color:
             color = self._series_colors.pop(0)
 
-        self.add_series(Series(data, Dots(color, radius), name=name))
+        self.add_series(Series(data, Dots(color, radius), x=x, y=y, name=name))
 
-    def add_lines(self, data, name=None, color=None, width=None):
+    def add_lines(self, data, x=None, y=None, name=None, color=None, width=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Lines`.
         """
         if not color:
             color = self._series_colors.pop(0)
 
-        self.add_series(Series(data, Lines(color, width), name=name))
+        self.add_series(Series(data, Lines(color, width), x=x, y=y, name=name))
 
     def _validate_dimension(self, dimension):
         """

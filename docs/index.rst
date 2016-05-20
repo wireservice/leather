@@ -10,6 +10,7 @@ leather |release|
 
     about
     install
+    examples
     api
     release_process
     license
@@ -17,9 +18,10 @@ leather |release|
 Show me docs
 ============
 
-* `About <about.html>`_ - why you should use leather and the principles that guide its development
+* `About <about.html>`_ - why you should use leather
 * `Install <install.html>`_ - how to install for users and developers
-* `API <api.html>`_ - technical documentation for every agate feature
+* `Examples <examples.html>`_ - code + output examples of every feature of leather
+* `API <api.html>`_ - technical documentation for the leather API
 
 Show me code
 ============

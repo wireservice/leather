@@ -41,21 +41,15 @@ class Series(Iterable):
     :param name:
         An optional name to be used in labeling this series.
     """
-    def __init__(self, data, shape, x=0, y=1, name=None):
+    def __init__(self, data, shape, x=None, y=None, name=None):
         self._data = data
-        self._len = len(data)
         self._shape = shape
         self._name = name
 
         self._keys = [
-            self._make_key(x),
-            self._make_key(y)
+            self._make_key(x if x is not None else X),
+            self._make_key(y if y is not None else Y)
         ]
-
-        if callable(y):
-            self._keys[Y] = y
-        else:
-            self._keys[Y] = lambda row, index: row[y]
 
         self._types = [None, None]
 
@@ -95,7 +89,8 @@ class Series(Iterable):
         while key(self._data[i], i) is None:
             i += 1
 
-        # TKTK: raise an exception if we hit the end of the data
+        if i == len(self._data):
+            raise ValueError('Entire value column was null.')
 
         return DataType.infer(key(self._data[i], i))
 
