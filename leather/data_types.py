@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from datetime import date, datetime
 from decimal import Decimal
 
 import six
@@ -11,12 +12,25 @@ class DataType(object):
     """
     @classmethod
     def infer(cls, v):
-        if isinstance(v, Number.types):
-            return Number
-        elif isinstance(v, Text.types):
-            return Text
+        for t in [DateTime, Date, Number, Text]:
+            if isinstance(v, t.types):
+                return t
 
         raise TypeError('No data type available for %s' % type(v))
+
+
+class Date(DataType):
+    """
+    Data representing dates.
+    """
+    types = (date,)
+
+
+class DateTime(DataType):
+    """
+    Data representing dates with times.
+    """
+    types = (datetime,)
 
 
 class Number(DataType):

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-from leather.data_types import Number, Text
+from datetime import date, datetime
+
+from leather.data_types import Date, DateTime, Number, Text
 from leather.shapes import Bars, Columns
 
 
@@ -23,9 +25,30 @@ class Scale(object):
         """
         from leather.scales.linear import Linear
         from leather.scales.ordinal import Ordinal
+        from leather.scales.temporal import Temporal
 
+        # Default Time scale is Temporal
+        # Default Time scale is Temporal
+        if data_type is Date:
+            data_min = date.max
+            data_max = date.min
+
+            for series in series_list:
+                data_min = min(data_min, series.min(dimension))
+                data_max = max(data_max, series.max(dimension))
+
+            scale = Temporal(data_min, data_max)
+        elif data_type is DateTime:
+            data_min = datetime.max
+            data_max = datetime.min
+
+            for series in series_list:
+                data_min = min(data_min, series.min(dimension))
+                data_max = max(data_max, series.max(dimension))
+
+            scale = Temporal(data_min, data_max)
         # Default Number scale is Linear
-        if data_type is Number:
+        elif data_type is Number:
             force_zero = False
             data_min = 0
             data_max = 0

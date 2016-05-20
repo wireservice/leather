@@ -10,3 +10,5 @@ Scales
 .. autoclass:: leather.Linear
 
 .. autoclass:: leather.Ordinal
+
+.. autoclass:: leather.Temporal
