@@ -45,9 +45,12 @@ TKTK
 Multiple series
 ---------------
 
-Multiple data series can be displayed on a single chart.
+Multiple data series can be displayed on a single chart so long as they all use the same type of :class:`.Scale`.
 
-TKTK
+.. literalinclude:: ../examples/multiple_series.py
+    :language: python
+
+.. figure:: ../examples/charts/multiple_series.svg
 
 Shapes
 ======
@@ -55,17 +58,26 @@ Shapes
 Bars
 ----
 
-TKTK
+.. literalinclude:: ../examples/bars.py
+    :language: python
+
+.. figure:: ../examples/charts/bars.svg
 
 Columns
 -------
 
-TKTK
+.. literalinclude:: ../examples/columns.py
+    :language: python
+
+.. figure:: ../examples/charts/columns.svg
 
 Dots
 ----
 
-TKTK
+.. literalinclude:: ../examples/dots.py
+    :language: python
+
+.. figure:: ../examples/charts/dots.svg
 
 Lines
 -----
@@ -74,6 +86,16 @@ Lines
     :language: python
 
 .. figure:: ../examples/charts/lines.svg
+
+Mixing shapes
+-------------
+
+You can mix different shapes for different series on the same chart.
+
+.. literalinclude:: ../examples/mixed_shapes.py
+    :language: python
+
+.. figure:: ../examples/charts/mixed_shapes.svg
 
 Scales
 ======
