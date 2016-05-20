@@ -11,10 +11,16 @@ from leather import theme
 class Dots(Shape):
     """
     Render a series of data as dots.
+
+    :param color:
+        The color to fill the dots.
+    :param radius:
+        The radius of the rendered dots. Defaults to
+        :data:`.theme.default_dot_radius`.
     """
     def __init__(self, color, radius=None):
         self.color = color
-        self.radius = radius or theme.dot_radius
+        self.radius = radius or theme.default_dot_radius
 
     def to_svg(self, width, height, x_scale, y_scale, series):
         """

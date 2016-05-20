@@ -10,6 +10,7 @@ leather |release|
 
     about
     install
+    api
     release_process
     license
 
@@ -18,6 +19,7 @@ Show me docs
 
 * `About <about.html>`_ - why you should use leather and the principles that guide its development
 * `Install <install.html>`_ - how to install for users and developers
+* `API <api.html>`_ - technical documentation for every agate feature
 
 Show me code
 ============

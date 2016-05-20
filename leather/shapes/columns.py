@@ -10,6 +10,9 @@ from leather.shapes.base import Shape
 class Columns(Shape):
     """
     Render a series of data as columns.
+
+    :param color:
+        The color to fill the columns.
     """
     def __init__(self, color):
         self.color = color

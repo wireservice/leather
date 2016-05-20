@@ -4,16 +4,16 @@ import xml.etree.ElementTree as ET
 
 import six
 
-from leather.renderable import Renderable
 from leather import theme
 
 
-class Axis(Renderable):
+class Axis(object):
     """
     A horizontal or vertical chart axis.
 
     :param ticks:
-        The number of ticks to display for this axis.
+        The number of ticks to display for this axis. Defaults to
+        :data:`.theme.default_ticks`
     :param tick_formatter:
         An optional function to call on every tick. The function must take
         three arguments: :code:`(value, index, count)` where :code:`value` is
@@ -21,8 +21,8 @@ class Axis(Renderable):
         is the total number of ticks. The return value of the function will
         be used for display instead of the original tick value.
     """
-    def __init__(self, ticks=5, tick_formatter=None):
-        self._ticks = ticks
+    def __init__(self, ticks=None, tick_formatter=None):
+        self._ticks = ticks or theme.default_ticks
         self._tick_formatter = tick_formatter
 
     def estimate_label_margin(self, scale, orient):

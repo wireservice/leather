@@ -18,10 +18,13 @@ from leather.utils import X, Y, DIMENSIONS, Box, IPythonSVG
 class Chart(object):
     """
     Container for all chart types.
+
+    :param title:
+        An optional title that will be rendered at the top of the chart.
     """
     def __init__(self, title=None):
         self._title = title
-        self._series_colors = copy(theme.series_colors)
+        self._series_colors = copy(theme.default_series_colors)
 
         self._layers = []
         self._types = [None, None]
@@ -30,43 +33,44 @@ class Chart(object):
 
     def _set_scale(self, dimension, scale):
         """
-        Set a new scale for this chart.
+        Set a new :class:`.Scale` for this chart.
         """
         self._scales[dimension] = scale
 
     def set_x_scale(self, scale):
         """
-        Set the X scale for this chart.
+        Set the X :class:`.Scale` for this chart.
         """
         self._set_scale(X, scale)
 
     def set_y_scale(self, scale):
         """
-        Set the Y scale for this chart.
+        Set the Y :class:`.Scale` for this chart.
         """
         self._set_scale(Y, scale)
 
     def _set_axis(self, dimension, axis):
         """
-        Set a new axis for this chart.
+        Set a new :class:`.Axis` for this chart.
         """
         self._axes[dimension] = axis
 
     def set_x_axis(self, axis):
         """
-        Set the X axis for this chart.
+        Set the X :class:`.Axis` for this chart.
         """
         self._set_axis(X, axis)
 
     def set_y_axis(self, axis):
         """
-        Set the Y axis for this chart.
+        Set the Y :class:`.Axis` for this chart.
         """
         self._set_axis(Y, axis)
 
     def add_series(self, series):
         """
-        Add a data :class:`.Series` to the chart.
+        Add a data :class:`.Series` to the chart. The data types of the new
+        series must be consistent with any series that have already been added.
         """
         for dim in DIMENSIONS:
             if not self._types[dim]:
@@ -78,7 +82,7 @@ class Chart(object):
 
     def add_bars(self, data, name=None, color=None):
         """
-        Shortcut method for adding a bar series to the chart.
+        Create and add a :class:`.Series` rendered with :class:`.Bars`.
         """
         if not color:
             color = self._series_colors.pop(0)
@@ -87,7 +91,7 @@ class Chart(object):
 
     def add_columns(self, data, name=None, color=None):
         """
-        Shortcut method for adding a column series to the chart.
+        Create and add a :class:`.Series` rendered with :class:`.Columns`.
         """
         if not color:
             color = self._series_colors.pop(0)
@@ -96,7 +100,7 @@ class Chart(object):
 
     def add_dots(self, data, name=None, color=None):
         """
-        Shortcut method for adding a dotted series to the chart.
+        Create and add a :class:`.Series` rendered with :class:`.Dots`.
         """
         if not color:
             color = self._series_colors.pop(0)
@@ -105,7 +109,7 @@ class Chart(object):
 
     def add_lines(self, data, name=None, color=None):
         """
-        Shortcut method for adding a line series to the chart.
+        Create and add a :class:`.Series` rendered with :class:`.Lines`.
         """
         if not color:
             color = self._series_colors.pop(0)
@@ -131,13 +135,18 @@ class Chart(object):
 
         return (scale, axis)
 
-    def to_svg_group(self, width, height):
+    def to_svg_group(self, width=None, height=None):
         """
-        Render the completechart to an SVG group element that can be placed
-        inside an :code:`<svg>` tag.
+        Render this chart to an SVG group element.
 
-        See :meth:`to_svg` for argument descriptions.
+        This can then be placed inside an :code:`<svg>` tag to make a complete
+        SVG graphic.
+
+        See :meth:`.Chart.to_svg` for arguments.
         """
+        width = width or theme.default_width
+        height = height or theme.default_height
+
         if not self._layers:
             raise ValueError('You must add at least one series to the chart before rendering.')
 
@@ -238,7 +247,7 @@ class Chart(object):
         """
         Render this chart to an SVG document.
 
-        Note: :code:`width` and :code:`height` are specified in SVG's
+        The :code:`width` and :code:`height` are specified in SVG's
         "unitless" units, however, it is usually convenient to specify them
         as though they were pixels.
 
@@ -247,12 +256,14 @@ class Chart(object):
             will be returned as a string. If running within IPython, then this
             will return a SVG object to be displayed.
         :param width:
-            The output width, in SVG user units.
+            The output width, in SVG user units. Defaults to
+            :data:`.theme.default_chart_width`.
         :param height:
-            The output height, in SVG user units.
+            The output height, in SVG user units. Defaults to
+            :data:`.theme.default_chart_height`.
         """
-        width = width or theme.default_width
-        height = height or theme.default_height
+        width = width or theme.default_chart_width
+        height = height or theme.default_chart_height
 
         root = ET.Element('svg',
             width=six.text_type(width),

@@ -13,20 +13,27 @@ from leather.utils import IPythonSVG
 
 class Grid(object):
     """
-    A grid of charts rendered together.
+    A container for a set of :class:`.Chart` instances that are rendered in a
+    grid layout.
     """
     def __init__(self):
         self._charts = []
 
     def add_chart(self, chart):
         """
-        Add a chart to the grid.
+        Add a :class:`.Chart` to the grid.
         """
         self._charts.append(chart)
 
     def to_svg(self, path=None, width=None, height=None):
         """
         Render the grid to an SVG.
+
+        The :code:`width` and :code:`height` arguments refer to the size of the
+        entire grid. The size of individual charts will be inferred
+        automatically.
+
+        See :meth:`.Chart.to_svg` for arguments.
         """
         if not width or not height:
             count = len(self._charts)

@@ -7,7 +7,7 @@ import six
 
 class DataType(object):
     """
-    Base class for series data types.
+    Base class for :class:`.Series` data types.
     """
     @classmethod
     def infer(cls, v):

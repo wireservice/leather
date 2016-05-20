@@ -11,12 +11,15 @@ class Scale(object):
     @classmethod
     def infer(cls, series_list, dimension, data_type):
         """
-        Infer's an appropriate default scale for a given sequence of series.
+        Infer's an appropriate default scale for a given sequence of
+        :class:`.Series`.
 
         :param chart_series:
-            A sequence of :code:`(series, shape)` pairs.
+            A sequence of :class:`.Series` instances
         :param dimension:
             The dimension, :code:`X` or :code:`Y` of the data to infer for.
+        :param data_type:
+            The type of data contained in the series dimension.
         """
         from leather.scales.linear import Linear
         from leather.scales.ordinal import Ordinal
@@ -58,11 +61,21 @@ class Scale(object):
 
         return scale
 
-    def project(self, value, target_range):
+    def project(self, value, range_min, range_max):
+        """
+        Project a value in this scale's domain to a target range.
+        """
         raise NotImplementedError
 
-    def project_interval(self, value, target_range):
+    def project_interval(self, value, range_min, range_max):
+        """
+        Project a value in this scale's domain to an interval in the target
+        range. This is used for places :class:`.Bars` and :class:`.Columns`.
+        """
         raise NotImplementedError
 
     def ticks(self, count):
+        """
+        Generate a series of ticks for this scale.
+        """
         raise NotImplementedError

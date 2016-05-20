@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-from leather.renderable import Renderable
 
-
-class Shape(Renderable):
+class Shape(object):
     """
-    Base class for renderable shapes.
+    Base class for shapes that can be used to render data :class:`.Series`.
     """
     pass

@@ -4,14 +4,14 @@ from leather.scales.base import Scale
 
 class Ordinal(Scale):
     """
-    A scale that maps individual values to a range.
+    A scale that maps individual values (e.g. strings) to a range.
     """
     def __init__(self, domain):
         self.domain = domain
 
     def project(self, value, range_min, range_max):
         """
-        Project a value to a point in the given range.
+        Project a value in this scale's domain to a target range.
         """
         segments = len(self.domain)
         segment_size = float(range_max - range_min) / segments
@@ -21,7 +21,8 @@ class Ordinal(Scale):
 
     def project_interval(self, value, range_min, range_max):
         """
-        Project a value to a segment of the given range (for columns/bars).
+        Project a value in this scale's domain to an interval in the target
+        range. This is used for places :class:`.Bars` and :class:`.Columns`.
         """
         segments = len(self.domain)
         segment_size = (range_max - range_min) / segments
@@ -34,7 +35,6 @@ class Ordinal(Scale):
 
     def ticks(self, count):
         """
-        Return a sequence of ticks for this scale. This will always be the
-        complete domain, regardless of :code:`count`.
+        Generate a series of ticks for this scale.
         """
         return self.domain

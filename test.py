@@ -17,11 +17,17 @@ line_data = [
     (9, 10)
 ]
 
+leather.theme.default_chart_width = 100
+
 chart = leather.Chart()
 # chart.set_x_scale(leather.Linear(0, 20))
 chart.add_dots(dot_data)
 chart.add_lines(line_data)
 chart.to_svg('test.svg')
+
+leather.theme.default_chart_width = 1000
+
+chart.to_svg('test2.svg')
 
 # dot_data = [
 #     ('foo', 3),

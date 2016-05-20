@@ -9,14 +9,17 @@ from leather.shapes.base import Shape
 
 class Bars(Shape):
     """
-    Render a series of data as columns.
+    Render a series of data as bars.
+
+    :param color:
+        The color to fill the bars.
     """
     def __init__(self, color):
         self.color = color
 
     def to_svg(self, width, height, x_scale, y_scale, series):
         """
-        Render columns to SVG elements.
+        Render bars to SVG elements.
         """
         group = ET.Element('g')
         group.set('class', 'series bars')

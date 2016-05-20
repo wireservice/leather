@@ -6,11 +6,13 @@ from leather.utils import DIMENSIONS
 
 class Series(object):
     """
-    A series of data and associated metadata.
+    A series of data and its associated metadata.
 
     :param data:
         A sequence of 2-item sequences, where each pair contains :code:`(x, y)`
         values.
+    :param shape:
+        An instance of :class:`.Shape` to use to render this data.
     :param name:
         An optional name to be used in labeling this series.
     """

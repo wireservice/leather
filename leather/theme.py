@@ -1,36 +1,82 @@
 #!/usr/bin/env python
 
 """
-Visual options for all chart elements.
+This module contains all style configuration for rendering charts. Setting any
+of these variables will change how charts are rendered.
 """
 
-# Chart
-default_width = 800
-default_height = 600
+# CHART
+
+#: Default chart width
+default_chart_width = 800
+
+#: Default chart height
+default_chart_height = 600
+
+#: Chart background color
 background_color = '#f9f9f9'
+
+#: Chart margin as a percent of chart width
 margin = 0.05
 
-# Chart title
+# CHART TITLE
+
+#: Chart title text color
 title_color = '#333'
+
+#: Chart title font
 title_font_family = 'Monaco'
+
+#: Chart title font size
 title_font_size = 16
+
+#: Approximate glyph height of the title font
 title_font_char_height = 18
+
+#: Approximate glyph width of the title font
 title_font_char_width = 9
 
-# Tick lines
+# TICKS
+
+#: Default number of ticks to display
+default_ticks = 5
+
+#: Width of a tick mark
 tick_width = 1
+
+#: Length of a tick mark
 tick_size = 4
+
+#: Color of tick marks
 tick_color = '#eee'
-label_color = '#9c9c9c'
+
+#: Color of the zero tick mark
 zero_color = '#a8a8a8'
 
-# Tick labels
+# TICK LABELS
+
+#: Color of tick label text
+label_color = '#9c9c9c'
+
+#: Tick label font
 tick_font_family = 'Monaco'
+
+#: Tick label font size
 tick_font_size = 14
+
+#: Approximate glyph height of the tick label font
 tick_font_char_height = 14
+
+#: Approximate glyph width of the tick label font
 tick_font_char_width = 8
 
-# Series
-series_colors = ['#d190b6', '#51b2e5', '#d365ba', '#168dd9']
-dot_radius = 3
-line_width = 2
+# SERIES
+
+#: Default sequence of :class:`.Shape` colors
+default_series_colors = ['#d190b6', '#51b2e5', '#d365ba', '#168dd9']
+
+#: Default :class:`.Dots` radius
+default_dot_radius = 3
+
+#: Default :class:`.Lines` width
+default_line_width = 2

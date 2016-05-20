@@ -9,10 +9,14 @@ from leather.utils import X, Y
 
 class Lattice(object):
     """
-    A grid of charts with synchronized scales.
+    A grid of charts with synchronized scales and axes.
 
     :param data:
-         A sequence of chart data sequences.
+        A sequence of chart data sequences.
+    :param shape:
+        An instance of :class:`.Shape` to use to render all series.
+    :param titles:
+        An optional sequence of titles to be rendered above each chart.
     """
     def __init__(self, data, shape, titles=None):
         self._data = data
@@ -32,9 +36,11 @@ class Lattice(object):
 
         return Scale.infer(chart_series, dimension, data_type)
 
-    def to_svg(self, path, width=None, height=None):
+    def to_svg(self, path=None, width=None, height=None):
         """
         Render the grid to an SVG.
+
+        See :class:`.Grid` for additional documentation.
         """
         chart_series = []
 
