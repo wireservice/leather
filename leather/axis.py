@@ -24,7 +24,7 @@ class Axis(object):
     """
     def __init__(self, ticks=None, tick_formatter=None, name=None):
         self._ticks = ticks or theme.default_ticks
-        self._tick_formatter = tick_formatter or (lambda value, i, tick_count: value)
+        self._tick_formatter = tick_formatter or (lambda value, i, tick_count: six.text_type(value))
         self._name = name
 
     def _estimate_left_tick_width(self, scale):
