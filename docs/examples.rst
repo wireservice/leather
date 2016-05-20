@@ -157,9 +157,15 @@ Chart grids
 With mixed scales
 -----------------
 
-TKTK
+.. literalinclude:: ../examples/grid.py
+    :language: python
+
+.. figure:: ../examples/charts/grid.svg
 
 With consistent scales
 ----------------------
 
-TKTK
+.. literalinclude:: ../examples/lattice.py
+    :language: python
+
+.. figure:: ../examples/charts/lattice.svg

@@ -41,8 +41,8 @@ class Grid(object):
             columns = math.ceil(math.sqrt(count))
             rows = math.ceil(count / columns)
 
-            width = columns * theme.default_width
-            height = rows * theme.default_height
+            width = columns * theme.default_chart_width
+            height = rows * theme.default_chart_height
 
         root = ET.Element('svg',
             width=six.text_type(width),

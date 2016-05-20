@@ -4,37 +4,64 @@ from leather.chart import Chart
 from leather.grid import Grid
 from leather.scales import Scale
 from leather.series import Series
-from leather.utils import X, Y
+from leather.shapes import Lines
+from leather import theme
+from leather.utils import DIMENSIONS, X, Y
 
 
 class Lattice(object):
     """
-    A grid of charts with synchronized scales and axes.
+    A grid of charts with synchronized shapes, scales, and axes.
 
-    :param data:
-        A sequence of chart data sequences.
+    Lattice only supports graphing a single series of data.
+
     :param shape:
-        An instance of :class:`.Shape` to use to render all series.
-    :param titles:
-        An optional sequence of titles to be rendered above each chart.
+        An instance of :class:`.Shape` to use to render all series. Defaults
+        to :class:`.Lines` if not specified.
     """
-    def __init__(self, data, shape, titles=None):
-        self._data = data
-        self._shape = shape
-        self._titles = titles
+    def __init__(self, shape=None):
+        self._shape = shape or Lines(theme.default_series_colors[0])
+        self._series = []
+        self._types = [None, None]
 
-    def _validate_dimension(self, dimension, chart_series):
+    def add_one(self, data, x=None, y=None, title=None):
         """
-        Verify all series have the same data types and generate a scale to fit
-        all the data.
+        Add a data series to this lattice.
+
+        :param data:
+            A sequence of data suitable for constructing a :class:`.Series`,
+            or a sequence of such objects.
+        :param x:
+            See :class:`.Series`.
+        :param y:
+            See :class:`.Series`.
+        :param title:
+            A title to render above this chart.
         """
-        data_type = chart_series[0].types[dimension]
+        series = Series(data, self._shape, x=x, y=y, name=title)
 
-        for series in chart_series[1:]:
-            if series.types[dimension] is not data_type:
-                raise TypeError('All series must have the same data types.')
+        for dimension in DIMENSIONS:
+            if self._types[dimension]:
+                if series._types[dimension] is not self._types[dimension]:
+                    raise TypeError('All data series must have the same data types.')
+            else:
+                self._types[dimension] = series._types[dimension]
 
-        return Scale.infer(chart_series, dimension, data_type)
+        self._series.append(series)
+
+    def add_many(self, data, x=None, y=None, titles=None):
+        """
+        Same as :meth:`.add_one` except :code:`data` is a list of data series
+        to be added simultaneously.
+
+        See :meth:`.add_one` for other arguments.
+
+        Note that :code:`titles` is a sequence of titles that must be the same
+        length as :code:`data`.
+        """
+        for i, d in enumerate(data):
+            title = titles[i] if titles else None
+            self.add_one(d, x=x, y=y, title=title)
 
     def to_svg(self, path=None, width=None, height=None):
         """
@@ -42,23 +69,13 @@ class Lattice(object):
 
         See :class:`.Grid` for additional documentation.
         """
-        chart_series = []
-
-        for seq in self._data:
-            chart_series.append(Series(seq, self._shape))
-
-        x_scale = self._validate_dimension(X, chart_series)
-        y_scale = self._validate_dimension(Y, chart_series)
+        x_scale = Scale.infer(self._series, X, self._types[X])
+        y_scale = Scale.infer(self._series, Y, self._types[Y])
 
         grid = Grid()
 
-        for i, series in enumerate(chart_series):
-            if self._titles:
-                title = self._titles[i]
-            else:
-                title = None
-
-            chart = Chart(title)
+        for i, series in enumerate(self._series):
+            chart = Chart(title=series._name)
             chart.set_x_scale(x_scale)
             chart.set_y_scale(y_scale)
             chart.add_series(series)
