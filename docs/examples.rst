@@ -2,8 +2,8 @@
 Examples
 ========
 
-Data
-====
+Data series
+===========
 
 Simple pairs
 ------------
@@ -39,6 +39,13 @@ See previous example for note on strings from CSVs.
 
 Custom data
 -----------
+
+TKTK
+
+Multiple series
+---------------
+
+Multiple data series can be displayed on a single chart.
 
 TKTK
 
@@ -114,6 +121,8 @@ TKTK
 
 Styling data based on value
 ---------------------------
+
+Style attributes of individual data points can be set by value using a :func:`.style_function`.
 
 .. literalinclude:: ../examples/colorized_dots.py
     :language: python

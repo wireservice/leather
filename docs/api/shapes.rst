@@ -14,3 +14,5 @@ Shapes
 .. autoclass:: leather.Dots
 
 .. autoclass:: leather.Lines
+
+.. autofunction:: leather.style_function

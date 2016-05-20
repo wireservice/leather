@@ -5,7 +5,7 @@ import leather
 
 dot_data = [(random.randint(0, 250), random.randint(0, 250)) for i in range(100)]
 
-def colorizer(x, y, i):
+def colorizer(x, y, row, i):
     return 'rgb(%i, %i, %i)' % (x, y, 150)
 
 chart = leather.Chart('Colorized dots')

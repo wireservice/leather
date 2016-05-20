@@ -12,9 +12,8 @@ class Bars(Shape):
     Render a series of data as bars.
 
     :param color:
-        The color to fill the bars. You may also specify a function, which will
-        be called with the arguments :code:`(x, y, index)` and should return a
-        color.
+        The color to fill the bars. You may also specify a
+        :func:`.style_function`.
     """
     def __init__(self, color):
         self._color = color
@@ -34,7 +33,7 @@ class Bars(Shape):
             y1, y2 = y_scale.project_interval(y, height, 0)
 
             if callable(self._color):
-                color = self._color(x, y, i)
+                color = self._color(x, y, row, i)
             else:
                 color = self._color
 

@@ -13,14 +13,12 @@ class Dots(Shape):
     Render a series of data as dots.
 
     :param fill_color:
-        The color to fill the dots. You may also specify a function, which will
-        be called with the arguments :code:`(x, y, index)` and should return a
-        color.
+        The color to fill the dots. You may also specify a
+        :func:`.style_function`.
     :param radius:
         The radius of the rendered dots. Defaults to
-        :data:`.theme.default_dot_radius`. You may also specify a function,
-        which will be called with the arguments :code:`(x, y, index)` and
-        should return a radius.
+        :data:`.theme.default_dot_radius`. You may also specify a
+        :func:`.style_function`.
     """
     def __init__(self, fill_color, radius=None):
         self._fill_color = fill_color
@@ -41,7 +39,7 @@ class Dots(Shape):
             proj_y = y_scale.project(y, height, 0)
 
             if callable(self._fill_color):
-                fill_color = self._fill_color(x, y, i)
+                fill_color = self._fill_color(x, y, row, i)
             else:
                 fill_color = self._fill_color
 
