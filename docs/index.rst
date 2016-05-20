@@ -12,6 +12,7 @@ leather |release|
     install
     examples
     api
+    changelog
     release_process
     license
 
@@ -22,6 +23,7 @@ Show me docs
 * `Install <install.html>`_ - how to install for users and developers
 * `Examples <examples.html>`_ - code + output examples of every feature of leather
 * `API <api.html>`_ - technical documentation for the leather API
+* `Changelog <changelog.html>`_ - a record of every change made for each release
 
 Show me code
 ============
