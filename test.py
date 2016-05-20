@@ -1,15 +1,20 @@
-import csv
-
 import leather
 
-with open('examples/realdata/gii.csv') as f:
-    reader = csv.reader(f)
-    next(reader)
+data1    = [
+    (0, 3),
+    (4, 5),
+    (7, 9),
+    (8, 4)
+]
 
-    data = list(reader)[:10]
+data2 = [
+    (2, 4),
+    (7, 3),
+    (6, 2),
+    (5, 9)
+]
 
-chart = leather.Chart('Test')
-chart.add_x_axis(name='Test X Axis name')
-chart.add_y_axis(name='The Y Axis has arrived')
-chart.add_bars(data, x=1, y=0)
+chart = leather.Chart('Multiple series')
+chart.add_dots(data1)
+chart.add_dots(data2)
 chart.to_svg('test.svg')

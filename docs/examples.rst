@@ -151,8 +151,8 @@ Style attributes of individual data points can be set by value using a :func:`.s
 
 .. figure:: ../examples/charts/colorized_dots.svg
 
-Grids
-=====
+Chart grids
+===========
 
 With mixed scales
 -----------------

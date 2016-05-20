@@ -8,6 +8,7 @@ import six
 
 from leather.axis import Axis
 from leather.data_types import Date, DateTime
+from leather.legend import Legend
 from leather.scales import Scale, Linear, Temporal
 from leather.series import Series
 from leather.shapes import Bars, Columns, Dots, Lines
@@ -27,6 +28,7 @@ class Chart(object):
         self._title = title
         self._series_colors = copy(theme.default_series_colors)
 
+        self._legend = None
         self._layers = []
         self._types = [None, None]
         self._scales = [None, None]
@@ -75,7 +77,7 @@ class Chart(object):
 
     def set_x_axis(self, axis):
         """
-        Set a new :class:`.Axis` class for this chart.
+        Set an :class:`.Axis` class for this chart.
         """
         self._axes[X] = axis
 
@@ -98,6 +100,12 @@ class Chart(object):
         See :meth:`.add_x_axis`.
         """
         self._axes[Y] = Axis(ticks, tick_formatter, name)
+
+    def set_legend(self, legend):
+        """
+        Set a :class:`.Legend` to use for this chart.
+        """
+        self._legend = legend
 
     def add_series(self, series):
         """
@@ -233,6 +241,17 @@ class Chart(object):
 
             header_group.append(label)
             header_margin += theme.title_font_char_height + theme.title_gap
+
+        if not self._legend:
+            if len(self._layers) > 1:
+                self._legend = Legend()
+
+        if self._legend:
+            legend_group, legend_height = self._legend.to_svg(margin_width, self._layers)
+            legend_group.set('transform', svg.translate(0, header_margin))
+
+            header_margin += legend_height
+            header_group.append(legend_group)
 
         margin_group.append(header_group)
 
