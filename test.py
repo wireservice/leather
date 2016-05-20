@@ -1,51 +1,54 @@
 #!/usr/bin/env python
 
+import random
+
 import leather
 
-dot_data = [
-    (0, 3),
-    (4, 5),
-    (7, 9),
-    (8, 4)
-]
+dot_data = [(random.randint(0, 250), random.randint(0, 250)) for i in range(100)]
 
-line_data = [
-    (0, 4),
-    (1, 3),
-    (2, 5),
-    (5, 6),
-    (9, 10)
-]
+def colorizer(x, y, i):
+    return 'rgb(%i, %i, %i)' % (x, y, 150)
 
-leather.theme.default_chart_width = 100
-
-chart = leather.Chart()
-# chart.set_x_scale(leather.Linear(0, 20))
-chart.add_dots(dot_data)
-chart.add_lines(line_data)
+chart = leather.Chart('Well that was easy')
+chart.add_dots(dot_data, color=colorizer)
 chart.to_svg('test.svg')
 
-leather.theme.default_chart_width = 1000
-
-chart.to_svg('test2.svg')
-
 # dot_data = [
-#     ('foo', 3),
-#     ('bing', 5),
-#     ('baz', 9),
-#     ('blurg', 4)
+#     (0, 3),
+#     (4, 5),
+#     (7, 9),
+#     (8, 4)
 # ]
 #
 # line_data = [
-#     ('foo', 7),
-#     ('bing', 2),
-#     ('baz', 3),
-#     ('blurg', 4)
+#     (0, 4),
+#     (1, 3),
+#     (2, 5),
+#     (5, 6),
+#     (9, 10)
 # ]
 #
 # chart = leather.Chart()
-# chart.add_column(line_data)
-# chart.add_dot(dot_data)
+# # chart.set_x_scale(leather.Linear(0, 20))
+# chart.add_dots(dot_data)
+# chart.add_lines(line_data)
+# chart.to_svg('test.svg')
+
+# bar_data = [
+#     (3, 'foo'),
+#     (5, 'bing blaarg murg'),
+#     (9, 'baz'),
+#     (4, 'blurg')
+# ]
+#
+# def colorizer(x, y, i):
+#     if y == 'baz':
+#         return 'yellow'
+#     else:
+#         return 'blue'
+#
+# chart = leather.Chart('Bar charts are fun')
+# chart.add_dots(bar_data, color=colorizer)
 # chart.to_svg('test.svg')
 #
 # data = [[

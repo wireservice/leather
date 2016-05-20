@@ -13,7 +13,7 @@ class Lines(Shape):
     Render a series of data as a lines.
 
     :param color:
-        The color to use for the line stroke.
+        The color to stroke the lines.
     :param width:
         The width of the lines. Defaults to :data:`.theme.default_line_width`.
     """

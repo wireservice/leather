@@ -40,6 +40,19 @@ Show me code
 
 .. figure:: example.svg
 
+.. code-block:: python
+
+    dot_data = [(random.randint(0, 250), random.randint(0, 250)) for i in range(100)]
+
+    def colorizer(x, y, i):
+        return 'rgb(%i, %i, %i)' % (x, y, 150)
+
+    chart = leather.Chart('Something a little fancier')
+    chart.add_dots(dot_data, color=colorizer)
+    chart.to_svg('docs/example2.svg')
+
+.. figure:: example2.svg
+
 Join us
 =======
 
