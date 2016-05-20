@@ -128,3 +128,16 @@ Style attributes of individual data points can be set by value using a :func:`.s
     :language: python
 
 .. figure:: ../examples/charts/colorized_dots.svg
+
+Grids
+=====
+
+With mixed scales
+-----------------
+
+TKTK
+
+With consistent scales
+----------------------
+
+TKTK
