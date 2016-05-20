@@ -24,34 +24,15 @@ Show me docs
 Show me code
 ============
 
-.. code-block:: python
+.. literalinclude:: ../examples/lines.py
+    :language: python
 
-    data = [
-        (0, 3),
-        (4, 5),
-        (7, 9),
-        (8, 4)
-    ]
+.. figure:: ../examples/charts/lines.svg
 
-    chart = leather.Chart()
-    chart.add_lines(data)
-    chart.add_dots(data)
-    chart.to_svg('example.svg')
+.. literalinclude:: ../examples/colorized_dots.py
+    :language: python
 
-.. figure:: example.svg
-
-.. code-block:: python
-
-    dot_data = [(random.randint(0, 250), random.randint(0, 250)) for i in range(100)]
-
-    def colorizer(x, y, i):
-        return 'rgb(%i, %i, %i)' % (x, y, 150)
-
-    chart = leather.Chart('Something a little fancier')
-    chart.add_dots(dot_data, color=colorizer)
-    chart.to_svg('docs/example2.svg')
-
-.. figure:: example2.svg
+.. figure:: ../examples/charts/colorized_dots.svg
 
 Join us
 =======

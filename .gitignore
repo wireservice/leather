@@ -11,3 +11,4 @@ build
 .proof
 .ipynb_checkpoints
 .idea
+examples/charts
