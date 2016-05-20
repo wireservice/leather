@@ -5,6 +5,7 @@ from collections import Iterable, Sequence, Mapping
 import six
 
 from leather.data_types import DataType
+from leather.shapes import Bars
 from leather.utils import DIMENSIONS, X, Y
 
 
@@ -45,6 +46,10 @@ class Series(Iterable):
         self._data = data
         self._shape = shape
         self._name = name
+
+        # Bars should display top-down
+        if isinstance(self._shape, Bars):
+            self._data = tuple(reversed(self._data))
 
         self._keys = [
             self._make_key(x if x is not None else X),

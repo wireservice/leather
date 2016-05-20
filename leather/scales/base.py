@@ -28,7 +28,6 @@ class Scale(object):
         from leather.scales.temporal import Temporal
 
         # Default Time scale is Temporal
-        # Default Time scale is Temporal
         if data_type is Date:
             data_min = date.max
             data_max = date.min
