@@ -17,16 +17,19 @@ class Lines(Shape):
     :param width:
         The width of the lines. Defaults to :data:`.theme.default_line_width`.
     """
-    def __init__(self, color, width=None):
-        self.color = color
-        self.width = width or theme.default_line_width
+    def __init__(self, stroke_color, width=None):
+        self._stroke_color = stroke_color
+        self._width = width or theme.default_line_width
 
     def _new_path(self):
+        """
+        Start a new path.
+        """
         path = ET.Element('path',
-            stroke=self.color,
+            stroke=self._stroke_color,
             fill='none'
         )
-        path.set('stroke-width', six.text_type(self.width))
+        path.set('stroke-width', six.text_type(self._width))
 
         return path
 

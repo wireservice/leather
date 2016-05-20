@@ -37,7 +37,8 @@ class Legend(object):
             item_group = ET.Element('g')
             item_group.set('transform', svg.translate(indent, y))
 
-            fill_color = series._shape._fill_color
+            fill_color = getattr(series._shape, '_fill_color', None)
+            stroke_color = getattr(series._shape, '_stroke_color', None)
 
             if callable(fill_color):
                 # TODO
@@ -48,9 +49,13 @@ class Legend(object):
                 x=six.text_type(0),
                 y=six.text_type(-theme.legend_font_char_height + theme.legend_bubble_offset),
                 width=six.text_type(theme.legend_bubble_size),
-                height=six.text_type(theme.legend_bubble_size),
-                fill=fill_color
+                height=six.text_type(theme.legend_bubble_size)
             )
+
+            if fill_color:
+                bubble.set('fill', fill_color)
+            elif stroke_color:
+                bubble.set('fill', stroke_color)
 
             item_group.append(bubble)
 

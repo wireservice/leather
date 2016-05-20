@@ -20,7 +20,6 @@ data3 = [
 ]
 
 chart = leather.Chart('Multiple series')
-chart.add_x_axis(name='Foo')
 chart.add_dots(data1, name="This is a really insanely long series name......")
 chart.add_dots(data2, name="And this one is almost as long!")
 chart.add_dots(data3, name="But this one's short.")

@@ -15,8 +15,8 @@ class Columns(Shape):
         The color to fill the columns. You may also specify a
         :func:`.style_function`.
     """
-    def __init__(self, color):
-        self._color = color
+    def __init__(self, fill_color):
+        self._fill_color = fill_color
 
     def to_svg(self, width, height, x_scale, y_scale, series):
         """
@@ -32,10 +32,10 @@ class Columns(Shape):
             x1, x2 = x_scale.project_interval(x, 0, width)
             proj_y = y_scale.project(y, height, 0)
 
-            if callable(self._color):
-                color = self._color(x, y, row, i)
+            if callable(self._fill_color):
+                color = self._fill_color(x, y, row, i)
             else:
-                color = self._color
+                color = self._fill_color
 
             group.append(ET.Element('rect',
                 x=six.text_type(x1),
