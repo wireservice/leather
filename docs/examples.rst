@@ -157,6 +157,8 @@ Chart grids
 With mixed scales
 -----------------
 
+You can add charts of completely different types to a single graphic by using :class:`.Grid`.
+
 .. literalinclude:: ../examples/grid.py
     :language: python
 
@@ -164,6 +166,8 @@ With mixed scales
 
 With consistent scales
 ----------------------
+
+A grid of charts can automatically be synchronized to a consistent view using :class:`.Lattice`.
 
 .. literalinclude:: ../examples/lattice.py
     :language: python
