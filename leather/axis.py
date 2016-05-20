@@ -16,15 +16,11 @@ class Axis(object):
         The number of ticks to display for this axis. Defaults to
         :data:`.theme.default_ticks`
     :param tick_formatter:
-        An optional function to call on every tick. The function must take
-        three arguments: :code:`(value, index, count)` where :code:`value` is
-        the tick, :code:`index` is the index of the tick, and :code:`count`
-        is the total number of ticks. The return value of the function will
-        be used for display instead of the original tick value.
+        An optional :func:`.tick_format_function`.
     """
     def __init__(self, ticks=None, tick_formatter=None, name=None):
         self._ticks = ticks or theme.default_ticks
-        self._tick_formatter = tick_formatter or (lambda value, i, tick_count: six.text_type(value))
+        self._tick_formatter = tick_formatter or tick_format_function
         self._name = name
 
     def _estimate_left_tick_width(self, scale):
@@ -165,3 +161,20 @@ class Axis(object):
             tick_group.append(label)
 
         return group
+
+
+def tick_format_function(value, index, tick_count):
+    """
+    This example shows how to define a function to format tick values for
+    display.
+
+    :param x:
+        The value to be formatted.
+    :param index:
+        The index of the tick.
+    :param tick_count:
+        The total number of ticks being displayed.
+    :returns:
+        A stringified tick value for display.
+    """
+    return six.text_type(value)
