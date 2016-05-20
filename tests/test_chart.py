@@ -49,18 +49,46 @@ class TestChart(XMLTest):
         self.assertElementCount(svg, '.dots', 2)
         self.assertElementCount(svg, 'circle', 9)
 
-    def test_custom_scales(self):
+    def test_set_scales(self):
         chart = leather.Chart()
         chart.set_x_scale(leather.Linear(0, 20))
-        chart.set_x_axis(leather.Axis(ticks=5))
         chart.set_y_scale(leather.Linear(0, 20))
-        chart.set_y_axis(leather.Axis(ticks=5))
         chart.add_dots(self.data1)
 
         svg = self.render_chart(chart)
 
-        self.assertElementCount(svg, '.axis', 2)
-        self.assertElementCount(svg, '.tick', 10)
-        self.assertElementCount(svg, '.series', 1)
-        self.assertElementCount(svg, '.dots', 1)
-        self.assertElementCount(svg, 'circle', 4)
+        self.assertTickLabels(svg, 'left', ['0.0', '5.0', '10.0', '15.0', '20.0'])
+        self.assertTickLabels(svg, 'bottom', ['0.0', '5.0', '10.0', '15.0', '20.0'])
+
+    def test_add_scales(self):
+        chart = leather.Chart()
+        chart.add_x_scale(0, 20)
+        chart.add_y_scale(0, 20)
+        chart.add_dots(self.data1)
+
+        svg = self.render_chart(chart)
+
+        self.assertTickLabels(svg, 'left', ['0.0', '5.0', '10.0', '15.0', '20.0'])
+        self.assertTickLabels(svg, 'bottom', ['0.0', '5.0', '10.0', '15.0', '20.0'])
+
+    def test_set_axes(self):
+        chart = leather.Chart()
+        chart.set_x_axis(leather.Axis(ticks=3))
+        chart.set_y_axis(leather.Axis(ticks=3))
+        chart.add_dots(self.data1)
+
+        svg = self.render_chart(chart)
+
+        self.assertTickLabels(svg, 'left', ['3.0', '6.0', '9.0'])
+        self.assertTickLabels(svg, 'bottom', ['0.0', '4.0', '8.0'])
+
+    def test_add_axes(self):
+        chart = leather.Chart()
+        chart.add_x_axis(ticks=3)
+        chart.add_y_axis(ticks=3)
+        chart.add_dots(self.data1)
+
+        svg = self.render_chart(chart)
+
+        self.assertTickLabels(svg, 'left', ['3.0', '6.0', '9.0'])
+        self.assertTickLabels(svg, 'bottom', ['0.0', '4.0', '8.0'])

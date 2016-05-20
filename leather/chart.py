@@ -7,7 +7,8 @@ import xml.etree.ElementTree as ET
 import six
 
 from leather.axis import Axis
-from leather.scales import Scale
+from leather.data_types import Date, DateTime
+from leather.scales import Scale, Linear, Temporal
 from leather.series import Series
 from leather.shapes import Bars, Columns, Dots, Lines
 import leather.svg as svg
@@ -39,9 +40,38 @@ class Chart(object):
 
     def set_y_scale(self, scale):
         """
-        Set the Y :class:`.Scale` for this chart.
+        See :meth:`.set_x_scale`.
         """
         self._scales[Y] = scale
+
+    def add_x_scale(self, domain_min, domain_max):
+        """
+        Create and add a :class:`.Scale`.
+
+        If the provided domain values are :class:`date` or :class:`datetime`
+        then a :class:`.Temporal` scale will be created, otherwise it will
+        :class:`.Linear`.
+
+        If you want to set a custom scale class use :meth:`.set_x_scale`
+        instead.
+        """
+        scale_type = Linear
+
+        if isinstance(domain_min, Date.types) or isinstance(domain_min, DateTime.types):
+            scale_type = Temporal
+
+        self.set_x_scale(scale_type(domain_min, domain_max))
+
+    def add_y_scale(self, domain_min, domain_max):
+        """
+        See :meth:`.add_x_scale`.
+        """
+        scale_type = Linear
+
+        if isinstance(domain_min, Date.types) or isinstance(domain_min, DateTime.types):
+            scale_type = Temporal
+
+        self.set_y_scale(scale_type(domain_min, domain_max))
 
     def set_x_axis(self, axis):
         """
@@ -51,7 +81,7 @@ class Chart(object):
 
     def set_y_axis(self, axis):
         """
-        Set the Y :class:`.Axis` class for this chart.
+        See :meth:`.set_x_axis`.
         """
         self._axes[Y] = axis
 
@@ -59,15 +89,13 @@ class Chart(object):
         """
         Create and add an X :class:`.Axis`.
 
-        If you want to use a custom axis class use :meth:`.set_x_axis` instead.
+        If you want to set a custom axis class use :meth:`.set_x_axis` instead.
         """
         self._axes[X] = Axis(ticks, tick_formatter, name)
 
     def add_y_axis(self, ticks=None, tick_formatter=None, name=None):
         """
-        Create and add an Y :class:`.Axis`.
-
-        If you want to use a custom axis class use :meth:`.set_y_axis` instead.
+        See :meth:`.add_x_axis`.
         """
         self._axes[Y] = Axis(ticks, tick_formatter, name)
 

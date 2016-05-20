@@ -49,8 +49,8 @@ class Scale(object):
         # Default Number scale is Linear
         elif data_type is Number:
             force_zero = False
-            data_min = 0
-            data_max = 0
+            data_min = float('inf')
+            data_max = float('-inf')
 
             for series in series_list:
                 if isinstance(series._shape, (Bars, Columns)):
