@@ -74,9 +74,9 @@ class Chart(object):
         """
         for dim in DIMENSIONS:
             if not self._types[dim]:
-                self._types[dim] = series.types[dim]
-            elif series.types[dim] is not self._types[dim]:
-                raise TypeError('Can\'t mix axis-data types: %s and %s' % (series.types[dim], self._types[dim]))
+                self._types[dim] = series._types[dim]
+            elif series._types[dim] is not self._types[dim]:
+                raise TypeError('Can\'t mix axis-data types: %s and %s' % (series._types[dim], self._types[dim]))
 
         self._layers.append(series)
 

@@ -54,7 +54,7 @@ class Scale(object):
             data_max = 0
 
             for series in series_list:
-                if isinstance(series.shape, (Bars, Columns)):
+                if isinstance(series._shape, (Bars, Columns)):
                     force_zero = True
 
                 data_min = min(data_min, series.min(dimension))

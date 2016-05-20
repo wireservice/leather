@@ -26,7 +26,7 @@ class Columns(Shape):
         group = ET.Element('g')
         group.set('class', 'series columns')
 
-        for i, (x, y) in enumerate(series.data):
+        for i, (x, y, row) in enumerate(series):
             if x is None or y is None:
                 continue
 

@@ -41,7 +41,7 @@ class Lines(Shape):
 
         d = []
 
-        for x, y in series.data:
+        for x, y, row in series:
             if x is None or y is None:
                 if d:
                     path.set('d', ' '.join(d))
