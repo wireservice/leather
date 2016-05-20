@@ -42,7 +42,7 @@ title_gap = 4
 # LEGEND
 
 #: Chart legend text color
-legend_color = '#333'
+legend_color = '#666'
 
 #: Chart legend font
 legend_font_family = 'Monaco'
@@ -59,10 +59,16 @@ legend_font_char_width = 8
 #: Gap between legend and rest of chart
 legend_gap = 4
 
+#: Size of the bubble next to an legend item
+legend_bubble_size = 10
+
+#: Offset from the top of the glyph
+legend_bubble_offset = 4
+
 # AXIS
 
 #: Axis title text color
-axis_title_color = '#eee'
+axis_title_color = '#666'
 
 #: Axis title font
 axis_title_font_family = 'Monaco'

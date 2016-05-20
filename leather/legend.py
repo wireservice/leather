@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 
 import six
 
+from leather import svg
 from leather import theme
 
 
@@ -15,41 +16,59 @@ class Legend(object):
         """
         Render a legend series list and return it for embedding in an SVG.
         """
-        group = ET.Element('g')
+        legend_group = ET.Element('g')
+
+        bubble_width = theme.legend_bubble_size + theme.legend_bubble_offset
 
         rows = 1
-        offset = 0
+        indent = 0
 
         for i, series in enumerate(series_list):
+            text = six.text_type(series._name or 'Series %i' % i)
+            text_width = (len(text) + 4) * theme.legend_font_char_width
+
+            if indent + text_width + bubble_width > width:
+                indent = 0
+                rows += 1
+
+            y = (rows - 1) * (theme.legend_font_char_height + theme.legend_gap)
+
+            # Group
+            item_group = ET.Element('g')
+            item_group.set('transform', svg.translate(indent, y))
+
             fill_color = series._shape._fill_color
 
             if callable(fill_color):
                 # TODO
                 fill_color = 'black'
 
-            text = six.text_type(series._name or 'Series %i' % i)
-            text_width = (len(text) + 4) * theme.legend_font_char_width
+            # Bubble
+            bubble = ET.Element('rect',
+                x=six.text_type(0),
+                y=six.text_type(-theme.legend_font_char_height + theme.legend_bubble_offset),
+                width=six.text_type(theme.legend_bubble_size),
+                height=six.text_type(theme.legend_bubble_size),
+                fill=fill_color
+            )
 
-            if offset + text_width > width:
-                indent = 0
-                rows += 1
+            item_group.append(bubble)
 
-            x = offset
-            y = (rows - 1) * (theme.legend_font_char_height + theme.legend_gap)
-
+            # Label
             label = ET.Element('text',
-                x=six.text_type(x),
-                y=six.text_type(y),
+                x=six.text_type(bubble_width),
+                y=six.text_type(0),
                 fill=theme.legend_color
             )
             label.set('font-family', theme.legend_font_family)
             label.set('font-size', six.text_type(theme.legend_font_size))
             label.text = text
 
-            group.append(label)
+            item_group.append(label)
 
-            offset += text_width
+            legend_group.append(item_group)
+            indent += text_width + bubble_width
 
         height = rows * (theme.legend_font_char_height + theme.legend_gap)
 
-        return (group, height)
+        return (legend_group, height)
