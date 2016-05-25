@@ -30,4 +30,4 @@ class TestChart(XMLTest):
 
         svg = self.render_chart(chart)
 
-        self.assertTickLabels(svg, 'bottom', ['0+', '25+', '50+', '75+', '100+'])
+        self.assertTickLabels(svg, 'bottom', ['25+', '50+', '75+', '100+', '0+'])

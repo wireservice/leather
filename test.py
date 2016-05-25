@@ -1,11 +1,11 @@
 import leather
 
 data = [
-    (-3, 'foo', -3),
-    (5, 'bar', 5),
-    (-9, 'baz', -9)
+    (-1, -1),
+    (0, 0),
+    (1, 1)
 ]
 
-chart = leather.Chart('Negative columns')
-chart.add_bars(data)
+chart = leather.Chart()
+chart.add_lines(data)
 chart.to_svg('test.svg')

@@ -1,6 +1,7 @@
 0.3.0
 -----
 
+* Zero lines now render above other tick marks. (#31)
 * Fixed rendering of :class:`.Bar` and :class:`.Column` shapes for negative values.
 * Refactored the :class:`.Lattice` API.
 

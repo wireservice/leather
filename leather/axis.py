@@ -101,11 +101,17 @@ class Axis(object):
         tick_values = scale.ticks(self._ticks)
         tick_count = len(tick_values)
 
+        zero_tick_group = None
+
         for i, value in enumerate(tick_values):
             # Tick group
             tick_group = ET.Element('g')
             tick_group.set('class', 'tick')
-            group.append(tick_group)
+
+            if value == 0:
+                zero_tick_group = tick_group
+            else:
+                group.append(tick_group)
 
             # Tick line
             projected_value = scale.project(value, range_min, range_max)
@@ -159,6 +165,9 @@ class Axis(object):
             label.text = six.text_type(value)
 
             tick_group.append(label)
+
+        if zero_tick_group:
+            group.append(zero_tick_group)
 
         return group
 
