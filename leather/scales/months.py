@@ -1,17 +1,22 @@
 #!/usr/bin/env python
 
 from datetime import datetime, date
+import math
 
 from leather.scales.temporal import Temporal
 
 
-class Annual(Temporal):
-    """
-    A scale that maps years to a pixel range.
+def to_month_count(d):
+    return (d.year * 12) + d.month
 
-    This scale takes linear values (dates, datetimes, or numbers), but treats
-    them as ordinal values for purposes of projection. Thus you can use this
-    scale to render :class:`.Bars` or :class:`.Columns` for yearly data.
+
+class Months(Temporal):
+    """
+    A scale that maps years and months to a coordinate range.
+
+    This scale takes dates and datetimes, but treats them as ordinal values for
+    purposes of projection. Thus you can use this scale to render
+    :class:`.Bars` or :class:`.Columns` for yearly data.
 
     :param domain_min:
         The minimum value of the domain.
@@ -28,8 +33,6 @@ class Annual(Temporal):
         """
         if isinstance(value, (datetime, date)):
             return value
-        elif isinstance(value, (int, float)):
-            return date(value, 1, 1)
 
         raise ValueError('Unsupported domain value for Annual scale.')
 
@@ -39,10 +42,10 @@ class Annual(Temporal):
         """
         d = self._value_as_date(value)
 
-        segments = self._max.year - self._min.year + 1
-        segment_size = (range_max - range_min) / segments
+        segments = to_month_count(self._max) - to_month_count(self._min) + 1
+        segment_size = float(range_max - range_min) / segments
 
-        pos = d.year - self._min.year
+        pos = to_month_count(d) - to_month_count(self._min)
 
         return range_min + ((pos + 0.5) * segment_size)
 
@@ -53,14 +56,21 @@ class Annual(Temporal):
         """
         d = self._value_as_date(value)
 
-        segments = self._max.year - self._min.year + 1
-        segment_size = (range_max - range_min) / segments
+        segments = to_month_count(self._max) - to_month_count(self._min) + 1
+        segment_size = float(range_max - range_min) / segments
         gap = segment_size * 0.05
 
-        pos = d.year - self._min.year
+        pos = to_month_count(d) - to_month_count(self._min)
+        a = pos
+        b = pos
 
-        a = range_min + ((pos) * segment_size) + gap
-        b = range_min + ((pos + 1) * segment_size) - gap
+        if pos >= 0:
+            b += 1
+        else:
+            a -= 1
+
+        a = range_min + (a * segment_size) + gap
+        b = range_min + (b * segment_size) - gap
 
         return (a, b)
 
@@ -68,10 +78,23 @@ class Annual(Temporal):
         """
         Generate a series of ticks for this scale.
         """
-        return [date(year, 1, 1) for year in range(self._min.year, self._max.year + 1)]
+        a = to_month_count(self._min)
+        b = to_month_count(self._max)
+
+        size = int(math.ceil(float(b - a) / (count - 1)))
+        values = []
+
+        for i in range(count):
+            month_count = a + (size * i)
+            years = month_count // 12
+            months = month_count % 12
+
+            values.append(date(years, months, 1))
+
+        return values
 
     def format_tick(self, value, i, count):
         """
         Display only year component.
         """
-        return value.year
+        return '%i-%i' % (value.year, value.month + 1)
