@@ -9,7 +9,7 @@ import six
 from leather.axis import Axis
 from leather.data_types import Date, DateTime
 from leather.legend import Legend
-from leather.scales import Scale, Linear, Temporal
+from leather.scales import Scale, Linear, Temporal, Ordinal
 from leather.series import Series
 from leather.shapes import Bars, Columns, Dots, Lines
 import leather.svg as svg
@@ -158,17 +158,16 @@ class Chart(object):
 
     def add_grouped_bars(self, data, x=None, y=None, name=None, color=None):
         """
-        Create and add multiple :class:`.Series` rendered with :class:`.Bars`.
-        
-        Data should be a sequence of :class:`.Series` data, one for each bar in
-        a group.
-
-        Color should be a sequence of colors, one for each bar in a group.
+        Create and add a :class:`.Series` rendered with :class:`.Bars`. Data
+        points with equivalent y values will be rendered as grouped
+        :class:`.Bars`.
         """
         if not color:
             color = self._series_colors.pop(0)
 
-        self.add_series(Series(data, Bars(color, grouped=True), x=x, y=y, name=name))
+        grouped_series = Series(data, Bars(color, grouped=True), x=x, y=y, name=name)
+        self.add_series(grouped_series)
+        self.set_y_scale(Ordinal(list(set(grouped_series.values(Y)))))
 
     def _validate_dimension(self, dimension):
         """
