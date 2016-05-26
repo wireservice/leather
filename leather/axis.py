@@ -103,6 +103,10 @@ class Axis(object):
         tick_count = len(tick_values)
         tick_formatter = self._tick_formatter or scale.format_tick
 
+        if 0 not in tick_values and tick_values[0] < 0 and tick_values[tick_count - 1] > 0:
+            tick_values.append(0)
+            tick_count += 1
+
         zero_tick_group = None
 
         for i, value in enumerate(tick_values):
