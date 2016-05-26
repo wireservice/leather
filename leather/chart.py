@@ -156,6 +156,20 @@ class Chart(object):
 
         self.add_series(Series(data, Lines(color, width), x=x, y=y, name=name))
 
+    def add_grouped_bars(self, data, x=None, y=None, name=None, color=None):
+        """
+        Create and add multiple :class:`.Series` rendered with :class:`.Bars`.
+        
+        Data should be a sequence of :class:`.Series` data, one for each bar in
+        a group.
+
+        Color should be a sequence of colors, one for each bar in a group.
+        """
+        if not color:
+            color = self._series_colors.pop(0)
+
+        self.add_series(Series(data, Bars(color, grouped=True), x=x, y=y, name=name))
+
     def _validate_dimension(self, dimension):
         """
         Validates that the given scale and axis are valid for the data that
