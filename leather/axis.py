@@ -20,7 +20,7 @@ class Axis(object):
     """
     def __init__(self, ticks=None, tick_formatter=None, name=None):
         self._ticks = ticks or theme.default_ticks
-        self._tick_formatter = tick_formatter or tick_format_function
+        self._tick_formatter = tick_formatter
         self._name = name
 
     def _estimate_left_tick_width(self, scale):
@@ -29,10 +29,11 @@ class Axis(object):
         """
         ticks = scale.ticks(self._ticks)
         tick_count = len(ticks)
+        tick_formatter = self._tick_formatter or scale.format_tick
         max_len = 0
 
         for i, value in enumerate(ticks):
-            max_len = max(max_len, len(self._tick_formatter(value, i, tick_count)))
+            max_len = max(max_len, len(tick_formatter(value, i, tick_count)))
 
         return max_len * theme.tick_font_char_width
 
@@ -100,6 +101,7 @@ class Axis(object):
 
         tick_values = scale.ticks(self._ticks)
         tick_count = len(tick_values)
+        tick_formatter = self._tick_formatter or scale.format_tick
 
         zero_tick_group = None
 
@@ -161,12 +163,12 @@ class Axis(object):
             label.set('text-anchor', text_anchor)
             label.set('font-family', theme.tick_font_family)
 
-            value = self._tick_formatter(value, i, tick_count)
+            value = tick_formatter(value, i, tick_count)
             label.text = six.text_type(value)
 
             tick_group.append(label)
 
-        if zero_tick_group:
+        if zero_tick_group is not None:
             group.append(zero_tick_group)
 
         return group

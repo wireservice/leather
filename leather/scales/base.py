@@ -2,6 +2,8 @@
 
 from datetime import date, datetime
 
+import six
+
 from leather.data_types import Date, DateTime, Number, Text
 from leather.shapes import Bars, Columns
 
@@ -101,3 +103,12 @@ class Scale(object):
         Generate a series of ticks for this scale.
         """
         raise NotImplementedError
+
+    def format_tick(self, value, i, count):
+        """
+        Format ticks for display.
+
+        This method is used as a default which will be ignored if the user
+        provides a custom tick formatter to the axis.
+        """
+        return six.text_type(value)

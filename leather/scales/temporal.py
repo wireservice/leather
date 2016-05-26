@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-from datetime import date, datetime, time
-
 from leather.scales.base import Scale
 
 

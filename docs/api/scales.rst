@@ -12,3 +12,5 @@ Scales
 .. autoclass:: leather.Ordinal
 
 .. autoclass:: leather.Temporal
+
+.. autoclass:: leather.Annual

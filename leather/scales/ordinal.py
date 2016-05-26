@@ -2,6 +2,7 @@
 
 from leather.scales.base import Scale
 
+
 class Ordinal(Scale):
     """
     A scale that maps individual values (e.g. strings) to a range.
