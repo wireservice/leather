@@ -167,7 +167,8 @@ class Chart(object):
 
         grouped_series = Series(data, Bars(color, grouped=True), x=x, y=y, name=name)
         self.add_series(grouped_series)
-        self.set_y_scale(Ordinal(list(set(grouped_series.values(Y)))))
+        seen = set()
+        self.set_y_scale(Ordinal([x for x in grouped_series.values(Y) if not (x in seen or seen.add(x))]))
 
     def _validate_dimension(self, dimension):
         """
