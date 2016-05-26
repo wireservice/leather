@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 
 from datetime import datetime, date
+from decimal import Decimal
+import math
 
 from leather.scales.temporal import Temporal
 
 
 class Annual(Temporal):
     """
-    A scale that maps years to a pixel range.
+    A scale that maps years to a coordinate range.
 
     This scale takes linear values (dates, datetimes, or numbers), but treats
     them as ordinal values for purposes of projection. Thus you can use this
@@ -28,7 +30,7 @@ class Annual(Temporal):
         """
         if isinstance(value, (datetime, date)):
             return value
-        elif isinstance(value, (int, float)):
+        elif isinstance(value, (int, float, Decimal)):
             return date(value, 1, 1)
 
         raise ValueError('Unsupported domain value for Annual scale.')
@@ -44,7 +46,12 @@ class Annual(Temporal):
 
         pos = d.year - self._min.year
 
-        return range_min + ((pos + 0.5) * segment_size)
+        if pos >= 0:
+            pos += 0.5
+        else:
+            pos -= 0.5
+
+        return range_min + (pos * segment_size)
 
     def project_interval(self, value, range_min, range_max):
         """
@@ -68,7 +75,15 @@ class Annual(Temporal):
         """
         Generate a series of ticks for this scale.
         """
-        return [date(year, 1, 1) for year in range(self._min.year, self._max.year + 1)]
+        size = int(math.ceil(float(self._max.year - self._min.year) / count))
+        values = []
+
+        for i in range(count):
+            years = self._min.year + (i * size)
+
+            values.append(date(years, 1, 1))
+
+        return values
 
     def format_tick(self, value, i, count):
         """

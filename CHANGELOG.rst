@@ -1,7 +1,9 @@
 0.3.0
 -----
 
-* Implement :class:`.Annual` scale type.
+* Expanded unit tests for :class:`.Scale` subclasses.
+* Implemented :class:`.Monthly` scale type.
+* Implemented :class:`.Annual` scale type.
 * Zero lines now render above other tick marks. (#31)
 * Fixed rendering of :class:`.Bar` and :class:`.Column` shapes for negative values. (#52)
 * Refactored the :class:`.Lattice` API.
