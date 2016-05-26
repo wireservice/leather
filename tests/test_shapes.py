@@ -13,6 +13,11 @@ class TestBars(unittest.TestCase):
         self.shape = leather.Bars('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
+        self.rows = [
+            (0, 'foo'),
+            (None, None),
+            (10, 'bing')
+        ]
 
     def test_to_svg(self):
         series = leather.Series([
@@ -29,11 +34,7 @@ class TestBars(unittest.TestCase):
         self.assertEqual(float(rects[1].get('width')), 100)
 
     def test_nulls(self):
-        series = leather.Series([
-            (0, 'foo'),
-            (None, None),
-            (10, 'bing')
-        ], self.shape)
+        series = leather.Series(self.rows, self.shape)
 
         group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series)
         rects = list(group)
@@ -41,6 +42,29 @@ class TestBars(unittest.TestCase):
         self.assertEqual(len(rects), 2)
         self.assertEqual(float(rects[1].get('x')), 0)
         self.assertEqual(float(rects[1].get('width')), 0)
+
+    def test_grouped(self):
+        shape = leather.Bars(fill_color=['red', 'blue', 'green'], grouped=True)
+        series = leather.Series([
+            (0, 'foo'),
+            (6, 'bar'),
+            (5, 'bar'),
+            (7, 'bar'),
+            (3, 'bing'),
+            (10, 'bing')
+        ], shape)
+        group = shape.to_svg(200, 100, self.linear, self.ordinal, series)
+
+        base_series = leather.Series(self.rows, shape)
+        base_group = self.shape.to_svg(200, 100, self.linear, self.ordinal, base_series)
+        rects = list(group)
+        base_rects = list(base_group)
+
+        self.assertEqual(len(rects), 6)
+        self.assertEqual(float(rects[1].get('x')), 0)
+        self.assertEqual(float(rects[1].get('width')), 60)
+        self.assertEqual(rects[1].get('fill'), 'blue')
+        self.assertEqual(rects[5].get('y'), base_rects[1].get('y'))
 
 
 class TestColumns(unittest.TestCase):
