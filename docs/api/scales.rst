@@ -13,4 +13,6 @@ Scales
 
 .. autoclass:: leather.Temporal
 
-.. autoclass:: leather.Annual
+.. autoclass:: leather.Years
+
+.. autoclass:: leather.Months

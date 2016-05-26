@@ -106,33 +106,33 @@ class TestTemporal(XMLTest):
         self.assertEqual(ticks[-1], date(2014, 1, 1))
 
 
-class TestAnnual(XMLTest):
+class TestYears(XMLTest):
     def test_project(self):
-        scale = leather.Annual(date(2010, 1, 1), date(2014, 1, 1))
+        scale = leather.Years(date(2010, 1, 1), date(2014, 1, 1))
 
         self.assertEqual(scale.project(date(2011, 1, 1), 0, 20), 6)
         self.assertEqual(scale.project(date(2012, 1, 1), 0, 20), 10)
         self.assertEqual(scale.project(date(2009, 1, 1), 0, 20), -6)
 
-        scale = leather.Annual(datetime(2010, 1, 1), datetime(2014, 1, 1))
+        scale = leather.Years(datetime(2010, 1, 1), datetime(2014, 1, 1))
 
         self.assertEqual(scale.project(datetime(2011, 1, 1), 0, 20), 6)
         self.assertEqual(scale.project(datetime(2012, 1, 1), 0, 20), 10)
         self.assertEqual(scale.project(datetime(2009, 1, 1), 0, 20), -6)
 
-        scale = leather.Annual(2010, 2014)
+        scale = leather.Years(2010, 2014)
 
         self.assertEqual(scale.project(2011, 0, 20), 6)
         self.assertEqual(scale.project(2012, 0, 20), 10)
         self.assertEqual(scale.project(2009, 0, 20), -6)
 
     def test_project_interval(self):
-        scale = leather.Annual(date(2010, 1, 1), date(2014, 1, 1))
+        scale = leather.Years(date(2010, 1, 1), date(2014, 1, 1))
 
         self.assertEqual(scale.project_interval(date(2011, 1, 1), 0, 20), (4.2, 7.8))
 
     def test_ticks(self):
-        scale = leather.Annual(date(2010, 1, 1), date(2014, 1, 1))
+        scale = leather.Years(date(2010, 1, 1), date(2014, 1, 1))
 
         self.assertEqual(scale.ticks(5), [
             date(2010, 1, 1),
@@ -143,35 +143,35 @@ class TestAnnual(XMLTest):
         ])
 
 
-class TestMonthly(XMLTest):
+class TestMonths(XMLTest):
     """
     See notes for :class:`.TestTemporal`.
     """
     def test_project(self):
-        scale = leather.Monthly(date(2010, 1, 1), date(2014, 1, 1))
+        scale = leather.Months(date(2010, 1, 1), date(2014, 1, 1))
 
         self.assertAlmostEqual(scale.project(date(2011, 1, 1), 0, 48), 12, 0)
         self.assertAlmostEqual(scale.project(date(2012, 1, 1), 0, 48), 24, 0)
         self.assertAlmostEqual(scale.project(date(2008, 12, 1), 0, 48), -12, 0)
 
-        scale = leather.Monthly(datetime(2010, 1, 1), datetime(2014, 1, 1))
+        scale = leather.Months(datetime(2010, 1, 1), datetime(2014, 1, 1))
 
         self.assertAlmostEqual(scale.project(datetime(2011, 1, 1), 0, 48), 12, 0)
         self.assertAlmostEqual(scale.project(datetime(2012, 1, 1), 0, 48), 24, 0)
         self.assertAlmostEqual(scale.project(datetime(2008, 12, 1), 0, 48), -12, 0)
 
         with self.assertRaises(ValueError):
-            scale = leather.Monthly(2010, 2014)
+            scale = leather.Months(2010, 2014)
 
     def test_project_interval(self):
-        scale = leather.Monthly(date(2010, 1, 1), date(2014, 1, 1))
+        scale = leather.Months(date(2010, 1, 1), date(2014, 1, 1))
 
         a, b = scale.project_interval(date(2011, 1, 1), 0, 48)
         self.assertAlmostEqual(a, 11.5, 0)
         self.assertAlmostEqual(b, 12.5, 0)
 
     def test_ticks(self):
-        scale = leather.Monthly(date(2010, 1, 1), date(2014, 1, 1))
+        scale = leather.Months(date(2010, 1, 1), date(2014, 1, 1))
 
         self.assertEqual(scale.ticks(5), [
             date(2010, 1, 1),
@@ -181,7 +181,7 @@ class TestMonthly(XMLTest):
             date(2014, 1, 1)
         ])
 
-        scale = leather.Monthly(date(2010, 1, 1), date(2012, 1, 1))
+        scale = leather.Months(date(2010, 1, 1), date(2012, 1, 1))
 
         self.assertEqual(scale.ticks(5), [
             date(2010, 1, 1),
