@@ -1,6 +1,7 @@
 0.3.0
 -----
 
+* Tick values can now be overridden with the :code:`tick_values` argument. (#56)
 * Added methods to customize scales and axes for :class:`.Lattice` charts. (#17)
 * Expanded unit tests for :class:`.Scale` subclasses.
 * Implemented :class:`.Months` scale type.

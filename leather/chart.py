@@ -87,19 +87,19 @@ class Chart(object):
         """
         self._axes[Y] = axis
 
-    def add_x_axis(self, ticks=None, tick_formatter=None, name=None):
+    def add_x_axis(self, ticks=None, tick_values=None, tick_formatter=None, name=None):
         """
         Create and add an X :class:`.Axis`.
 
         If you want to set a custom axis class use :meth:`.set_x_axis` instead.
         """
-        self._axes[X] = Axis(ticks, tick_formatter, name)
+        self._axes[X] = Axis(ticks, tick_values, tick_formatter, name)
 
-    def add_y_axis(self, ticks=None, tick_formatter=None, name=None):
+    def add_y_axis(self, ticks=None, tick_values=None, tick_formatter=None, name=None):
         """
         See :meth:`.add_x_axis`.
         """
-        self._axes[Y] = Axis(ticks, tick_formatter, name)
+        self._axes[Y] = Axis(ticks, tick_values, tick_formatter, name)
 
     def set_legend(self, legend):
         """

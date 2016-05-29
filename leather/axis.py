@@ -15,11 +15,16 @@ class Axis(object):
     :param ticks:
         The number of ticks to display for this axis. Defaults to
         :data:`.theme.default_ticks`
+    :param tick_values:
+        Instead of inferring tick values from the data, use exactly this
+        sequence of ticks values. These will still be passed to the
+        `tick_formatter`.
     :param tick_formatter:
         An optional :func:`.tick_format_function`.
     """
-    def __init__(self, ticks=None, tick_formatter=None, name=None):
+    def __init__(self, ticks=None, tick_values=None, tick_formatter=None, name=None):
         self._ticks = ticks or theme.default_ticks
+        self._tick_values = tick_values
         self._tick_formatter = tick_formatter
         self._name = name
 
@@ -99,7 +104,8 @@ class Axis(object):
             range_min = 0
             range_max = width
 
-        tick_values = scale.ticks(self._ticks)
+        tick_values = self._tick_values or scale.ticks(self._ticks)
+        print(self._tick_values, tick_values)
         tick_count = len(tick_values)
         tick_formatter = self._tick_formatter or scale.format_tick
 
