@@ -57,8 +57,8 @@ class TestChart(XMLTest):
 
         svg = self.render_chart(chart)
 
-        self.assertTickLabels(svg, 'left', ['5.0', '10.0', '15.0', '20.0', '0.0'])
-        self.assertTickLabels(svg, 'bottom', ['5.0', '10.0', '15.0', '20.0', '0.0'])
+        self.assertTickLabels(svg, 'left', ['5', '10', '15', '20', '0'])
+        self.assertTickLabels(svg, 'bottom', ['5', '10', '15', '20', '0'])
 
     def test_add_scales(self):
         chart = leather.Chart()
@@ -68,8 +68,8 @@ class TestChart(XMLTest):
 
         svg = self.render_chart(chart)
 
-        self.assertTickLabels(svg, 'left', ['5.0', '10.0', '15.0', '20.0', '0.0'])
-        self.assertTickLabels(svg, 'bottom', ['5.0', '10.0', '15.0', '20.0', '0.0'])
+        self.assertTickLabels(svg, 'left', ['5', '10', '15', '20', '0'])
+        self.assertTickLabels(svg, 'bottom', ['5', '10', '15', '20', '0'])
 
     def test_set_axes(self):
         chart = leather.Chart()
@@ -79,8 +79,8 @@ class TestChart(XMLTest):
 
         svg = self.render_chart(chart)
 
-        self.assertTickLabels(svg, 'left', ['3.0', '6.0', '9.0'])
-        self.assertTickLabels(svg, 'bottom', ['4.0', '8.0', '0.0'])
+        self.assertTickLabels(svg, 'left', ['3', '6', '9'])
+        self.assertTickLabels(svg, 'bottom', ['4', '8', '0'])
 
     def test_add_axes(self):
         chart = leather.Chart()
@@ -90,5 +90,5 @@ class TestChart(XMLTest):
 
         svg = self.render_chart(chart)
 
-        self.assertTickLabels(svg, 'left', ['3.0', '6.0', '9.0'])
-        self.assertTickLabels(svg, 'bottom', ['4.0', '8.0', '0.0'])
+        self.assertTickLabels(svg, 'left', ['3', '6', '9'])
+        self.assertTickLabels(svg, 'bottom', ['4', '8', '0'])

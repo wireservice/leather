@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from datetime import date, datetime
+from decimal import Decimal
 
 try:
     import unittest2 as unittest
@@ -46,6 +47,16 @@ class TestLinear(XMLTest):
         self.assertEqual(scale.ticks(5), [0, 2.5, 5, 7.5, 10])
         self.assertEqual(scale.ticks(6), [0, 2, 4, 6, 8, 10])
 
+    def test_decimal(self):
+        scale = leather.Linear(Decimal(0), Decimal(10))
+
+        self.assertEqual(scale.project(Decimal(2), Decimal(0), Decimal(20)), Decimal(4))
+        self.assertEqual(scale.project(Decimal(10), Decimal(0), Decimal(40)), Decimal(40))
+        self.assertEqual(scale.project(Decimal(5), Decimal(10), Decimal(40)), Decimal(25))
+        self.assertEqual(scale.project(Decimal(5), Decimal(10), Decimal(41)), Decimal(25.5))
+
+        self.assertEqual(scale.ticks(5)[1], Decimal(2.5))
+        self.assertEqual(scale.ticks(6)[1], Decimal(2))
 
 class TestOrdinal(XMLTest):
     def test_project(self):

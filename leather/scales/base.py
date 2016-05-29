@@ -51,15 +51,22 @@ class Scale(object):
         # Default Number scale is Linear
         elif data_type is Number:
             force_zero = False
-            data_min = float('inf')
-            data_max = float('-inf')
+            data_min = None
+            data_max = None
 
             for series in series_list:
                 if isinstance(series._shape, (Bars, Columns)):
                     force_zero = True
 
-                data_min = min(data_min, series.min(dimension))
-                data_max = max(data_max, series.max(dimension))
+                if not data_min:
+                    data_min = series.min(dimension)
+                else:
+                    data_min = min(data_min, series.min(dimension))
+
+                if not data_max:
+                    data_max = series.max(dimension)
+                else:
+                    data_max = min(data_max, series.max(dimension))
 
             if force_zero:
                 if data_min > 0:

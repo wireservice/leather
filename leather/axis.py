@@ -105,7 +105,6 @@ class Axis(object):
             range_max = width
 
         tick_values = self._tick_values or scale.ticks(self._ticks)
-        print(self._tick_values, tick_values)
         tick_count = len(tick_values)
         tick_formatter = self._tick_formatter or scale.format_tick
 

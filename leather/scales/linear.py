@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from decimal import Decimal
+
 from leather.scales.base import Scale
 
 
@@ -13,14 +15,18 @@ class Linear(Scale):
         The maximum value of the input domain.
     """
     def __init__(self, domain_min, domain_max):
-        self.min = domain_min
-        self.max = domain_max
+        self._min = Decimal(domain_min)
+        self._max = Decimal(domain_max)
 
     def project(self, value, range_min, range_max):
         """
         Project a value in this scale's domain to a target range.
         """
-        pos = float(value - self.min) / (self.max - self.min)
+        value = Decimal(value)
+        range_min = Decimal(range_min)
+        range_max = Decimal(range_max)
+
+        pos = (value - self._min) / (self._max - self._min)
 
         return ((range_max - range_min) * pos) + range_min
 
@@ -35,6 +41,6 @@ class Linear(Scale):
         """
         Generate a series of ticks for this scale.
         """
-        size = float(self.max - self.min) / (count - 1)
+        size = (self._max - self._min) / (count - 1)
 
-        return [self.min + (size * i) for i in range(count)]
+        return [self._min + (size * i) for i in range(count)]

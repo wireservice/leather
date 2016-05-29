@@ -27,7 +27,7 @@ class TestChart(XMLTest):
 
         svg = self.render_chart(chart)
 
-        self.assertTickLabels(svg, 'bottom', ['2.0', '4.0', '6.0', '8.0', '10.0', '0.0'])
+        self.assertTickLabels(svg, 'bottom', ['2', '4', '6', '8', '10', '0'])
 
     def test_tick_values(self):
         chart = leather.Chart()
