@@ -21,6 +21,6 @@ chart2 = leather.Chart('Lines')
 chart2.add_lines(data2)
 
 grid = leather.Grid()
-grid.add_chart(chart1)
-grid.add_chart(chart2)
+grid.add_one(chart1)
+grid.add_one(chart2)
 grid.to_svg('examples/charts/grid.svg')

@@ -163,6 +163,6 @@ class Lattice(object):
             chart.set_y_axis(self._axes[Y])
             chart.add_series(series)
 
-            grid.add_chart(chart)
+            grid.add_one(chart)
 
-        grid.to_svg(path, width, height)
+        return grid.to_svg(path, width, height)

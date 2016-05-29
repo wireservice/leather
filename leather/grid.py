@@ -19,11 +19,17 @@ class Grid(object):
     def __init__(self):
         self._charts = []
 
-    def add_chart(self, chart):
+    def add_one(self, chart):
         """
         Add a :class:`.Chart` to the grid.
         """
         self._charts.append(chart)
+
+    def add_many(self, charts):
+        """
+        Add a sequence of charts to this grid.
+        """
+        self._charts.extend(charts)
 
     def to_svg(self, path=None, width=None, height=None):
         """
