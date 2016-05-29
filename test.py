@@ -1,18 +1,30 @@
 import leather
 
-import datetime
-
-data = [
-    (datetime.date(2010, 1, 1), -1),
-    (datetime.date(2010, 6, 1), 0),
-    (datetime.date(2011, 1, 1), -0.5),
-    (datetime.date(2012, 1, 1), 0.5),
-    (datetime.date(2013, 1, 1), 1)
+data1 = [
+    (0, 3),
+    (4, 5),
+    (7, 9),
+    (8, 4)
 ]
 
-chart = leather.Chart()
-chart.add_columns(data)
-chart.add_lines(data)
-chart.add_dots(data)
-chart.set_x_scale(leather.Months(datetime.date(2010, 1, 1), datetime.date(2014, 1, 1)))
-chart.to_svg('test.svg')
+data2 = [
+    (3, 4),
+    (3, 4),
+    (5, 6),
+    (7, 10),
+    (8, 2)
+]
+
+data3 = [
+    (2, 4),
+    (3, 5),
+    (6, 2),
+    (8, 3),
+    (10, 5)
+]
+
+lattice = leather.Lattice()
+lattice.add_y_scale(-20, 20)
+lattice.add_x_axis(ticks=10)
+lattice.add_many([data1, data2, data3], titles=['First', 'Second', 'Third'])
+lattice.to_svg('test.svg')

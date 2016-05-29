@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
+from leather.axis import Axis
 from leather.chart import Chart
+from leather.data_types import Date, DateTime
 from leather.grid import Grid
-from leather.scales import Scale
+from leather.scales import Scale, Linear
 from leather.series import Series
 from leather.shapes import Lines
 from leather import theme
@@ -23,6 +25,75 @@ class Lattice(object):
         self._shape = shape or Lines(theme.default_series_colors[0])
         self._series = []
         self._types = [None, None]
+        self._scales = [None, None]
+        self._axes = [None, None]
+
+    def set_x_scale(self, scale):
+        """
+        Set the X :class:`.Scale` for this lattice.
+        """
+        self._scales[X] = scale
+
+    def set_y_scale(self, scale):
+        """
+        See :meth:`.set_x_scale`.
+        """
+        self._scales[Y] = scale
+
+    def add_x_scale(self, domain_min, domain_max):
+        """
+        Create and add a :class:`.Scale`.
+
+        If the provided domain values are :class:`date` or :class:`datetime`
+        then a :class:`.Temporal` scale will be created, otherwise it will
+        :class:`.Linear`.
+
+        If you want to set a custom scale class use :meth:`.set_x_scale`
+        instead.
+        """
+        scale_type = Linear
+
+        if isinstance(domain_min, Date.types) or isinstance(domain_min, DateTime.types):
+            scale_type = Temporal
+
+        self.set_x_scale(scale_type(domain_min, domain_max))
+
+    def add_y_scale(self, domain_min, domain_max):
+        """
+        See :meth:`.add_x_scale`.
+        """
+        scale_type = Linear
+
+        if isinstance(domain_min, Date.types) or isinstance(domain_min, DateTime.types):
+            scale_type = Temporal
+
+        self.set_y_scale(scale_type(domain_min, domain_max))
+
+    def set_x_axis(self, axis):
+        """
+        Set an :class:`.Axis` class for this lattice.
+        """
+        self._axes[X] = axis
+
+    def set_y_axis(self, axis):
+        """
+        See :meth:`.set_x_axis`.
+        """
+        self._axes[Y] = axis
+
+    def add_x_axis(self, ticks=None, tick_formatter=None, name=None):
+        """
+        Create and add an X :class:`.Axis`.
+
+        If you want to set a custom axis class use :meth:`.set_x_axis` instead.
+        """
+        self._axes[X] = Axis(ticks, tick_formatter, name)
+
+    def add_y_axis(self, ticks=None, tick_formatter=None, name=None):
+        """
+        See :meth:`.add_x_axis`.
+        """
+        self._axes[Y] = Axis(ticks, tick_formatter, name)
 
     def add_one(self, data, x=None, y=None, title=None):
         """
@@ -61,23 +132,35 @@ class Lattice(object):
         """
         for i, d in enumerate(data):
             title = titles[i] if titles else None
+
             self.add_one(d, x=x, y=y, title=title)
 
     def to_svg(self, path=None, width=None, height=None):
         """
-        Render the grid to an SVG.
+        Render the lattice to an SVG.
 
         See :class:`.Grid` for additional documentation.
         """
-        x_scale = Scale.infer(self._series, X, self._types[X])
-        y_scale = Scale.infer(self._series, Y, self._types[Y])
+        if not self._scales[X]:
+            self._scales[X] = Scale.infer(self._series, X, self._types[X])
+
+        if not self._scales[Y]:
+            self._scales[Y]= Scale.infer(self._series, Y, self._types[Y])
+
+        if not self._axes[X]:
+            self._axes[X] = Axis()
+
+        if not self._axes[Y]:
+            self._axes[Y] = Axis()
 
         grid = Grid()
 
         for i, series in enumerate(self._series):
             chart = Chart(title=series._name)
-            chart.set_x_scale(x_scale)
-            chart.set_y_scale(y_scale)
+            chart.set_x_scale(self._scales[X])
+            chart.set_y_scale(self._scales[Y])
+            chart.set_x_axis(self._axes[X])
+            chart.set_y_axis(self._axes[Y])
             chart.add_series(series)
 
             grid.add_chart(chart)
