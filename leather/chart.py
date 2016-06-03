@@ -8,7 +8,6 @@ import six
 
 from leather.axis import Axis
 from leather.data_types import Date, DateTime
-from leather.legend import Legend
 from leather.scales import Scale, Linear, Temporal
 from leather.series import Series, CategorySeries
 from leather.shapes import Bars, Columns, Dots, Line
@@ -28,11 +27,16 @@ class Chart(object):
         self._title = title
         self._series_colors = theme.default_series_colors
 
-        self._legend = None
         self._layers = []
         self._types = [None, None]
         self._scales = [None, None]
         self._axes = [None, None]
+
+    def _palette(self):
+        """
+        Return a generator for series colors.
+        """
+        return (color for color in self._series_colors)
 
     def set_x_scale(self, scale):
         """
@@ -102,22 +106,16 @@ class Chart(object):
         """
         self._axes[Y] = Axis(ticks, tick_values, tick_formatter, name)
 
-    def set_legend(self, legend):
-        """
-        Set a :class:`.Legend` to use for this chart.
-        """
-        self._legend = legend
-
     def add_series(self, series, shape):
         """
         Add a data :class:`.Series` to the chart. The data types of the new
         series must be consistent with any series that have already been added.
         """
+        if self._layers and isinstance(self._layers[0][0], CategorySeries):
+            raise RuntimeError('Additional series can not be added to a chart with a CategorySeries.')
+
         if isinstance(series, CategorySeries):
-            if self._layers:
-                raise RuntimeError('A chart may only contain a single CategorySeries.')
-            else:
-                self._types = series._types
+            self._types = series._types
         else:
             for dim in [X, Y]:
                 if not self._types[dim]:
@@ -242,16 +240,32 @@ class Chart(object):
             header_group.append(label)
             header_margin += theme.title_font_char_height + theme.title_gap
 
-        if not self._legend:
-            if len(self._layers) > 1:
-                self._legend = Legend()
+        # Legend
+        legend_group = ET.Element('g')
+        legend_group.set('transform', svg.translate(0, header_margin))
 
-        if self._legend:
-            legend_group, legend_height = self._legend.to_svg(margin_width, self._layers)
-            legend_group.set('transform', svg.translate(0, header_margin))
+        indent = 0
+        rows = 1
+        palette = self._palette()
 
-            header_margin += legend_height
-            header_group.append(legend_group)
+        for series, shape in self._layers:
+            item_group, item_width = shape.legend_to_svg(series, palette)
+
+            if indent + item_width > width:
+                indent = 0
+                rows += 1
+
+            y = (rows - 1) * (theme.legend_font_char_height + theme.legend_gap)
+            item_group.set('transform', svg.translate(indent, y))
+
+            indent += item_width
+
+            legend_group.append(item_group)
+
+        legend_height = rows * (theme.legend_font_char_height + theme.legend_gap)
+
+        header_margin += legend_height
+        header_group.append(legend_group)
 
         margin_group.append(header_group)
 
@@ -287,7 +301,7 @@ class Chart(object):
         # Series
         series_group = ET.Element('g')
 
-        palette = (color for color in self._series_colors)
+        palette = self._palette()
 
         for series, shape in self._layers:
             series_group.append(shape.to_svg(canvas_width, canvas_height, x_scale, y_scale, series, palette))

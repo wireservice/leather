@@ -6,6 +6,7 @@ import six
 
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
+from leather import theme
 
 
 class Bars(Shape):

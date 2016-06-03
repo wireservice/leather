@@ -69,3 +69,57 @@ class Dots(Shape):
             ))
 
         return group
+
+    def legend_to_svg(self, series, palette):
+        """
+        Render the legend entry for these shapes.
+        """
+        if self._fill_color:
+            if callable(self._fill_colors):
+                # TODO
+                fill_color = 'black'
+            else:
+                fill_color = self._fill_color
+        else:
+            fill_color = next(palette)
+
+        stroke_color = None
+
+        bubble_width = theme.legend_bubble_size + theme.legend_bubble_offset
+
+        text = six.text_type(series._name)
+        text_width = (len(text) + 4) * theme.legend_font_char_width
+
+        item_width = text_width + bubble_width
+
+        # Group
+        item_group = ET.Element('g')
+
+        # Bubble
+        bubble = ET.Element('rect',
+            x=six.text_type(0),
+            y=six.text_type(-theme.legend_font_char_height + theme.legend_bubble_offset),
+            width=six.text_type(theme.legend_bubble_size),
+            height=six.text_type(theme.legend_bubble_size)
+        )
+
+        if fill_color:
+            bubble.set('fill', fill_color)
+        elif stroke_color:
+            bubble.set('fill', stroke_color)
+
+        item_group.append(bubble)
+
+        # Label
+        label = ET.Element('text',
+            x=six.text_type(bubble_width),
+            y=six.text_type(0),
+            fill=theme.legend_color
+        )
+        label.set('font-family', theme.legend_font_family)
+        label.set('font-size', six.text_type(theme.legend_font_size))
+        label.text = text
+
+        item_group.append(label)
+
+        return (item_group, item_width)

@@ -8,7 +8,7 @@ data = [
 ]
 
 chart = leather.Chart('Dots')
-series = leather.CategorySeries(data)
-shape = leather.Dots()
-chart.add_series(series, shape)
+chart.add_dots(data, x=0, y=1, name='Short')
+chart.add_dots(data, x=1, y=0, name='Very very very very very very very very long')
+chart.add_dots(data, x=1, y=1, name='Looooooooooooooooooooooooooooooooooooooooooooooooooong')
 chart.to_svg('test.svg')
