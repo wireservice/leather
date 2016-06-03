@@ -23,3 +23,6 @@ Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
 
 #: Data structure for a single series data point
 Datum = namedtuple('Datum', ['i', 'x', 'y', 'z', 'row'])
+
+#: Dummy object used in place of a series when rendering legends for categories
+DummySeries = namedtuple('DummySeries', ['name'])

@@ -71,3 +71,18 @@ class CategorySeries(Series):
 
         for i, row in enumerate(self._data):
             yield Datum(i, x(row, i), y(row, i), z(row, i), row)
+
+    def categories(self):
+        """
+        Return all unique values in the category field.
+        """
+        z = self._keys[Z]
+        categories = []
+
+        for i, row in enumerate(self._data):
+            cat = z(row, i)
+
+            if cat not in categories:
+                categories.append(cat)
+
+        return categories

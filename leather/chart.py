@@ -134,25 +134,37 @@ class Chart(object):
         """
         Create and add a :class:`.Series` rendered with :class:`.Bars`.
         """
-        self.add_series(Series(data, x=x, y=y, name=name), Bars(fill_color))
+        self.add_series(
+            Series(data, x=x, y=y, name=name),
+            Bars(fill_color)
+        )
 
     def add_columns(self, data, x=None, y=None, name=None, fill_color=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Columns`.
         """
-        self.add_series(Series(data, x=x, y=y, name=name), Columns(fill_color))
+        self.add_series(
+            Series(data, x=x, y=y, name=name),
+            Columns(fill_color)
+        )
 
     def add_dots(self, data, x=None, y=None, name=None, fill_color=None, radius=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Dots`.
         """
-        self.add_series(Series(data, x=x, y=y, name=name), Dots(fill_color, radius))
+        self.add_series(
+            Series(data, x=x, y=y, name=name),
+            Dots(fill_color, radius)
+        )
 
     def add_line(self, data, x=None, y=None, name=None, stroke_color=None, width=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Line`.
         """
-        self.add_series(Series(data, x=x, y=y, name=name), Line(stroke_color, width))
+        self.add_series(
+            Series(data, x=x, y=y, name=name),
+            Line(stroke_color, width)
+        )
 
     def _validate_dimension(self, dimension):
         """
@@ -250,7 +262,7 @@ class Chart(object):
             palette = self._palette()
 
             for series, shape in self._layers:
-                for (item_group, item_width) in shape.legend_to_svg(series, palette):
+                for item_group, item_width in shape.legend_to_svg(series, palette):
                     if indent + item_width > width:
                         indent = 0
                         rows += 1

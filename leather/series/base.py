@@ -85,6 +85,10 @@ class Series(object):
 
         return DataType.infer(v)
 
+    @property
+    def name(self):
+        return self._name
+
     def data(self, reverse=False):
         """
         Return data for this series.

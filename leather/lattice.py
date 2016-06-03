@@ -160,7 +160,7 @@ class Lattice(object):
         grid = Grid()
 
         for i, series in enumerate(self._series):
-            chart = Chart(title=series._name)
+            chart = Chart(title=series.name)
             chart.set_x_scale(self._scales[X])
             chart.set_y_scale(self._scales[Y])
             chart.set_x_axis(self._axes[X])

@@ -16,6 +16,12 @@ class Shape(object):
         """
         raise NotImplementedError
 
+    def to_svg(self, width, height, x_scale, y_scale, series, palette):
+        """
+        Render this shape to an SVG.
+        """
+        raise NotImplementedError
+
     def legend_to_svg(self, series, palette):
         """
         Render the legend entries for these shapes.
@@ -46,7 +52,7 @@ class Shape(object):
 
         bubble_width = theme.legend_bubble_size + theme.legend_bubble_offset
 
-        text = six.text_type(series._name) or 'Unnamed series'
+        text = six.text_type(series.name) or 'Unnamed series'
         text_width = (len(text) + 4) * theme.legend_font_char_width
 
         item_width = text_width + bubble_width

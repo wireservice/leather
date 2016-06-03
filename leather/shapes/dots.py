@@ -8,6 +8,7 @@ import six
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
 from leather import theme
+from leather.utils import DummySeries
 
 
 class Dots(Shape):
@@ -69,3 +70,17 @@ class Dots(Shape):
             ))
 
         return group
+
+    def legend_to_svg(self, series, palette):
+        """
+        Render the legend entries for these shapes.
+        """
+        items = []
+
+        if isinstance(series, CategorySeries):
+            for category in series.categories():
+                items.extend(Shape.legend_to_svg(self, DummySeries(category), palette))
+        else:
+            items.extend(Shape.legend_to_svg(self, series, palette))
+
+        return items
