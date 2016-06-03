@@ -5,7 +5,11 @@ class Shape(object):
     """
     Base class for shapes that can be used to render data :class:`.Series`.
     """
-    pass
+    def validate_series(self, series):
+        """
+        Verify this shape can be used to render a given series.
+        """
+        raise NotImplementedError
 
 
 def style_function(x, y, row, index):

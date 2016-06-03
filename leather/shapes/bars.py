@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 
 import six
 
+from leather.series import CategorySeries
 from leather.shapes.base import Shape
 
 
@@ -18,7 +19,14 @@ class Bars(Shape):
     def __init__(self, fill_color):
         self._fill_color = fill_color
 
-    def to_svg(self, width, height, x_scale, y_scale, series):
+    def validate_series(self, series):
+        """
+        Verify this shape can be used to render a given series.
+        """
+        if isinstance(series, CategorySeries):
+            raise ValueError('Bars can not be used to render CategorySeries.')
+
+    def to_svg(self, width, height, x_scale, y_scale, series, palette):
         """
         Render bars to SVG elements.
         """
@@ -27,14 +35,20 @@ class Bars(Shape):
 
         zero_x = x_scale.project(0, 0, width)
 
-        for i, (x, y, row) in enumerate(series):
-            if x is None or y is None:
+        if self._fill_color:
+            fill_color = self._fill_color
+        else:
+            fill_color = next(palette)
+
+        # Bars display "top-down"
+        for d in series.data(reverse=True):
+            if d.x is None or d.y is None:
                 continue
 
-            y1, y2 = y_scale.project_interval(y, height, 0)
-            proj_x = x_scale.project(x, 0, width)
+            y1, y2 = y_scale.project_interval(d.y, height, 0)
+            proj_x = x_scale.project(d.x, 0, width)
 
-            if x < 0:
+            if d.x < 0:
                 bar_x = proj_x
                 bar_width = zero_x - proj_x
             else:
@@ -42,7 +56,7 @@ class Bars(Shape):
                 bar_width = proj_x - zero_x
 
             if callable(self._fill_color):
-                color = self._fill_color(x, y, row, i)
+                color = self._fill_color(d.x, d.y, d.row, d.i)
             else:
                 color = self._fill_color
 

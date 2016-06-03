@@ -13,7 +13,7 @@ class Scale(object):
     Base class for various kinds of scale objects.
     """
     @classmethod
-    def infer(cls, series_list, dimension, data_type):
+    def infer(cls, layers, dimension, data_type):
         """
         Infer's an appropriate default scale for a given sequence of
         :class:`.Series`.
@@ -54,16 +54,16 @@ class Scale(object):
             data_min = None
             data_max = None
 
-            for series in series_list:
-                if isinstance(series._shape, (Bars, Columns)):
+            for series, shape in layers:
+                if isinstance(shape, (Bars, Columns)):
                     force_zero = True
 
-                if not data_min:
+                if data_min is None:
                     data_min = series.min(dimension)
                 else:
                     data_min = min(data_min, series.min(dimension))
 
-                if not data_max:
+                if data_max is None:
                     data_max = series.max(dimension)
                 else:
                     data_max = min(data_max, series.max(dimension))
@@ -80,8 +80,8 @@ class Scale(object):
         elif data_type is Text:
             scale_values = None
 
-            for series in series_list:
-                if not scale_values:
+            for series, shape in layers:
+                if scale_values is None:
                     scale_values = series.values(dimension)
                     continue
 

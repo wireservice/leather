@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 
 import six
 
+from leather.series import CategorySeries
 from leather.shapes.base import Shape
 from leather import theme
 
@@ -13,64 +14,76 @@ class Lines(Shape):
     Render a series of data as a lines.
 
     :param color:
-        The color to stroke the lines.
+        The color to stroke the lines. If not provided, default chart colors
+        will be used.
     :param width:
         The width of the lines. Defaults to :data:`.theme.default_line_width`.
     """
-    def __init__(self, stroke_color, width=None):
+    def __init__(self, stroke_color=None, width=None):
         self._stroke_color = stroke_color
         self._width = width or theme.default_line_width
 
-    def _new_path(self):
+    def validate_series(self, series):
+        """
+        Verify this shape can be used to render a given series.
+        """
+        if isinstance(series, CategorySeries):
+            raise ValueError('Lines can not be used to render CategorySeries.')
+
+    def _new_path(self, stroke_color):
         """
         Start a new path.
         """
         path = ET.Element('path',
-            stroke=self._stroke_color,
+            stroke=stroke_color,
             fill='none'
         )
         path.set('stroke-width', six.text_type(self._width))
 
         return path
 
-    def to_svg(self, width, height, x_scale, y_scale, series):
+    def to_svg(self, width, height, x_scale, y_scale, series, palette):
         """
         Render lines to SVG elements.
         """
         group = ET.Element('g')
         group.set('class', 'series lines')
 
-        path = self._new_path()
+        if self._stroke_color:
+            stroke_color = self._stroke_color
+        else:
+            stroke_color = next(palette)
 
-        d = []
+        path = self._new_path(stroke_color)
+        path_d = []
 
-        for x, y, row in series:
-            if x is None or y is None:
-                if d:
-                    path.set('d', ' '.join(d))
+        for d in series.data():
+            if d.x is None or d.y is None:
+                if path_d:
+                    path.set('d', ' '.join(path_d))
                     group.append(path)
 
-                d = []
-                path = self._new_path()
+                path_d = []
+                path = self._new_path(stroke_color)
 
                 continue
 
-            proj_x = x_scale.project(x, 0, width)
-            proj_y = y_scale.project(y, height, 0)
+            proj_x = x_scale.project(d.x, 0, width)
+            proj_y = y_scale.project(d.y, height, 0)
 
-            if not d:
+            if not path_d:
                 command = 'M'
             else:
                 command = 'L'
 
-            d.extend([
+            path_d.extend([
                 command,
                 six.text_type(proj_x),
                 six.text_type(proj_y)
             ])
 
-        if d:
-            path.set('d', ' '.join(d))
+        if path_d:
+            path.set('d', ' '.join(path_d))
             group.append(path)
 
         return group

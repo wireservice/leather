@@ -15,8 +15,11 @@ X = 0
 #: Y data dimension index
 Y = 1
 
-#: List of all data dimensions
-DIMENSIONS = [X, Y]
+#: Z data dimension index
+Z = 2
 
 #: Data structure for representing margins or other CSS-edge like properties
 Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
+
+#: Data structure for a single series data point
+Datum = namedtuple('Datum', ['i', 'x', 'y', 'z', 'row'])

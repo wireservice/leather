@@ -14,7 +14,7 @@ from leather.series import Series
 from leather.shapes import Bars, Columns, Dots, Lines
 import leather.svg as svg
 from leather import theme
-from leather.utils import X, Y, DIMENSIONS, Box, IPythonSVG
+from leather.utils import X, Y, Box, IPythonSVG
 
 
 class Chart(object):
@@ -26,7 +26,7 @@ class Chart(object):
     """
     def __init__(self, title=None):
         self._title = title
-        self._series_colors = copy(theme.default_series_colors)
+        self._series_colors = theme.default_series_colors
 
         self._legend = None
         self._layers = []
@@ -107,54 +107,47 @@ class Chart(object):
         """
         self._legend = legend
 
-    def add_series(self, series):
+    def add_series(self, series, shape):
         """
         Add a data :class:`.Series` to the chart. The data types of the new
         series must be consistent with any series that have already been added.
         """
-        for dim in DIMENSIONS:
+        for dim in [X, Y]:
             if not self._types[dim]:
                 self._types[dim] = series._types[dim]
             elif series._types[dim] is not self._types[dim]:
                 raise TypeError('Can\'t mix axis-data types: %s and %s' % (series._types[dim], self._types[dim]))
 
-        self._layers.append(series)
+        shape.validate_series(series)
 
-    def add_bars(self, data, x=None, y=None, name=None, color=None):
+        self._layers.append((
+            series,
+            shape
+        ))
+
+    def add_bars(self, data, x=None, y=None, name=None, fill_color=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Bars`.
         """
-        if not color:
-            color = self._series_colors.pop(0)
+        self.add_series(Series(data, x=x, y=y, name=name), Bars(fill_color))
 
-        self.add_series(Series(data, Bars(color), x=x, y=y, name=name))
-
-    def add_columns(self, data, x=None, y=None, name=None, color=None):
+    def add_columns(self, data, x=None, y=None, name=None, fill_color=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Columns`.
         """
-        if not color:
-            color = self._series_colors.pop(0)
+        self.add_series(Series(data, x=x, y=y, name=name), Columns(fill_color))
 
-        self.add_series(Series(data, Columns(color), x=x, y=y, name=name))
-
-    def add_dots(self, data, x=None, y=None, name=None, color=None, radius=None):
+    def add_dots(self, data, x=None, y=None, name=None, fill_color=None, radius=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Dots`.
         """
-        if not color:
-            color = self._series_colors.pop(0)
+        self.add_series(Series(data, x=x, y=y, name=name), Dots(fill_color, radius))
 
-        self.add_series(Series(data, Dots(color, radius), x=x, y=y, name=name))
-
-    def add_lines(self, data, x=None, y=None, name=None, color=None, width=None):
+    def add_line(self, data, x=None, y=None, name=None, stroke_color=None, width=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Lines`.
         """
-        if not color:
-            color = self._series_colors.pop(0)
-
-        self.add_series(Series(data, Lines(color, width), x=x, y=y, name=name))
+        self.add_series(Series(data, x=x, y=y, name=name), Lines(stroke_color, width))
 
     def _validate_dimension(self, dimension):
         """
@@ -287,8 +280,10 @@ class Chart(object):
         # Series
         series_group = ET.Element('g')
 
-        for series in self._layers:
-            series_group.append(series.to_svg(canvas_width, canvas_height, x_scale, y_scale))
+        palette = (color for color in self._series_colors)
+
+        for series, shape in self._layers:
+            series_group.append(shape.to_svg(canvas_width, canvas_height, x_scale, y_scale, series, palette))
 
         axes_group.append(series_group)
 

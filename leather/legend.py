@@ -12,7 +12,7 @@ class Legend(object):
     """
     Renders a legend describing the data series being charted.
     """
-    def to_svg(self, width, series_list):
+    def to_svg(self, width, layers):
         """
         Render a legend series list and return it for embedding in an SVG.
         """
@@ -23,7 +23,7 @@ class Legend(object):
         rows = 1
         indent = 0
 
-        for i, series in enumerate(series_list):
+        for i, (series, shape) in enumerate(layers):
             text = six.text_type(series._name or 'Series %i' % i)
             text_width = (len(text) + 4) * theme.legend_font_char_width
 
@@ -37,8 +37,8 @@ class Legend(object):
             item_group = ET.Element('g')
             item_group.set('transform', svg.translate(indent, y))
 
-            fill_color = getattr(series._shape, '_fill_color', None)
-            stroke_color = getattr(series._shape, '_stroke_color', None)
+            fill_color = getattr(shape, '_fill_color', None)
+            stroke_color = getattr(shape, '_stroke_color', None)
 
             if callable(fill_color):
                 # TODO

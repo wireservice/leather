@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 
 from collections import Iterable, Sequence, Mapping
+from functools import partial
 
 import six
 
 from leather.data_types import DataType
-from leather.shapes import Bars
-from leather.utils import DIMENSIONS, X, Y
+from leather.utils import X, Y, Datum
 
 
-class Series(Iterable):
+class Series(object):
     """
     A series of data and its associated metadata.
 
-    Series object does not modify or consume the data it is passed.
+    Series object does not modify the data it is passed.
 
     :param data:
         A sequence (rows) of sequences (columns), a.k.a. :func:`csv.reader`
@@ -42,34 +42,19 @@ class Series(Iterable):
     :param name:
         An optional name to be used in labeling this series.
     """
-    def __init__(self, data, shape, x=None, y=None, name=None):
+    def __init__(self, data, x=None, y=None, name=None):
         self._data = data
-        self._shape = shape
         self._name = name
-
-        # Bars should display top-down
-        if isinstance(self._shape, Bars):
-            self._data = tuple(reversed(self._data))
 
         self._keys = [
             self._make_key(x if x is not None else X),
             self._make_key(y if y is not None else Y)
         ]
 
-        self._types = [None, None]
-
-        for i in DIMENSIONS:
-            self._types[i] = self._infer_type(i)
-
-    def __iter__(self):
-        """
-        Iterate over this data series. Yields :code:`(x, y, row)`.
-        """
-        x = self._keys[X]
-        y = self._keys[Y]
-
-        for i, row in enumerate(self._data):
-            yield (x(row, i), y(row, i), row)
+        self._types = [
+            self._infer_type(self._keys[X]),
+            self._infer_type(self._keys[Y])
+        ]
 
     def _make_key(self, key):
         """
@@ -84,20 +69,35 @@ class Series(Iterable):
         else:
             return lambda row, index: row[key]
 
-    def _infer_type(self, dimension):
+    def _infer_type(self, key):
         """
         Infer the datatype of this column by sampling the data.
         """
-        key = self._keys[dimension]
-        i = 0
+        for i, row in enumerate(self._data):
+            v = key(row, i)
 
-        while key(self._data[i], i) is None:
-            i += 1
+            if v is not None:
+                break
 
-        if i == len(self._data):
-            raise ValueError('Entire value column was null.')
+        if v is None:
+            raise ValueError('All values in dimension was null.')
 
-        return DataType.infer(key(self._data[i], i))
+        return DataType.infer(v)
+
+    def data(self, reverse=False):
+        """
+        Return data for this series.
+        """
+        x = self._keys[X]
+        y = self._keys[Y]
+
+        if reverse:
+            increment = -1
+        else:
+            increment = 1
+
+        for i, row in enumerate(self._data[::increment]):
+            yield Datum(i, x(row, i), y(row, i), None, row)
 
     def values(self, dimension):
         """
@@ -118,12 +118,6 @@ class Series(Iterable):
         Compute the minimum value of a given dimension.
         """
         return max(v for v in self.values(dimension) if v is not None)
-
-    def to_svg(self, width, height, x_scale, y_scale):
-        """
-        Render this series to SVG elements using it's assigned shape.
-        """
-        return self._shape.to_svg(width, height, x_scale, y_scale, self)
 
 
 def key_function(row, index):

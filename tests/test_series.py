@@ -20,7 +20,7 @@ class TestSeries(unittest.TestCase):
             ('baz', 3)
         ]
 
-        series = leather.Series(data, self.shape)
+        series = leather.Series(data)
 
         self.assertSequenceEqual(series.values(X), ['foo', 'bar', 'baz'])
         self.assertSequenceEqual(series.values(Y), [1, 2, 3])
@@ -32,18 +32,18 @@ class TestSeries(unittest.TestCase):
             ('baz', 3, 6)
         ]
 
-        series = leather.Series(data, self.shape)
+        series = leather.Series(data)
 
         self.assertSequenceEqual(series.values(X), ['foo', 'bar', 'baz'])
         self.assertSequenceEqual(series.values(Y), [1, 2, 3])
 
-        series = leather.Series(data, self.shape, x=2, y=0)
+        series = leather.Series(data, x=2, y=0)
 
         self.assertSequenceEqual(series.values(X), [4, 5, 6])
         self.assertSequenceEqual(series.values(Y), ['foo', 'bar', 'baz'])
 
         with self.assertRaises(TypeError):
-            series = leather.Series(data, self.shape, x='words')
+            series = leather.Series(data, x='words')
 
     def test_dicts(self):
         data = [
@@ -53,9 +53,9 @@ class TestSeries(unittest.TestCase):
         ]
 
         with self.assertRaises(TypeError):
-            series = leather.Series(data, self.shape)
+            series = leather.Series(data)
 
-        series = leather.Series(data, self.shape, x='c', y='a')
+        series = leather.Series(data, x='c', y='a')
 
         self.assertSequenceEqual(series.values(X), [4, 5, 6])
         self.assertSequenceEqual(series.values(Y), ['foo', 'bar', 'baz'])
@@ -74,10 +74,10 @@ class TestSeries(unittest.TestCase):
         ]
 
         with self.assertRaises(TypeError):
-            series = leather.Series(data, self.shape)
+            series = leather.Series(data)
 
         with self.assertRaises(TypeError):
-            series = leather.Series(data, self.shape, x='words', y='more')
+            series = leather.Series(data, x='words', y='more')
 
         def get_x(row, i):
             return row.b
@@ -85,7 +85,7 @@ class TestSeries(unittest.TestCase):
         def get_y(row, i):
             return row.c
 
-        series = leather.Series(data, self.shape, x=get_x, y=get_y)
+        series = leather.Series(data, x=get_x, y=get_y)
 
         self.assertSequenceEqual(series.values(X), [1, 2, 3])
         self.assertSequenceEqual(series.values(Y), [4, 5, 6])

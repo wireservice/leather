@@ -8,7 +8,7 @@ from leather.scales import Scale, Linear
 from leather.series import Series
 from leather.shapes import Lines
 from leather import theme
-from leather.utils import DIMENSIONS, X, Y
+from leather.utils import X, Y
 
 
 class Lattice(object):
@@ -22,7 +22,7 @@ class Lattice(object):
         to :class:`.Lines` if not specified.
     """
     def __init__(self, shape=None):
-        self._shape = shape or Lines(theme.default_series_colors[0])
+        self._shape = shape or Lines()
         self._series = []
         self._types = [None, None]
         self._scales = [None, None]
@@ -109,15 +109,16 @@ class Lattice(object):
         :param title:
             A title to render above this chart.
         """
-        series = Series(data, self._shape, x=x, y=y, name=title)
+        series = Series(data, x=x, y=y, name=title)
 
-        for dimension in DIMENSIONS:
+        for dimension in [X, Y]:
             if self._types[dimension]:
                 if series._types[dimension] is not self._types[dimension]:
                     raise TypeError('All data series must have the same data types.')
             else:
                 self._types[dimension] = series._types[dimension]
 
+        self._shape.validate_series(series)
         self._series.append(series)
 
     def add_many(self, data, x=None, y=None, titles=None):
@@ -141,11 +142,13 @@ class Lattice(object):
 
         See :class:`.Grid` for additional documentation.
         """
+        layers = [(s, self._shape) for s in self._series]
+
         if not self._scales[X]:
-            self._scales[X] = Scale.infer(self._series, X, self._types[X])
+            self._scales[X] = Scale.infer(layers, X, self._types[X])
 
         if not self._scales[Y]:
-            self._scales[Y]= Scale.infer(self._series, Y, self._types[Y])
+            self._scales[Y]= Scale.infer(layers, Y, self._types[Y])
 
         if not self._axes[X]:
             self._axes[X] = Axis()
@@ -161,7 +164,7 @@ class Lattice(object):
             chart.set_y_scale(self._scales[Y])
             chart.set_x_axis(self._axes[X])
             chart.set_y_axis(self._axes[Y])
-            chart.add_series(series)
+            chart.add_series(series, self._shape)
 
             grid.add_one(chart)
 

@@ -13,15 +13,16 @@ class TestBars(unittest.TestCase):
         self.shape = leather.Bars('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
+        self.palette = (color for color in ['red', 'white', 'blue'])
 
     def test_to_svg(self):
         series = leather.Series([
             (0, 'foo'),
             (5, 'bar'),
             (10, 'bing')
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series)
+        group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series, self.palette)
         rects = list(group)
 
         self.assertEqual(len(rects), 3)
@@ -33,9 +34,9 @@ class TestBars(unittest.TestCase):
             (0, 'foo'),
             (None, None),
             (10, 'bing')
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series)
+        group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series, self.palette)
         rects = list(group)
 
         self.assertEqual(len(rects), 2)
@@ -48,15 +49,16 @@ class TestColumns(unittest.TestCase):
         self.shape = leather.Columns('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
+        self.palette = (color for color in ['red', 'white', 'blue'])
 
     def test_to_svg(self):
         series = leather.Series([
             ('foo', 0),
             ('bar', 5),
             ('bing', 10)
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.ordinal, self.linear, series)
+        group = self.shape.to_svg(200, 100, self.ordinal, self.linear, series, self.palette)
         rects = list(group)
 
         self.assertEqual(len(rects), 3)
@@ -68,9 +70,9 @@ class TestColumns(unittest.TestCase):
             ('foo', 0),
             (None, None),
             ('bing', 10)
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.ordinal, self.linear, series)
+        group = self.shape.to_svg(200, 100, self.ordinal, self.linear, series, self.palette)
         rects = list(group)
 
         self.assertEqual(len(rects), 2)
@@ -83,15 +85,16 @@ class TestDots(unittest.TestCase):
         self.shape = leather.Dots('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
+        self.palette = (color for color in ['red', 'white', 'blue'])
 
     def test_linear(self):
         series = leather.Series([
             (0, 0),
             (5, 5),
             (10, 10)
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.linear, self.linear, series)
+        group = self.shape.to_svg(200, 100, self.linear, self.linear, series, self.palette)
         circles = list(group)
 
         self.assertEqual(len(circles), 3)
@@ -103,9 +106,9 @@ class TestDots(unittest.TestCase):
             ('foo', 0),
             ('bar', 5),
             ('bing', 10)
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.ordinal, self.linear, series)
+        group = self.shape.to_svg(200, 100, self.ordinal, self.linear, series, self.palette)
         circles = list(group)
 
         self.assertEqual(len(circles), 3)
@@ -117,9 +120,9 @@ class TestDots(unittest.TestCase):
             (0, 0),
             (None, None),
             (10, 10)
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.linear, self.linear, series)
+        group = self.shape.to_svg(200, 100, self.linear, self.linear, series, self.palette)
         circles = list(group)
 
         self.assertEqual(len(circles), 2)
@@ -132,15 +135,16 @@ class TestLines(unittest.TestCase):
         self.shape = leather.Lines('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
+        self.palette = (color for color in ['red', 'white', 'blue'])
 
     def test_linear(self):
         series = leather.Series([
             (0, 0),
             (5, 5),
             (10, 10)
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.linear, self.linear, series)
+        group = self.shape.to_svg(200, 100, self.linear, self.linear, series, self.palette)
         paths = list(group)
 
         self.assertEqual(len(paths), 1)
@@ -150,9 +154,9 @@ class TestLines(unittest.TestCase):
             ('foo', 0),
             ('bar', 5),
             ('bing', 10)
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.ordinal, self.linear, series)
+        group = self.shape.to_svg(200, 100, self.ordinal, self.linear, series, self.palette)
         paths = list(group)
 
         self.assertEqual(len(paths), 1)
@@ -162,9 +166,9 @@ class TestLines(unittest.TestCase):
             (0, 0),
             (None, None),
             (10, 10)
-        ], self.shape)
+        ])
 
-        group = self.shape.to_svg(200, 100, self.linear, self.linear, series)
+        group = self.shape.to_svg(200, 100, self.linear, self.linear, series, self.palette)
         paths = list(group)
 
         self.assertEqual(len(paths), 2)
