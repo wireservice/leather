@@ -18,7 +18,7 @@ chart1 = leather.Chart('Dots')
 chart1.add_dots(data1)
 
 chart2 = leather.Chart('Lines')
-chart2.add_lines(data2)
+chart2.add_line(data2)
 
 grid = leather.Grid()
 grid.add_one(chart1)

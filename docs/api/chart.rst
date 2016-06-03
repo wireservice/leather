@@ -20,7 +20,7 @@ Adding data
     leather.Chart.add_bars
     leather.Chart.add_columns
     leather.Chart.add_dots
-    leather.Chart.add_lines
+    leather.Chart.add_line
 
 Customizing
 -----------

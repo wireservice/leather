@@ -55,10 +55,10 @@ class Bars(Shape):
                 bar_x = zero_x
                 bar_width = proj_x - zero_x
 
-            if callable(self._fill_color):
-                color = self._fill_color(d.x, d.y, d.row, d.i)
+            if callable(fill_color):
+                color = fill_color(d)
             else:
-                color = self._fill_color
+                color = fill_color
 
             group.append(ET.Element('rect',
                 x=six.text_type(bar_x),

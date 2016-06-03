@@ -130,9 +130,9 @@ class TestDots(unittest.TestCase):
         self.assertEqual(float(circles[1].get('cy')), 0)
 
 
-class TestLines(unittest.TestCase):
+class TestLine(unittest.TestCase):
     def setUp(self):
-        self.shape = leather.Lines('red')
+        self.shape = leather.Line('red')
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['foo', 'bar', 'bing'])
         self.palette = (color for color in ['red', 'white', 'blue'])

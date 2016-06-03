@@ -9,9 +9,9 @@ from leather.shapes.base import Shape
 from leather import theme
 
 
-class Lines(Shape):
+class Line(Shape):
     """
-    Render a series of data as a lines.
+    Render a series of data as a line.
 
     :param color:
         The color to stroke the lines. If not provided, default chart colors
@@ -28,7 +28,7 @@ class Lines(Shape):
         Verify this shape can be used to render a given series.
         """
         if isinstance(series, CategorySeries):
-            raise ValueError('Lines can not be used to render CategorySeries.')
+            raise ValueError('Line can not be used to render CategorySeries.')
 
     def _new_path(self, stroke_color):
         """

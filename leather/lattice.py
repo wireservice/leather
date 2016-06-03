@@ -6,7 +6,7 @@ from leather.data_types import Date, DateTime
 from leather.grid import Grid
 from leather.scales import Scale, Linear
 from leather.series import Series
-from leather.shapes import Lines
+from leather.shapes import Line
 from leather import theme
 from leather.utils import X, Y
 
@@ -19,10 +19,10 @@ class Lattice(object):
 
     :param shape:
         An instance of :class:`.Shape` to use to render all series. Defaults
-        to :class:`.Lines` if not specified.
+        to :class:`.Line` if not specified.
     """
     def __init__(self, shape=None):
-        self._shape = shape or Lines()
+        self._shape = shape or Line()
         self._series = []
         self._types = [None, None]
         self._scales = [None, None]
@@ -36,7 +36,7 @@ class Lattice(object):
 
     def set_y_scale(self, scale):
         """
-        See :meth:`.set_x_scale`.
+        See :meth:`.Lattice.set_x_scale`.
         """
         self._scales[Y] = scale
 
@@ -48,7 +48,7 @@ class Lattice(object):
         then a :class:`.Temporal` scale will be created, otherwise it will
         :class:`.Linear`.
 
-        If you want to set a custom scale class use :meth:`.set_x_scale`
+        If you want to set a custom scale class use :meth:`.Lattice.set_x_scale`
         instead.
         """
         scale_type = Linear
@@ -60,7 +60,7 @@ class Lattice(object):
 
     def add_y_scale(self, domain_min, domain_max):
         """
-        See :meth:`.add_x_scale`.
+        See :meth:`.Lattice.add_x_scale`.
         """
         scale_type = Linear
 
@@ -77,7 +77,7 @@ class Lattice(object):
 
     def set_y_axis(self, axis):
         """
-        See :meth:`.set_x_axis`.
+        See :meth:`.Lattice.set_x_axis`.
         """
         self._axes[Y] = axis
 
@@ -85,13 +85,14 @@ class Lattice(object):
         """
         Create and add an X :class:`.Axis`.
 
-        If you want to set a custom axis class use :meth:`.set_x_axis` instead.
+        If you want to set a custom axis class use :meth:`.Lattice.set_x_axis`
+        instead.
         """
         self._axes[X] = Axis(ticks, tick_formatter, name)
 
     def add_y_axis(self, ticks=None, tick_formatter=None, name=None):
         """
-        See :meth:`.add_x_axis`.
+        See :meth:`.Lattice.add_x_axis`.
         """
         self._axes[Y] = Axis(ticks, tick_formatter, name)
 

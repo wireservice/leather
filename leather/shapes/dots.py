@@ -50,14 +50,14 @@ class Dots(Shape):
             proj_y = y_scale.project(d.y, height, 0)
 
             if callable(self._fill_color):
-                fill_color = self._fill_color(d.x, d.y, d.row, d.i)
+                fill_color = self._fill_color(d)
             elif self._fill_color:
                 fill_color = self._fill_color
             else:
                 fill_color = default_colors[d.z]
 
             if callable(self._radius):
-                radius = self._radius(d.x, d.y, d.i)
+                radius = self._radius(d)
             else:
                 radius = self._radius
 

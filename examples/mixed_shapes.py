@@ -23,6 +23,6 @@ dot_data = [
 
 chart = leather.Chart('Mixed shapes')
 chart.add_columns(column_data)
-chart.add_lines(line_data)
+chart.add_line(line_data)
 chart.add_dots(dot_data)
 chart.to_svg('examples/charts/mixed_shapes.svg')

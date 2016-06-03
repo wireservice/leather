@@ -54,10 +54,10 @@ class Columns(Shape):
                 column_y = proj_y
                 column_height = zero_y - proj_y
 
-            if callable(self._fill_color):
-                color = self._fill_color(d.x, d.y, d.row, d.i)
+            if callable(fill_color):
+                color = fill_color(d)
             else:
-                color = self._fill_color
+                color = fill_color
 
             group.append(ET.Element('rect',
                 x=six.text_type(x1),

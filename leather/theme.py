@@ -127,5 +127,5 @@ default_series_colors = ['#d190b6', '#51b2e5', '#d365ba', '#168dd9']
 #: Default :class:`.Dots` radius
 default_dot_radius = 3
 
-#: Default :class:`.Lines` width
+#: Default :class:`.Line` width
 default_line_width = 2

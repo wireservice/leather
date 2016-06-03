@@ -11,7 +11,7 @@ from leather.data_types import Date, DateTime
 from leather.legend import Legend
 from leather.scales import Scale, Linear, Temporal
 from leather.series import Series
-from leather.shapes import Bars, Columns, Dots, Lines
+from leather.shapes import Bars, Columns, Dots, Line
 import leather.svg as svg
 from leather import theme
 from leather.utils import X, Y, Box, IPythonSVG
@@ -42,7 +42,7 @@ class Chart(object):
 
     def set_y_scale(self, scale):
         """
-        See :meth:`.set_x_scale`.
+        See :meth:`.Chart.set_x_scale`.
         """
         self._scales[Y] = scale
 
@@ -54,7 +54,7 @@ class Chart(object):
         then a :class:`.Temporal` scale will be created, otherwise it will
         :class:`.Linear`.
 
-        If you want to set a custom scale class use :meth:`.set_x_scale`
+        If you want to set a custom scale class use :meth:`.Chart.set_x_scale`
         instead.
         """
         scale_type = Linear
@@ -66,7 +66,7 @@ class Chart(object):
 
     def add_y_scale(self, domain_min, domain_max):
         """
-        See :meth:`.add_x_scale`.
+        See :meth:`.Chart.add_x_scale`.
         """
         scale_type = Linear
 
@@ -83,7 +83,7 @@ class Chart(object):
 
     def set_y_axis(self, axis):
         """
-        See :meth:`.set_x_axis`.
+        See :meth:`.Chart.set_x_axis`.
         """
         self._axes[Y] = axis
 
@@ -91,13 +91,14 @@ class Chart(object):
         """
         Create and add an X :class:`.Axis`.
 
-        If you want to set a custom axis class use :meth:`.set_x_axis` instead.
+        If you want to set a custom axis class use :meth:`.Chart.set_x_axis`
+        instead.
         """
         self._axes[X] = Axis(ticks, tick_values, tick_formatter, name)
 
     def add_y_axis(self, ticks=None, tick_values=None, tick_formatter=None, name=None):
         """
-        See :meth:`.add_x_axis`.
+        See :meth:`.Chart.add_x_axis`.
         """
         self._axes[Y] = Axis(ticks, tick_values, tick_formatter, name)
 
@@ -145,9 +146,9 @@ class Chart(object):
 
     def add_line(self, data, x=None, y=None, name=None, stroke_color=None, width=None):
         """
-        Create and add a :class:`.Series` rendered with :class:`.Lines`.
+        Create and add a :class:`.Series` rendered with :class:`.Line`.
         """
-        self.add_series(Series(data, x=x, y=y, name=name), Lines(stroke_color, width))
+        self.add_series(Series(data, x=x, y=y, name=name), Line(stroke_color, width))
 
     def _validate_dimension(self, dimension):
         """
