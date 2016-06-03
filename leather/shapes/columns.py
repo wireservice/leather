@@ -12,7 +12,7 @@ class Columns(Shape):
     """
     Render a series of data as columns.
 
-    :param color:
+    :param fill_color:
         The color to fill the columns. You may also specify a
         :func:`.style_function`.
     """

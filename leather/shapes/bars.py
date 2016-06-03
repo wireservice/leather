@@ -12,7 +12,7 @@ class Bars(Shape):
     """
     Render a series of data as bars.
 
-    :param color:
+    :param fill_color:
         The color to fill the bars. You may also specify a
         :func:`.style_function`.
     """

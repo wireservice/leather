@@ -40,7 +40,8 @@ class Series(object):
     :param y:
         See :code:`x`.
     :param name:
-        An optional name to be used in labeling this series.
+        An optional name to be used in labeling this series. This will be
+        used as the chart title if rendered in a :class:`.Lattice`.
     """
     def __init__(self, data, x=None, y=None, name=None):
         self._data = data

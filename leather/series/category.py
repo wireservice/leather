@@ -27,8 +27,6 @@ class CategorySeries(Series):
 
         Or, a custom data format, in which case :code:`x` and :code:`y` must
         specify :func:`.key_function`.
-    :param shape:
-        An instance of :class:`.Shape` to use to render this data.
     :param x:
         If using sequence row data, then this may be either an integer index
         identifying the X column, or a :func:`.key_function`.
@@ -43,9 +41,13 @@ class CategorySeries(Series):
     :param z:
         See :code:`y`. This variable identifies the category/sub-series of each
         row.
+    :param name:
+        An optional name to be used in labeling this series. This will be
+        used as the chart title if rendered in a :class:`.Lattice`.
     """
-    def __init__(self, data, x=None, y=None, z=None):
+    def __init__(self, data, x=None, y=None, z=None, name=None):
         self._data = data
+        self._name = name
 
         self._keys = [
             self._make_key(x if x is not None else X),

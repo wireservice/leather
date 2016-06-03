@@ -13,7 +13,7 @@ class Line(Shape):
     """
     Render a series of data as a line.
 
-    :param color:
+    :param stroke_color:
         The color to stroke the lines. If not provided, default chart colors
         will be used.
     :param width:
