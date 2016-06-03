@@ -10,7 +10,7 @@ from leather.axis import Axis
 from leather.data_types import Date, DateTime
 from leather.legend import Legend
 from leather.scales import Scale, Linear, Temporal
-from leather.series import Series
+from leather.series import Series, CategorySeries
 from leather.shapes import Bars, Columns, Dots, Line
 import leather.svg as svg
 from leather import theme
@@ -113,11 +113,17 @@ class Chart(object):
         Add a data :class:`.Series` to the chart. The data types of the new
         series must be consistent with any series that have already been added.
         """
-        for dim in [X, Y]:
-            if not self._types[dim]:
-                self._types[dim] = series._types[dim]
-            elif series._types[dim] is not self._types[dim]:
-                raise TypeError('Can\'t mix axis-data types: %s and %s' % (series._types[dim], self._types[dim]))
+        if isinstance(series, CategorySeries):
+            if self._layers:
+                raise RuntimeError('A chart may only contain a single CategorySeries.')
+            else:
+                self._types = series._types
+        else:
+            for dim in [X, Y]:
+                if not self._types[dim]:
+                    self._types[dim] = series._types[dim]
+                elif series._types[dim] is not self._types[dim]:
+                    raise TypeError('Can\'t mix axis-data types: %s and %s' % (series._types[dim], self._types[dim]))
 
         shape.validate_series(series)
 

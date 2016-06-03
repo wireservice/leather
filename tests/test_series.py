@@ -6,13 +6,10 @@ except ImportError:
     import unittest
 
 import leather
-from leather.utils import X, Y
+from leather.utils import X, Y, Z
 
 
 class TestSeries(unittest.TestCase):
-    def setUp(self):
-        self.shape = leather.Dots('red')
-
     def test_pairs(self):
         data = [
             ('foo', 1),
@@ -89,3 +86,18 @@ class TestSeries(unittest.TestCase):
 
         self.assertSequenceEqual(series.values(X), [1, 2, 3])
         self.assertSequenceEqual(series.values(Y), [4, 5, 6])
+
+
+class TestCategorySeries(unittest.TestCase):
+    def test_triples(self):
+        data = [
+            ('foo', 1, 'a'),
+            ('bar', 2, 'a'),
+            ('baz', 3, 'b')
+        ]
+
+        series = leather.CategorySeries(data)
+
+        self.assertSequenceEqual(series.values(X), ['foo', 'bar', 'baz'])
+        self.assertSequenceEqual(series.values(Y), [1, 2, 3])
+        self.assertSequenceEqual(series.values(Z), ['a', 'a', 'b'])
