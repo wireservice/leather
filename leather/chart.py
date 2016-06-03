@@ -241,31 +241,31 @@ class Chart(object):
             header_margin += theme.title_font_char_height + theme.title_gap
 
         # Legend
-        legend_group = ET.Element('g')
-        legend_group.set('transform', svg.translate(0, header_margin))
+        if len(self._layers) > 1 or isinstance(self._layers[0][0], CategorySeries):
+            legend_group = ET.Element('g')
+            legend_group.set('transform', svg.translate(0, header_margin))
 
-        indent = 0
-        rows = 1
-        palette = self._palette()
+            indent = 0
+            rows = 1
+            palette = self._palette()
 
-        for series, shape in self._layers:
-            item_group, item_width = shape.legend_to_svg(series, palette)
+            for series, shape in self._layers:
+                for (item_group, item_width) in shape.legend_to_svg(series, palette):
+                    if indent + item_width > width:
+                        indent = 0
+                        rows += 1
 
-            if indent + item_width > width:
-                indent = 0
-                rows += 1
+                    y = (rows - 1) * (theme.legend_font_char_height + theme.legend_gap)
+                    item_group.set('transform', svg.translate(indent, y))
 
-            y = (rows - 1) * (theme.legend_font_char_height + theme.legend_gap)
-            item_group.set('transform', svg.translate(indent, y))
+                    indent += item_width
 
-            indent += item_width
+                    legend_group.append(item_group)
 
-            legend_group.append(item_group)
+            legend_height = rows * (theme.legend_font_char_height + theme.legend_gap)
 
-        legend_height = rows * (theme.legend_font_char_height + theme.legend_gap)
-
-        header_margin += legend_height
-        header_group.append(legend_group)
+            header_margin += legend_height
+            header_group.append(legend_group)
 
         margin_group.append(header_group)
 
