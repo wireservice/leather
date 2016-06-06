@@ -63,10 +63,6 @@ class Series(object):
         """
         if callable(key):
             return key
-        elif isinstance(self._data[0], Sequence) and not isinstance(key, int):
-            raise TypeError('You must specify an integer index when using sequence data.')
-        elif isinstance(self._data[0], Mapping) and not isinstance(key, six.string_types):
-            raise TypeError('You must specify a string index when using dict data.')
         else:
             return lambda row, index: row[key]
 
