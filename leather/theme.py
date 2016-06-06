@@ -83,7 +83,7 @@ axis_title_font_char_height = 14
 axis_title_font_char_width = 8
 
 #: Gap between axis title and rest of chart
-axis_title_gap = 8
+axis_title_gap = 16
 
 # TICKS
 
