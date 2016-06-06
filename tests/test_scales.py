@@ -3,16 +3,10 @@
 from datetime import date, datetime
 from decimal import Decimal
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
-
 import leather
-from tests.utils import XMLTest
 
 
-class TestLinear(XMLTest):
+class TestLinear(leather.LeatherTestCase):
     def test_project(self):
         scale = leather.Linear(0, 10)
 
@@ -58,7 +52,7 @@ class TestLinear(XMLTest):
         self.assertEqual(scale.ticks(5)[1], Decimal(2.5))
         self.assertEqual(scale.ticks(6)[1], Decimal(2))
 
-class TestOrdinal(XMLTest):
+class TestOrdinal(leather.LeatherTestCase):
     def test_project(self):
         scale = leather.Ordinal(['a', 'b', 'c', 'd'])
 
@@ -85,7 +79,7 @@ class TestOrdinal(XMLTest):
         self.assertEqual(scale.ticks(6), ['a', 'b', 'c', 'd'])
 
 
-class TestTemporal(XMLTest):
+class TestTemporal(leather.LeatherTestCase):
     """
     Note: due to leap-year calculations, it's almost impossible to write
     exact tests for this scale which are not trivial.
@@ -117,7 +111,7 @@ class TestTemporal(XMLTest):
         self.assertEqual(ticks[-1], date(2014, 1, 1))
 
 
-class TestYears(XMLTest):
+class TestYears(leather.LeatherTestCase):
     def test_project(self):
         scale = leather.Years(date(2010, 1, 1), date(2014, 1, 1))
 
@@ -154,7 +148,7 @@ class TestYears(XMLTest):
         ])
 
 
-class TestMonths(XMLTest):
+class TestMonths(leather.LeatherTestCase):
     """
     See notes for :class:`.TestTemporal`.
     """

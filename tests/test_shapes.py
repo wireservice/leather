@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
-
 import leather
 
 
-class TestBars(unittest.TestCase):
+class TestBars(leather.LeatherTestCase):
     def setUp(self):
         self.shape = leather.Bars('red')
         self.linear = leather.Linear(0, 10)
@@ -44,7 +39,7 @@ class TestBars(unittest.TestCase):
         self.assertEqual(float(rects[1].get('width')), 0)
 
 
-class TestColumns(unittest.TestCase):
+class TestColumns(leather.LeatherTestCase):
     def setUp(self):
         self.shape = leather.Columns('red')
         self.linear = leather.Linear(0, 10)
@@ -80,7 +75,7 @@ class TestColumns(unittest.TestCase):
         self.assertEqual(float(rects[1].get('height')), 100)
 
 
-class TestDots(unittest.TestCase):
+class TestDots(leather.LeatherTestCase):
     def setUp(self):
         self.shape = leather.Dots('red')
         self.linear = leather.Linear(0, 10)
@@ -130,7 +125,7 @@ class TestDots(unittest.TestCase):
         self.assertEqual(float(circles[1].get('cy')), 0)
 
 
-class TestLine(unittest.TestCase):
+class TestLine(leather.LeatherTestCase):
     def setUp(self):
         self.shape = leather.Line('red')
         self.linear = leather.Linear(0, 10)

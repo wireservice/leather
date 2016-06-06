@@ -8,18 +8,20 @@ except ImportError:
 from lxml import etree
 
 
-class XMLTest(unittest.TestCase):
+class LeatherTestCase(unittest.TestCase):
     """
-    Unittest case for quickly asserting logic about tables.
+    Unittest case for quickly asserting logic about charts.
     """
     def render_chart(self, chart):
         """
         Verify the column names in the given table match what is expected.
         """
-        text = chart.to_svg()
-        text = text.replace(' xmlns="http://www.w3.org/2000/svg"', '')
+        svg = chart.to_svg()
 
-        return etree.fromstring(text)
+        return self.parse_svg(svg)
+
+    def parse_svg(self, text):
+        return etree.fromstring(text.replace(' xmlns="http://www.w3.org/2000/svg"', ''))
 
     def assertElementCount(self, svg, selector, count):
         series = svg.cssselect(selector)

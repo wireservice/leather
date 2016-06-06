@@ -1,15 +1,10 @@
 #!/usr/bin/env python
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
-
 import leather
 from leather.utils import X, Y, Z
 
 
-class TestSeries(unittest.TestCase):
+class TestSeries(leather.LeatherTestCase):
     def test_pairs(self):
         data = [
             ('foo', 1),
@@ -49,7 +44,7 @@ class TestSeries(unittest.TestCase):
             {'a': 'baz', 'b': 3, 'c': 6}
         ]
 
-        with self.assertRaises(TypeError):
+        with self.assertRaises(KeyError):
             series = leather.Series(data)
 
         series = leather.Series(data, x='c', y='a')
@@ -88,7 +83,7 @@ class TestSeries(unittest.TestCase):
         self.assertSequenceEqual(series.values(Y), [4, 5, 6])
 
 
-class TestCategorySeries(unittest.TestCase):
+class TestCategorySeries(leather.LeatherTestCase):
     def test_triples(self):
         data = [
             ('foo', 1, 'a'),

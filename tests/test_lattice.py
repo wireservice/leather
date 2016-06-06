@@ -1,15 +1,9 @@
 #!/usr/bin/env python
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
-
 import leather
-from tests.utils import XMLTest
 
 
-class TestLattice(XMLTest):
+class TestLattice(leather.LeatherTestCase):
     def setUp(self):
         self.data1 = [
             (0, 3),
