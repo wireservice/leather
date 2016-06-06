@@ -21,7 +21,10 @@ class LeatherTestCase(unittest.TestCase):
         return self.parse_svg(svg)
 
     def parse_svg(self, text):
-        return etree.fromstring(text.replace(' xmlns="http://www.w3.org/2000/svg"', ''))
+        text = text.replace(' xmlns="http://www.w3.org/2000/svg"', '')
+        text = text.encode('utf-8')
+
+        return etree.fromstring(text)
 
     def assertElementCount(self, svg, selector, count):
         series = svg.cssselect(selector)
