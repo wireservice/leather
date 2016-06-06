@@ -66,7 +66,7 @@ class Scale(object):
                 if data_max is None:
                     data_max = series.max(dimension)
                 else:
-                    data_max = min(data_max, series.max(dimension))
+                    data_max = max(data_max, series.max(dimension))
 
             if force_zero:
                 if data_min > 0:

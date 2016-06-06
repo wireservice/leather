@@ -120,8 +120,6 @@ class Axis(object):
             else:
                 group.append(tick_group)
 
-            print(value, range_min, range_max)
-
             # Tick line
             projected_value = scale.project(value, range_min, range_max)
 
