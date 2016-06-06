@@ -88,13 +88,13 @@ class Lattice(object):
         If you want to set a custom axis class use :meth:`.Lattice.set_x_axis`
         instead.
         """
-        self._axes[X] = Axis(ticks, tick_formatter, name)
+        self._axes[X] = Axis(ticks=ticks, tick_formatter=tick_formatter, name=name)
 
     def add_y_axis(self, ticks=None, tick_formatter=None, name=None):
         """
         See :meth:`.Lattice.add_x_axis`.
         """
-        self._axes[Y] = Axis(ticks, tick_formatter, name)
+        self._axes[Y] = Axis(ticks=ticks, tick_formatter=tick_formatter, name=name)
 
     def add_one(self, data, x=None, y=None, title=None):
         """

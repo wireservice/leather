@@ -16,7 +16,7 @@ class Columns(Shape):
         The color to fill the columns. You may also specify a
         :func:`.style_function`.
     """
-    def __init__(self, fill_color):
+    def __init__(self, fill_color=None):
         self._fill_color = fill_color
 
     def validate_series(self, series):

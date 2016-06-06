@@ -34,7 +34,7 @@ class Scale(object):
             data_min = date.max
             data_max = date.min
 
-            for series in series_list:
+            for series, shape in layers:
                 data_min = min(data_min, series.min(dimension))
                 data_max = max(data_max, series.max(dimension))
 
@@ -43,7 +43,7 @@ class Scale(object):
             data_min = datetime.max
             data_max = datetime.min
 
-            for series in series_list:
+            for series, shape in layers:
                 data_min = min(data_min, series.min(dimension))
                 data_max = max(data_max, series.max(dimension))
 
@@ -86,7 +86,7 @@ class Scale(object):
                     continue
 
                 if series.values(dimension) != scale_values:
-                    raise ValueError('Mismatched series scales')
+                    raise ValueError('All series must have the same values for scale display.')
 
             scale = Ordinal(scale_values)
 
