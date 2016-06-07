@@ -141,17 +141,6 @@ def round_tick(t):
     Round ticks to 0-3 decimal places, if the remaining digits do not appear
     to be significant.
     """
-    # if isclose(t, int(t)):
-    #     return int(t)
-    #
-    # for r in range(1, 4):
-    #     rounded = round(t, r)
-    #
-    #     if isclose(t, rounded):
-    #         return rounded
-    #
-    # return t
-
     for r in range(0, 4):
         exp = pow(Decimal(10), Decimal(-r))
         quantized = t.quantize(exp)
