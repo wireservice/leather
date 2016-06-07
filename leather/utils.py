@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 from collections import namedtuple
+from decimal import Decimal
+import math
 import sys
 
 try:
@@ -9,6 +11,10 @@ try:
 except (NameError, ImportError):
     IPythonSVG = lambda x: x
 
+
+# Shorthand
+ZERO = Decimal('0')
+NINE_PLACES = Decimal('1e-9')
 
 #: X data dimension index
 X = 0
@@ -34,7 +40,7 @@ DummySeries = namedtuple('DummySeries', ['name'])
 if sys.version_info >= (3, 5):
     from math import isclose
 else:
-    def isclose(a, b, rel_tol=1e-9, abs_tol=0.0):
+    def isclose(a, b, rel_tol=NINE_PLACES, abs_tol=ZERO):
         """
         Test if two floating points numbers are close enough to be considered
         equal.
@@ -56,7 +62,7 @@ else:
         if a == b:
             return True
 
-        if rel_tol < 0.0 or abs_tol < 0.0:
+        if rel_tol < ZERO or abs_tol < ZERO:
             raise ValueError('Tolerances must be non-negative')
 
         if math.isinf(abs(a)) or math.isinf(abs(b)):

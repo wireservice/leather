@@ -3,7 +3,7 @@
 from decimal import Decimal
 
 from leather.scales.base import Scale
-from leather.ticks import optimize_ticks
+from leather.ticks.score import ScoreTicker
 
 
 class Linear(Scale):
@@ -17,15 +17,12 @@ class Linear(Scale):
     """
     def __init__(self, domain_min, domain_max):
         if domain_min >= domain_max:
-            raise ValueError('Domain minimum must be less than domain maximum.')
+            raise ValueError('Domain minimum must be less than domain maximum. Inverted domains are not currently supported.')
 
         self._data_min = Decimal(domain_min)
         self._data_max = Decimal(domain_max)
 
-        self._ticks = optimize_ticks(self._data_min, self._data_max)
-
-        self._min = self._ticks[0]
-        self._max = self._ticks[-1]
+        self._ticker = ScoreTicker(self._data_min, self._data_max)
 
     def project(self, value, range_min, range_max):
         """
@@ -35,7 +32,7 @@ class Linear(Scale):
         range_min = Decimal(range_min)
         range_max = Decimal(range_max)
 
-        pos = (value - self._min) / (self._max - self._min)
+        pos = (value - self._ticker._min) / (self._ticker._max - self._ticker._min)
 
         return ((range_max - range_min) * pos) + range_min
 
@@ -50,4 +47,4 @@ class Linear(Scale):
         """
         Generate a series of ticks for this scale.
         """
-        return self._ticks
+        return self._ticker.ticks
