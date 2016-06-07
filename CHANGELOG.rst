@@ -1,6 +1,10 @@
 0.3.0
 -----
 
+* Axis no longer takes a number of ticks as an argument. Instead pass a list of custom tick values.
+* Scales :code:`tick` methods no longer take a number of ticks as an argument. (They should self-optimize.)
+* Scales that cross :code:`0` will now always have a tick at :code:`0`. (#54)
+* Implemented auto-ticking. (#23)
 * :func:`.style_function` now takes a :class:`.Datum` instances, rather than a list of arguments.
 * Renamed the :code:`Lines` class to :class:`.Line` to be more accurate.
 * Implemented :class:`.CategorySeries`.
