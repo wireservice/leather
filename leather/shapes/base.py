@@ -52,7 +52,7 @@ class Shape(object):
 
         bubble_width = theme.legend_bubble_size + theme.legend_bubble_offset
 
-        text = six.text_type(series.name) or 'Unnamed series'
+        text = six.text_type(series.name) if series.name is not None else 'Unnamed series'
         text_width = (len(text) + 4) * theme.legend_font_char_width
 
         item_width = text_width + bubble_width
