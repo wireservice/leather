@@ -105,7 +105,7 @@ class Scale(object):
         """
         raise NotImplementedError
 
-    def ticks(self, count):
+    def ticks(self):
         """
         Generate a series of ticks for this scale.
         """

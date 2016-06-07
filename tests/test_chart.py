@@ -67,8 +67,8 @@ class TestChart(leather.LeatherTestCase):
 
     def test_set_axes(self):
         chart = leather.Chart()
-        chart.set_x_axis(leather.Axis(ticks=3))
-        chart.set_y_axis(leather.Axis(ticks=3))
+        chart.set_x_axis(leather.Axis(ticks=[0, 4, 8]))
+        chart.set_y_axis(leather.Axis(ticks=[3, 6, 9]))
         chart.add_dots(self.data1)
 
         svg = self.render_chart(chart)
@@ -78,8 +78,8 @@ class TestChart(leather.LeatherTestCase):
 
     def test_add_axes(self):
         chart = leather.Chart()
-        chart.add_x_axis(ticks=3)
-        chart.add_y_axis(ticks=3)
+        chart.add_x_axis(ticks=[0, 4, 8])
+        chart.add_y_axis(ticks=[3, 6, 9])
         chart.add_dots(self.data1)
 
         svg = self.render_chart(chart)

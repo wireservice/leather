@@ -71,10 +71,11 @@ class Years(Temporal):
 
         return (a, b)
 
-    def ticks(self, count):
+    def ticks(self):
         """
         Generate a series of ticks for this scale.
         """
+        count = 5
         size = int(math.ceil(float(self._max.year - self._min.year) / count))
         values = []
 

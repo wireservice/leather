@@ -87,9 +87,6 @@ axis_title_gap = 16
 
 # TICKS
 
-#: Default number of ticks to display
-default_ticks = 5
-
 #: Width of a tick mark
 tick_width = 1
 

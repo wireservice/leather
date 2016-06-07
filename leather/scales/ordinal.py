@@ -42,7 +42,7 @@ class Ordinal(Scale):
 
         return (a, b)
 
-    def ticks(self, count):
+    def ticks(self):
         """
         Generate a series of ticks for this scale.
         """

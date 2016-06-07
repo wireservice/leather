@@ -20,11 +20,6 @@ class TestLinear(leather.LeatherTestCase):
         self.assertEqual(scale.project(25, 0, 10), 5)
         self.assertEqual(scale.project(4, 0, 20), -4)
 
-        scale = leather.Linear(10, 0)
-
-        self.assertEqual(scale.project(5, 0, 10), 5)
-        self.assertEqual(scale.project(15, 0, 20), -10)
-
         scale = leather.Linear(-10, 10)
 
         self.assertEqual(scale.project(0, 0, 10), 5)
@@ -35,11 +30,13 @@ class TestLinear(leather.LeatherTestCase):
         self.assertEqual(scale.project(-15, 0, 10), 5)
         self.assertEqual(scale.project(-10, -5, 10), 10)
 
+        with self.assertRaises(ValueError):
+            leather.Linear(10, 0)
+
     def test_ticks(self):
         scale = leather.Linear(0, 10)
 
-        self.assertEqual(scale.ticks(5), [0, 2.5, 5, 7.5, 10])
-        self.assertEqual(scale.ticks(6), [0, 2, 4, 6, 8, 10])
+        self.assertEqual(scale.ticks(), [0, 2.5, 5, 7.5, 10])
 
     def test_decimal(self):
         scale = leather.Linear(Decimal(0), Decimal(10))
@@ -49,8 +46,7 @@ class TestLinear(leather.LeatherTestCase):
         self.assertEqual(scale.project(Decimal(5), Decimal(10), Decimal(40)), Decimal(25))
         self.assertEqual(scale.project(Decimal(5), Decimal(10), Decimal(41)), Decimal(25.5))
 
-        self.assertEqual(scale.ticks(5)[1], Decimal(2.5))
-        self.assertEqual(scale.ticks(6)[1], Decimal(2))
+        self.assertEqual(scale.ticks()[1], Decimal(2.5))
 
 class TestOrdinal(leather.LeatherTestCase):
     def test_project(self):
@@ -74,9 +70,7 @@ class TestOrdinal(leather.LeatherTestCase):
     def test_ticks(self):
         scale = leather.Ordinal(['a', 'b', 'c', 'd'])
 
-        self.assertEqual(scale.ticks(4), ['a', 'b', 'c', 'd'])
-        self.assertEqual(scale.ticks(5), ['a', 'b', 'c', 'd'])
-        self.assertEqual(scale.ticks(6), ['a', 'b', 'c', 'd'])
+        self.assertEqual(scale.ticks(), ['a', 'b', 'c', 'd'])
 
 
 class TestTemporal(leather.LeatherTestCase):
@@ -106,7 +100,7 @@ class TestTemporal(leather.LeatherTestCase):
     def test_ticks(self):
         scale = leather.Temporal(date(2010, 1, 1), date(2014, 1, 1))
 
-        ticks = scale.ticks(5)
+        ticks = scale.ticks()
         self.assertEqual(ticks[0], date(2010, 1, 1))
         self.assertEqual(ticks[-1], date(2014, 1, 1))
 
@@ -139,7 +133,7 @@ class TestYears(leather.LeatherTestCase):
     def test_ticks(self):
         scale = leather.Years(date(2010, 1, 1), date(2014, 1, 1))
 
-        self.assertEqual(scale.ticks(5), [
+        self.assertEqual(scale.ticks(), [
             date(2010, 1, 1),
             date(2011, 1, 1),
             date(2012, 1, 1),
@@ -178,7 +172,7 @@ class TestMonths(leather.LeatherTestCase):
     def test_ticks(self):
         scale = leather.Months(date(2010, 1, 1), date(2014, 1, 1))
 
-        self.assertEqual(scale.ticks(5), [
+        self.assertEqual(scale.ticks(), [
             date(2010, 1, 1),
             date(2011, 1, 1),
             date(2012, 1, 1),
@@ -188,7 +182,7 @@ class TestMonths(leather.LeatherTestCase):
 
         scale = leather.Months(date(2010, 1, 1), date(2012, 1, 1))
 
-        self.assertEqual(scale.ticks(5), [
+        self.assertEqual(scale.ticks(), [
             date(2010, 1, 1),
             date(2010, 7, 1),
             date(2011, 1, 1),

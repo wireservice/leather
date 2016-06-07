@@ -16,18 +16,7 @@ class TestChart(leather.LeatherTestCase):
         chart = leather.Chart()
         chart.add_dots(self.data)
 
-        axis = leather.Axis(ticks=6)
-        chart.set_x_axis(axis)
-
-        svg = self.render_chart(chart)
-
-        self.assertTickLabels(svg, 'bottom', ['2', '4', '6', '8', '10', '0'])
-
-    def test_tick_values(self):
-        chart = leather.Chart()
-        chart.add_dots(self.data)
-
-        axis = leather.Axis(tick_values=[-12, 0, 17, 44, 87, 99])
+        axis = leather.Axis(ticks=[-12, 0, 17, 44, 87, 99])
         chart.set_x_axis(axis)
 
         svg = self.render_chart(chart)

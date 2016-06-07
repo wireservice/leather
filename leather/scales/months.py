@@ -74,10 +74,11 @@ class Months(Temporal):
 
         return (a, b)
 
-    def ticks(self, count):
+    def ticks(self):
         """
         Generate a series of ticks for this scale.
         """
+        count = 5
         a = to_month_count(self._min)
         b = to_month_count(self._max)
 

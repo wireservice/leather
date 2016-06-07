@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from collections import namedtuple
+import sys
 
 try:
     __IPYTHON__
@@ -18,6 +19,7 @@ Y = 1
 #: Z data dimension index
 Z = 2
 
+
 #: Data structure for representing margins or other CSS-edge like properties
 Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
 
@@ -26,3 +28,42 @@ Datum = namedtuple('Datum', ['i', 'x', 'y', 'z', 'row'])
 
 #: Dummy object used in place of a series when rendering legends for categories
 DummySeries = namedtuple('DummySeries', ['name'])
+
+
+# In Python 3.5 use builtin C implementation of `isclose`
+if sys.version_info >= (3, 5):
+    from math import isclose
+else:
+    def isclose(a, b, rel_tol=1e-9, abs_tol=0.0):
+        """
+        Test if two floating points numbers are close enough to be considered
+        equal.
+
+        Via: https://github.com/PythonCHB/close_pep/blob/master/isclose.py
+
+        Verified against final CPython 3.5 implemenation.
+
+        :param a:
+            The first number to check.
+        :param b:
+            The second number to check.
+        :param rel_tol:
+            Relative tolerance. The amount of error allowed, relative to the larger
+            input value. Defaults to nine decimal places of accuracy.
+        :param abs_tol:
+            Absolute minimum tolerance. Disabled by default.
+        """
+        if a == b:
+            return True
+
+        if rel_tol < 0.0 or abs_tol < 0.0:
+            raise ValueError('Tolerances must be non-negative')
+
+        if math.isinf(abs(a)) or math.isinf(abs(b)):
+            return False
+
+        diff = abs(b - a)
+
+        return (((diff <= abs(rel_tol * b)) or
+                (diff <= abs(rel_tol * a))) or
+                (diff <= abs_tol))

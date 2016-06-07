@@ -124,10 +124,10 @@ class Lattice(object):
 
     def add_many(self, data, x=None, y=None, titles=None):
         """
-        Same as :meth:`.add_one` except :code:`data` is a list of data series
-        to be added simultaneously.
+        Same as :meth:`.Lattice.add_one` except :code:`data` is a list of data
+        series to be added simultaneously.
 
-        See :meth:`.add_one` for other arguments.
+        See :meth:`.Lattice.add_one` for other arguments.
 
         Note that :code:`titles` is a sequence of titles that must be the same
         length as :code:`data`.

@@ -47,10 +47,11 @@ class Temporal(Scale):
         """
         raise NotImplementedError
 
-    def ticks(self, count):
+    def ticks(self):
         """
         Generate a series of ticks for this scale.
         """
+        count = 5
         size = (self._max - self._min) / (count - 1)
 
         return [self._min + (size * i) for i in range(count)]
