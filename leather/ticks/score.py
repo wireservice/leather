@@ -37,7 +37,7 @@ BEST_INTERVALS = [Decimal('0.1'), Decimal('1.0')]
 WORST_INTERVALS = [Decimal('0.15')]
 
 
-class ScoreTicker(object):
+class ScoreTicker(Ticker):
     """
     Attempt to find an optimal series of ticks by generating many possible
     sequences and scoring them based on several criteria. Only the best
@@ -46,7 +46,7 @@ class ScoreTicker(object):
     Based an algorithm described by Austin Clemens:
     http://austinclemens.com/blog/2016/01/09/an-algorithm-for-creating-a-graphs-axes/
 
-    See :meth:`.BruteTicker.score` for scoring implementation.
+    See :meth:`.ScoreTicker.score` for scoring implementation.
 
     :param domain_min:
         Minimum value of the data series.

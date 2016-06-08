@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from collections import namedtuple
+from datetime import date, datetime, timedelta
 from decimal import Decimal
 import math
 import sys
@@ -73,3 +74,101 @@ else:
         return (((diff <= abs(rel_tol * b)) or
                 (diff <= abs(rel_tol * a))) or
                 (diff <= abs_tol))
+
+
+def to_year_count(d):
+    """
+    date > n years
+    """
+    return d.year
+
+
+def from_year_count(n, t=date):
+    """
+    n years > date
+    """
+    return t(n, 1, 1)
+
+
+def to_month_count(d):
+    """
+    date > n months
+    """
+    return (d.year * 12) + d.month
+
+
+def from_month_count(n, t=date):
+    """
+    n months > date
+    """
+    return t(n // 12, (n % 12) + 1, 1)
+
+
+def to_day_count(d):
+    """
+    date > n days
+    """
+    return (d - type(d).min).days
+
+
+def from_day_count(n, t=date):
+    """
+    n days > date
+    """
+    return t.min + timedelta(days=n)
+
+
+def to_hour_count(d):
+    """
+    date > n hours
+    """
+    return (d - datetime.min).total_seconds() / (60 * 60)
+
+
+def from_hour_count(n):
+    """
+    n hours > date
+    """
+    return datetime.min + timedelta(hours=n)
+
+
+def to_minute_count(d):
+    """
+    date > n minutes
+    """
+    return (d - datetime.min).total_seconds() / 60
+
+
+def from_minute_count(n):
+    """
+    n minutes > date
+    """
+    return datetime.min + timedelta(minutes=n)
+
+
+def to_second_count(d):
+    """
+    date > n seconds
+    """
+    return (d - datetime.min).total_seconds()
+
+
+def from_second_count(n):
+    """
+    n seconds > date
+    """
+    return datetime.min + timedelta(seconds=n)
+
+
+def to_microsecond_count(d):
+    """
+    date > n microseconds
+    """
+    return (d - datetime.min).total_seconds() * 1000
+
+
+def from_microsecond_count(n):
+    """
+    n microseconds > date
+    """
+    return datetime.min + timedelta(microseconds=n)
