@@ -19,8 +19,10 @@ MIN_TICK_COUNT = 4
 #: The maximum length of a viable tick sequence
 MAX_TICK_COUNT = 10
 
+#: The minimum units of the interval needed to use that interval ("4 years")
 MIN_UNITS = 4
 
+#: The possible intervals as (to_function, from_function, overlap_tick_formatter, simple_tick_formatter)
 INTERVALS = [
     (utils.to_year_count, utils.from_year_count, None, '%Y'),
     (utils.to_month_count, utils.from_month_count, '%Y-%m', '%m'),
