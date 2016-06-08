@@ -19,6 +19,18 @@ MIN_TICK_COUNT = 4
 #: The maximum length of a viable tick sequence
 MAX_TICK_COUNT = 10
 
+MIN_UNITS = 4
+
+INTERVALS = [
+    (utils.to_year_count, utils.from_year_count, None, '%Y'),
+    (utils.to_month_count, utils.from_month_count, '%Y-%m', '%m'),
+    (utils.to_day_count, utils.from_day_count, '%m-%d', '%d'),
+    (utils.to_hour_count, utils.from_hour_count, '%d-%H', '%H'),
+    (utils.to_minute_count, utils.from_minute_count, '%H:%M', '%M'),
+    (utils.to_second_count, utils.from_second_count, '%H:%M:%S', '%S'),
+    (utils.to_microsecond_count, utils.from_microsecond_count, '%S-%f', '%f'),
+]
+
 
 class ScoreTimeTicker(ScoreTicker):
     """
@@ -39,65 +51,28 @@ class ScoreTimeTicker(ScoreTicker):
         else:
             self._type = date
 
-        # Years
-        if self._domain_max.year - self._domain_min.year >= 4:
-            self._to_unit = utils.to_year_count
-            self._from_unit = partial(utils.from_year_count, t=self._type)
-            self._fmt = '%Y'
-        # Months
-        elif utils.to_month_count(self._domain_max) - utils.to_month_count(self._domain_min) >= 4:
-            self._to_unit = utils.to_month_count
-            self._from_unit = partial(utils.from_month_count, t=self._type)
+        # Identify appropriate interval unit
+        self._to_unit = None
+        self._from_unit = None
+        self._fmt = None
 
-            if utils.to_year_count(self._domain_max) - utils.to_year_count(self._domain_min) >= 1:
-                self._fmt = '%Y-%m'
-            else:
-                self._fmt = '%m'
-        # Days
-        elif utils.to_day_count(self._domain_max) - utils.to_day_count(self._domain_min) >= 4:
-            self._to_unit = utils.to_day_count
-            self._from_unit = partial(utils.from_day_count, t=self._type)
+        previous_delta = 0
 
-            if utils.to_month_count(self._domain_max) - utils.to_month_count(self._domain_min) >= 1:
-                self._fmt = '%m-%d'
-            else:
-                self._fmt = '%d'
-        # Hours
-        elif utils.to_hour_count(self._domain_max) - utils.to_hour_count(self._domain_min) >= 4:
-            self._to_unit = utils.to_hour_count
-            self._from_unit = utils.from_hour_count
+        for to_func, from_func, overlap_fmt, simple_fmt in INTERVALS:
+            delta = to_func(self._domain_max) - to_func(self._domain_min)
 
-            if utils.to_day_count(self._domain_max) - utils.to_day_count(self._domain_min) >= 1:
-                self._fmt = '%d-%H'
-            else:
-                self._fmt = '%H'
-        # Minutes
-        elif utils.to_minute_count(self._domain_max) - utils.to_minute_count(self._domain_min) >= 4:
-            self._to_unit = utils.to_minute_count
-            self._from_unit = utils.from_minute_count
+            if delta >= MIN_UNITS or to_func is utils.to_microsecond_count:
+                self._to_unit = to_func
+                self._from_unit = partial(from_func, t=self._type)
 
-            if utils.to_hour_count(self._domain_max) - utils.to_hour_count(self._domain_min) >= 1:
-                self._fmt = '%H:%M'
-            else:
-                self._fmt = '%M'
-        # Seconds
-        elif utils.to_second_count(self._domain_max) - utils.to_second_count(self._domain_min) >= 4:
-            self._to_unit = utils.to_second_count
-            self._from_unit = utils.from_second_count
+                if previous_delta >= 1:
+                    self._fmt = overlap_fmt
+                else:
+                    self._fmt = simple_fmt
 
-            if utils.to_minute_count(self._domain_max) - utils.to_minute_count(self._domain_min) >= 1:
-                self._fmt = '%H:%M:%S'
-            else:
-                self._fmt = '%S'
-        # Microseconds
-        else:
-            self._to_unit = utils.to_microsecond_count
-            self._from_unit = utils.from_microsecond_count
+                break
 
-            if utils.to_second_count(self._domain_max) - utils.to_second_count(self._domain_min) >= 1:
-                self._fmt = '%S-%f'
-            else:
-                self._fmt = '%f'
+            previous_delta = delta
 
         # Compute unit min and max
         self._unit_min = self._to_unit(self._domain_min)

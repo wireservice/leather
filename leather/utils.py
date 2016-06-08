@@ -125,11 +125,11 @@ def to_hour_count(d):
     return (d - datetime.min).total_seconds() / (60 * 60)
 
 
-def from_hour_count(n):
+def from_hour_count(n, t=datetime):
     """
     n hours > date
     """
-    return datetime.min + timedelta(hours=n)
+    return t.min + timedelta(hours=n)
 
 
 def to_minute_count(d):
@@ -139,11 +139,11 @@ def to_minute_count(d):
     return (d - datetime.min).total_seconds() / 60
 
 
-def from_minute_count(n):
+def from_minute_count(n, t=datetime):
     """
     n minutes > date
     """
-    return datetime.min + timedelta(minutes=n)
+    return t.min + timedelta(minutes=n)
 
 
 def to_second_count(d):
@@ -153,11 +153,11 @@ def to_second_count(d):
     return (d - datetime.min).total_seconds()
 
 
-def from_second_count(n):
+def from_second_count(n, t=datetime):
     """
     n seconds > date
     """
-    return datetime.min + timedelta(seconds=n)
+    return t.min + timedelta(seconds=n)
 
 
 def to_microsecond_count(d):
@@ -167,8 +167,8 @@ def to_microsecond_count(d):
     return (d - datetime.min).total_seconds() * 1000
 
 
-def from_microsecond_count(n):
+def from_microsecond_count(n, t=datetime):
     """
     n microseconds > date
     """
-    return datetime.min + timedelta(microseconds=n)
+    return t.min + timedelta(microseconds=n)
