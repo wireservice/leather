@@ -167,3 +167,44 @@ class TestLine(leather.LeatherTestCase):
         paths = list(group)
 
         self.assertEqual(len(paths), 2)
+
+class TestGroupedBars(leather.LeatherTestCase):
+    def setUp(self):
+        self.shape = leather.GroupedBars()
+        self.linear = leather.Linear(0, 10)
+        self.ordinal = leather.Ordinal(['first', 'second', 'third'])
+        self.palette = (color for color in ['red', 'white', 'blue'])
+        self.rows = [
+            (1, 'foo', 'first'),
+            (5, 'bar', 'first'),
+            (7, 'foo', 'second'),
+            (4, 'bing', 'second'),
+            (7, 'foo', 'third'),
+            (3, 'bar', 'third'),
+            (4, 'buzz', 'third')
+        ]
+
+    def test_to_svg(self):
+        series = leather.CategorySeries(self.rows)
+
+        group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series, self.palette)
+        rects = list(group)
+
+        self.assertEqual(len(rects), 7)
+        self.assertEqual(float(rects[1].get('x')), 0)
+        self.assertEqual(float(rects[1].get('width')), 100)
+        self.assertEqual(rects[1].get('fill'), 'white')
+
+    def test_nulls(self):
+        series = leather.CategorySeries([
+            (0, 'foo', 'first'),
+            (None, None, None),
+            (10, 'bing', 'third')
+        ])
+
+        group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series, self.palette)
+        rects = list(group)
+
+        self.assertEqual(len(rects), 2)
+        self.assertEqual(float(rects[0].get('x')), 0)
+        self.assertEqual(float(rects[0].get('width')), 0)

@@ -7,6 +7,6 @@ from leather.grid import Grid
 from leather.lattice import Lattice
 from leather.scales import Scale, Linear, Months, Ordinal, Temporal, Years
 from leather.series import Series, CategorySeries, key_function
-from leather.shapes import Shape, Bars, Columns, Dots, Line, style_function
+from leather.shapes import Shape, Bars, Columns, Dots, Line, GroupedBars, style_function
 from leather.testcase import LeatherTestCase
 from leather import theme
