@@ -10,10 +10,10 @@ from leather.axis import Axis
 from leather.data_types import Date, DateTime
 from leather.scales import Scale, Linear, Temporal
 from leather.series import Series, CategorySeries
-from leather.shapes import Bars, Columns, Dots, Line
+from leather.shapes import Bars, Columns, Dots, Line, GroupedBars
 import leather.svg as svg
 from leather import theme
-from leather.utils import X, Y, Box, IPythonSVG
+from leather.utils import X, Y, Z, Box, IPythonSVG
 
 
 class Chart(object):
@@ -28,9 +28,9 @@ class Chart(object):
         self._series_colors = theme.default_series_colors
 
         self._layers = []
-        self._types = [None, None]
-        self._scales = [None, None]
-        self._axes = [None, None]
+        self._types = [None, None, None]
+        self._scales = [None, None, None]
+        self._axes = [None, None, None]
 
     def _palette(self):
         """
@@ -166,6 +166,16 @@ class Chart(object):
             Line(stroke_color, width)
         )
 
+    def add_grouped_bars(self, data, x=None, y=None, z=None, name=None, fill_color=None):
+        """
+        Create and add a :class:`.CategorySeries` rendered with
+        :class:`.GroupedBars`.
+        """
+        self.add_series(
+            CategorySeries(data, x=x, y=y, z=z, name=name),
+            GroupedBars(fill_color)
+        )
+
     def _validate_dimension(self, dimension):
         """
         Validates that the given scale and axis are valid for the data that
@@ -291,8 +301,16 @@ class Chart(object):
         margin_group.append(body_group)
 
         # Axes
-        x_scale, x_axis = self._validate_dimension(X)
-        y_scale, y_axis = self._validate_dimension(Y)
+        if isinstance(self._layers[0][0], CategorySeries):
+            if self._layers[0][1].legend_dimension() is X:
+                x_scale, x_axis = self._validate_dimension(Z)
+                y_scale, y_axis = self._validate_dimension(Y)
+            elif self._layers[0][1].legend_dimension() is Y:
+                x_scale, x_axis = self._validate_dimension(X)
+                y_scale, y_axis = self._validate_dimension(Z)
+        else:
+            x_scale, x_axis = self._validate_dimension(X)
+            y_scale, y_axis = self._validate_dimension(Y)
 
         bottom_margin = x_axis.estimate_label_margin(x_scale, 'bottom')
         left_margin = y_axis.estimate_label_margin(y_scale, 'left')

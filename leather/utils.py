@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-from collections import namedtuple
+from collections import namedtuple, Sequence
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 import math
+import six
 import sys
 
 try:
@@ -172,3 +173,10 @@ def from_microsecond_count(n, t=datetime):
     n microseconds > date
     """
     return t.min + timedelta(microseconds=n)
+
+def issequence(obj):
+    """
+    Returns :code:`True` if the given object is an instance of
+    :class:`.Sequence` that is not also a string.
+    """
+    return isinstance(obj, Sequence) and not isinstance(obj, six.string_types)

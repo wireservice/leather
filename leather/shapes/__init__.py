@@ -5,3 +5,4 @@ from leather.shapes.bars import Bars
 from leather.shapes.columns import Columns
 from leather.shapes.dots import Dots
 from leather.shapes.line import Line
+from leather.shapes.grouped_bars import GroupedBars
