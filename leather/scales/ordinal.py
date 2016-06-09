@@ -10,7 +10,7 @@ class Ordinal(Scale):
     A scale that maps individual values (e.g. strings) to a range.
     """
     def __init__(self, domain):
-        self._domain = domain
+        self._domain = list(set(domain))
 
     def project(self, value, range_min, range_max):
         """
