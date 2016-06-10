@@ -15,8 +15,8 @@ class GroupedBars(CategoryShape):
     Render a categorized series of data as grouped bars.
 
     :param fill_color:
-        A sequence of colors to fill the bars. If the sequence is shorter than
-        the number of values in any category, the colors will be repeated.
+        A sequence of colors to fill the bars. The sequence must have length
+        greater than or equal to the number of values in any category.
     """
     def __init__(self, fill_color=None):
         self._fill_color = fill_color
@@ -26,8 +26,11 @@ class GroupedBars(CategoryShape):
         """
         Verify this shape can be used to render a given series.
         """
-        if issequence(self._fill_color) and len(series.categories()) > len(self._fill_color.keys()):
-            raise ValueError('fill_color must have an element for every category in the series.')
+        if len(series.categories()) > len(self._fill_color):
+            raise ValueError('Fill color must have an element for every category in the series.')
+
+        if isinstance(series, CategorySeries):
+            raise ValueError('GroupedBars can only be used to render CategorySeries.')
 
     def to_svg(self, width, height, x_scale, y_scale, series, palette):
         """
@@ -42,6 +45,9 @@ class GroupedBars(CategoryShape):
             fill_color = self._fill_color
         else:
             fill_color = list(palette)
+
+            if len(series.categories()) > len(fill_color):
+                raise ValueError('Fill color must have an element for every category in the series.')
 
         label_colors = self.legend_labels(series, fill_color)
 

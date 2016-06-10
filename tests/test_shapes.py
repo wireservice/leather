@@ -195,6 +195,12 @@ class TestGroupedBars(leather.LeatherTestCase):
         self.assertEqual(float(rects[1].get('width')), 100)
         self.assertEqual(rects[1].get('fill'), 'white')
 
+    def test_invalid_fill_color(self):
+        series = leather.CategorySeries(self.rows)
+
+        with self.assertRaises(ValueError):
+            group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series, ['one', 'two'])
+
     def test_nulls(self):
         series = leather.CategorySeries([
             (0, 'foo', 'first'),
