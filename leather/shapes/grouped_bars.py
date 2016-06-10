@@ -19,6 +19,9 @@ class GroupedBars(CategoryShape):
         greater than or equal to the number of values in any category.
     """
     def __init__(self, fill_color=None):
+        if fill_color and not issequence(fill_color):
+            raise ValueError('Fill color must be a sequence of strings.')
+        
         self._fill_color = fill_color
         self._legend_dimension = Y
 

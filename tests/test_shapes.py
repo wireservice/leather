@@ -201,6 +201,9 @@ class TestGroupedBars(leather.LeatherTestCase):
         with self.assertRaises(ValueError):
             group = self.shape.to_svg(200, 100, self.linear, self.ordinal, series, ['one', 'two'])
 
+        with self.assertRaises(ValueError):
+            shape = leather.GroupedBars('red')
+
     def test_nulls(self):
         series = leather.CategorySeries([
             (0, 'foo', 'first'),
