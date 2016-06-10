@@ -16,11 +16,15 @@ class Linear(Scale):
         The maximum value of the input domain.
     """
     def __init__(self, domain_min, domain_max):
-        if domain_min >= domain_max:
-            raise ValueError('Domain minimum must be less than domain maximum. Inverted domains are not currently supported.')
-
-        self._data_min = Decimal(domain_min)
-        self._data_max = Decimal(domain_max)
+        if domain_min > domain_max:
+            raise ValueError('Inverted domains are not currently supported.')
+        elif domain_min == domain_max:
+            # Default to unit scale
+            self._data_min = Decimal(0)
+            self._data_max = Decimal(1)
+        else:
+            self._data_min = Decimal(domain_min)
+            self._data_max = Decimal(domain_max)
 
         self._ticker = ScoreTicker(self._data_min, self._data_max)
 

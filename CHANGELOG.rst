@@ -1,6 +1,7 @@
 0.3.0
 -----
 
+* Linear scales will now default to the domain :code:`[0, 1]` if no values are provided. (#66)
 * Axis no longer takes a number of ticks as an argument. Instead pass a list of custom tick values.
 * Scales :code:`tick` methods no longer take a number of ticks as an argument. (They should self-optimize.)
 * Scales that cross :code:`0` will now always have a tick at :code:`0`. (#54)

@@ -33,6 +33,12 @@ class TestLinear(leather.LeatherTestCase):
         with self.assertRaises(ValueError):
             leather.Linear(10, 0)
 
+    def test_no_spread(self):
+        scale = leather.Linear(0, 0)
+
+        self.assertEqual(scale.project(0, 0, 10), 0)
+        self.assertEqual(scale.project(1, 0, 10), 10)
+
     def test_ticks(self):
         scale = leather.Linear(0, 10)
 

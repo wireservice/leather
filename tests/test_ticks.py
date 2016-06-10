@@ -5,8 +5,15 @@ from datetime import date, datetime
 from decimal import Decimal
 
 import leather
-from leather.ticks.score_time import ScoreTimeTicker
+from leather.ticks.score_time import ScoreTicker, ScoreTimeTicker
 from leather import utils
+
+
+class TestScoreTicker(leather.LeatherTestCase):
+    def test_years(self):
+        ticker = ScoreTicker(Decimal(0), Decimal(10))
+
+        self.assertIsInstance(ticker.ticks[0], Decimal)
 
 
 class TestScoreTimeTicker(leather.LeatherTestCase):
