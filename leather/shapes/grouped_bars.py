@@ -6,7 +6,7 @@ import six
 
 from leather.series import CategorySeries
 from leather.shapes.category import CategoryShape
-from leather.utils import issequence, Y, Z
+from leather.utils import Y, Z
 from leather import theme
 
 
@@ -16,12 +16,10 @@ class GroupedBars(CategoryShape):
 
     :param fill_color:
         A sequence of colors to fill the bars. The sequence must have length
-        greater than or equal to the number of values in any category.
+        greater than or equal to the number of unique values in all categories. 
+        You may also specify a :func:`.style_function`.
     """
     def __init__(self, fill_color=None):
-        if fill_color and not issequence(fill_color):
-            raise ValueError('Fill color must be a sequence of strings.')
-        
         self._fill_color = fill_color
         self._legend_dimension = Y
 
@@ -29,9 +27,6 @@ class GroupedBars(CategoryShape):
         """
         Verify this shape can be used to render a given series.
         """
-        if len(series.categories()) > len(self._fill_color):
-            raise ValueError('Fill color must have an element for every category in the series.')
-
         if isinstance(series, CategorySeries):
             raise ValueError('GroupedBars can only be used to render CategorySeries.')
 
@@ -48,9 +43,6 @@ class GroupedBars(CategoryShape):
             fill_color = self._fill_color
         else:
             fill_color = list(palette)
-
-            if len(series.categories()) > len(fill_color):
-                raise ValueError('Fill color must have an element for every category in the series.')
 
         label_colors = self.legend_labels(series, fill_color)
 
@@ -78,7 +70,12 @@ class GroupedBars(CategoryShape):
                 bar_x = zero_x
                 bar_width = proj_x - zero_x
 
-            color = dict(label_colors)[d.y]
+            if callable(fill_color):
+                color = fill_color(d)
+                print(color)
+            else:
+                color = dict(label_colors)[d.y]
+
             seen_counts[d.z] += 1
 
             group.append(ET.Element('rect',

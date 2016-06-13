@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 
 from leather import theme
 from leather.shapes.base import Shape
+from leather.utils import issequence
 
 
 class CategoryShape(Shape):
@@ -26,11 +27,22 @@ class CategoryShape(Shape):
         seen = set()
         legend_values = [v for v in series.values(self._legend_dimension) if v not in seen and not seen.add(v)]
 
-        colors = list(palette)
-        color_count = len(colors)
+        if issequence(palette):
+            colors = list(palette)
+            color_count = len(colors)
 
-        for i, value in enumerate(legend_values):
-            label_colors.append((value, colors[i % color_count]))
+            for i, value in enumerate(legend_values):
+                if i >= color_count:
+                    raise ValueError('Fill color must have length greater than or equal to the number of unique values in all categories.')
+                    
+                label_colors.append((value, colors[i]))
+
+        elif callable(palette):
+            # TODO
+            label_colors = []
+
+        else:
+            raise ValueError('Fill color must be a sequence of strings or a style function.')
 
         return label_colors
 

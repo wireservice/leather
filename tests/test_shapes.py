@@ -173,7 +173,7 @@ class TestGroupedBars(leather.LeatherTestCase):
         self.shape = leather.GroupedBars()
         self.linear = leather.Linear(0, 10)
         self.ordinal = leather.Ordinal(['first', 'second', 'third'])
-        self.palette = (color for color in ['red', 'white', 'blue'])
+        self.palette = (color for color in ['red', 'white', 'blue', 'yellow'])
         self.rows = [
             (1, 'foo', 'first'),
             (5, 'bar', 'first'),
@@ -203,6 +203,26 @@ class TestGroupedBars(leather.LeatherTestCase):
 
         with self.assertRaises(ValueError):
             shape = leather.GroupedBars('red')
+            shape.to_svg(100, 100, self.linear, self.ordinal, series, self.palette)
+
+    def test_style_function(self):
+        def color_code(d):
+            if d.y == 'foo':
+                return 'green'
+            else:
+                return 'black'
+
+        shape = leather.GroupedBars(color_code)
+        series = leather.CategorySeries(self.rows)
+
+        group = shape.to_svg(200, 100, self.linear, self.ordinal, series, self.palette)
+        rects = list(group)
+
+        self.assertEqual(rects[0].get('fill'), 'green')
+        self.assertEqual(rects[1].get('fill'), 'black')
+        self.assertEqual(rects[2].get('fill'), 'green')
+        self.assertEqual(rects[3].get('fill'), 'black')
+        self.assertEqual(rects[4].get('fill'), 'green')
 
     def test_nulls(self):
         series = leather.CategorySeries([
