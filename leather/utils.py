@@ -5,6 +5,9 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 import math
 import sys
+import warnings
+
+import six
 
 try:
     __IPYTHON__
@@ -37,6 +40,15 @@ Datum = namedtuple('Datum', ['i', 'x', 'y', 'z', 'row'])
 
 #: Dummy object used in place of a series when rendering legends for categories
 DummySeries = namedtuple('DummySeries', ['name'])
+
+
+formatwarning_orig = warnings.formatwarning
+warnings.formatwarning = lambda message, category, filename, lineno, line=None: \
+    formatwarning_orig(message, category, filename, lineno, line='')
+
+warn = warnings.warn
+warnings.resetwarnings()
+warnings.simplefilter('always')
 
 
 # In Python 3.5 use builtin C implementation of `isclose`

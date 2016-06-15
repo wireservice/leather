@@ -2,7 +2,6 @@
 
 from copy import copy
 import os
-import warnings
 import xml.etree.ElementTree as ET
 
 import six
@@ -14,7 +13,7 @@ from leather.series import Series, CategorySeries
 from leather.shapes import Bars, Columns, Dots, Line
 import leather.svg as svg
 from leather import theme
-from leather.utils import X, Y, DIMENSION_NAMES, Box, IPythonSVG
+from leather.utils import X, Y, DIMENSION_NAMES, Box, IPythonSVG, warn
 
 
 class Chart(object):
@@ -182,7 +181,7 @@ class Chart(object):
             for series, shape in self._layers:
                 if not scale.contains(series.min(dimension)) or not scale.contains(series.max(dimension)):
                     d = DIMENSION_NAMES[dimension]
-                    warnings.warn('Data contains values outside %s scale domain. All data points may not be visible on the chart.' % d)
+                    warn('Data contains values outside %s scale domain. All data points may not be visible on the chart.' % d)
 
                     # Only display once per axis
                     break
