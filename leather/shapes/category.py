@@ -19,7 +19,7 @@ class CategoryShape(Shape):
 
     def legend_labels(self, series, palette):
         """
-        Generate a dictionary of labels mappeds to colors for the legend.
+        Generate a list of tuples with labels mappeds to colors for the legend.
         """
         label_colors = []
         legend_dimension = self._legend_dimension
@@ -50,7 +50,12 @@ class CategoryShape(Shape):
         """
         Render the legend entries for these shapes.
         """
-        label_colors = self.legend_labels(series, palette)
+        if self._fill_color is not None:
+            colors = self._fill_color
+        else:
+            colors = list(palette)
+
+        label_colors = self.legend_labels(series, colors)
         item_groups = []
         
         if hasattr(self, '_stroke_color'):

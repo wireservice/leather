@@ -27,7 +27,7 @@ class GroupedBars(CategoryShape):
         """
         Verify this shape can be used to render a given series.
         """
-        if isinstance(series, CategorySeries):
+        if not isinstance(series, CategorySeries):
             raise ValueError('GroupedBars can only be used to render CategorySeries.')
 
     def to_svg(self, width, height, x_scale, y_scale, series, palette):
