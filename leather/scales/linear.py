@@ -28,6 +28,13 @@ class Linear(Scale):
 
         self._ticker = ScoreTicker(self._data_min, self._data_max)
 
+    def contains(self, v):
+        """
+        Return :code:`True` if a given value is contained within this scale's
+        displayed domain.
+        """
+        return self._ticker.min <= v <= self._ticker.max
+
     def project(self, value, range_min, range_max):
         """
         Project a value in this scale's domain to a target range.
@@ -36,7 +43,7 @@ class Linear(Scale):
         range_min = Decimal(range_min)
         range_max = Decimal(range_max)
 
-        pos = (value - self._ticker._min) / (self._ticker._max - self._ticker._min)
+        pos = (value - self._ticker.min) / (self._ticker.max - self._ticker.min)
 
         return ((range_max - range_min) * pos) + range_min
 

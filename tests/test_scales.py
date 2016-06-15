@@ -54,6 +54,16 @@ class TestLinear(leather.LeatherTestCase):
 
         self.assertEqual(scale.ticks()[1], Decimal(2.5))
 
+    def test_contains(self):
+        scale = leather.Linear(-5, 5)
+
+        self.assertTrue(scale.contains(-5))
+        self.assertTrue(scale.contains(0))
+        self.assertTrue(scale.contains(5))
+        self.assertFalse(scale.contains(-6))
+        self.assertFalse(scale.contains(6))
+
+
 class TestOrdinal(leather.LeatherTestCase):
     def test_project(self):
         scale = leather.Ordinal(['a', 'b', 'c', 'd'])
@@ -77,6 +87,14 @@ class TestOrdinal(leather.LeatherTestCase):
         scale = leather.Ordinal(['a', 'b', 'c', 'd'])
 
         self.assertEqual(scale.ticks(), ['a', 'b', 'c', 'd'])
+
+    def test_contains(self):
+        scale = leather.Ordinal(['a', 'b', 'c', 'd'])
+
+        self.assertTrue(scale.contains('a'))
+        self.assertFalse(scale.contains('aa'))
+        self.assertFalse(scale.contains('e'))
+        self.assertFalse(scale.contains(5))
 
 
 class TestTemporal(leather.LeatherTestCase):
@@ -109,3 +127,12 @@ class TestTemporal(leather.LeatherTestCase):
         ticks = scale.ticks()
         self.assertEqual(ticks[0], date(2010, 1, 1))
         self.assertEqual(ticks[-1], date(2014, 1, 1))
+
+    def test_contains(self):
+        scale = leather.Temporal(date(2010, 1, 1), date(2014, 1, 1))
+
+        self.assertTrue(scale.contains(date(2010, 1, 1)))
+        self.assertTrue(scale.contains(date(2012, 6, 3)))
+        self.assertTrue(scale.contains(date(2014, 1, 1)))
+        self.assertFalse(scale.contains(date(2009, 12, 31)))
+        self.assertFalse(scale.contains(date(2014, 1, 2)))

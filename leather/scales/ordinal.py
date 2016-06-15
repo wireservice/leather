@@ -12,6 +12,13 @@ class Ordinal(Scale):
     def __init__(self, domain):
         self._domain = domain
 
+    def contains(self, v):
+        """
+        Return :code:`True` if a given value is contained within this scale's
+        displayed domain.
+        """
+        return v in self._domain
+
     def project(self, value, range_min, range_max):
         """
         Project a value in this scale's domain to a target range.
