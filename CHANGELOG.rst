@@ -1,6 +1,7 @@
 0.3.0
 -----
 
+* Leather will now issue a warning if you attempt to render a chart with data exceeding the scale domain. (#42)
 * Linear scales will now default to the domain :code:`[0, 1]` if no values are provided. (#66)
 * Axis no longer takes a number of ticks as an argument. Instead pass a list of custom tick values.
 * Scales :code:`tick` methods no longer take a number of ticks as an argument. (They should self-optimize.)

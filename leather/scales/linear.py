@@ -31,9 +31,9 @@ class Linear(Scale):
     def contains(self, v):
         """
         Return :code:`True` if a given value is contained within this scale's
-        displayed domain.
+        domain.
         """
-        return self._ticker.min <= v <= self._ticker.max
+        return self._data_min <= v <= self._data_max
 
     def project(self, value, range_min, range_max):
         """

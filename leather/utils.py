@@ -27,6 +27,8 @@ Y = 1
 Z = 2
 
 
+DIMENSION_NAMES = ['X', 'Y', 'Z']
+
 #: Data structure for representing margins or other CSS-edge like properties
 Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
 

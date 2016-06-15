@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import warnings
+
 import leather
 
 
@@ -64,6 +66,18 @@ class TestChart(leather.LeatherTestCase):
 
         self.assertTickLabels(svg, 'left', ['5', '10', '15', '20', '0'])
         self.assertTickLabels(svg, 'bottom', ['5', '10', '15', '20', '0'])
+
+    def test_scale_domain_warning(self):
+        chart = leather.Chart()
+        chart.add_x_scale(4, 7)
+        chart.add_y_scale(0, 20)
+        chart.add_dots(self.data1)
+
+        with warnings.catch_warnings():
+            warnings.simplefilter('error')
+
+            with self.assertRaises(UserWarning):
+                self.render_chart(chart)
 
     def test_set_axes(self):
         chart = leather.Chart()
