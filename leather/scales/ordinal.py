@@ -13,6 +13,13 @@ class Ordinal(Scale):
         seen = set()
         self._domain = [v for v in domain if v not in seen and not seen.add(v)]
 
+    def contains(self, v):
+        """
+        Return :code:`True` if a given value is contained within this scale's
+        displayed domain.
+        """
+        return v in self._domain
+
     def project(self, value, range_min, range_max):
         """
         Project a value in this scale's domain to a target range.

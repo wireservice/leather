@@ -1,14 +1,20 @@
-from datetime import date
+import datetime
 
 import leather
 
 data = [
-    (date(1995, 5, 13), 3, 'foo'),
-    (date(1995, 6, 1), 5, 'foo'),
-    (date(1995, 6, 5), 9, 'bar'),
-    (date(1995, 7, 2), 4, 'bar')
+    (0, 0),
+    (5, 5),
+    (10, 10)
 ]
 
 chart = leather.Chart('Dots')
+chart.add_x_scale(7, 10)
+chart.add_y_scale(7, 10)
 chart.add_line(data)
 chart.to_svg('test.svg')
+
+foo = leather.Chart('Dots')
+foo.add_x_scale(7, 10)
+foo.add_line(data)
+foo.to_svg('test.svg')

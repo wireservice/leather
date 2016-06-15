@@ -1,6 +1,8 @@
 0.3.0
 -----
 
+* Leather will now issue a warning if you attempt to render a chart with data exceeding the scale domain. (#42)
+* Linear scales will now default to the domain :code:`[0, 1]` if no values are provided. (#66)
 * Axis no longer takes a number of ticks as an argument. Instead pass a list of custom tick values.
 * Scales :code:`tick` methods no longer take a number of ticks as an argument. (They should self-optimize.)
 * Scales that cross :code:`0` will now always have a tick at :code:`0`. (#54)
@@ -13,8 +15,6 @@
 * Tick values can now be overridden with the :code:`tick_values` argument. (#56)
 * Added methods to customize scales and axes for :class:`.Lattice` charts. (#17)
 * Expanded unit tests for :class:`.Scale` subclasses.
-* Implemented :class:`.Months` scale type.
-* Implemented :class:`.Years` scale type.
 * Zero lines now render above other tick marks. (#31)
 * Fixed rendering of :class:`.Bar` and :class:`.Column` shapes for negative values. (#52)
 * Refactored the :class:`.Lattice` API.

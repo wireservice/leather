@@ -47,4 +47,3 @@ Detailed list
 
 .. autoclass:: leather.Chart
     :members:
-    :inherited-members:

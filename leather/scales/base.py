@@ -92,6 +92,13 @@ class Scale(object):
 
         return scale
 
+    def contains(self, v):
+        """
+        Return :code:`True` if a given value is contained within this scale's
+        displayed domain.
+        """
+        raise NotImplementedError
+
     def project(self, value, range_min, range_max):
         """
         Project a value in this scale's domain to a target range.

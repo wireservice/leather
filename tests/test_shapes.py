@@ -38,6 +38,22 @@ class TestBars(leather.LeatherTestCase):
         self.assertEqual(float(rects[1].get('x')), 0)
         self.assertEqual(float(rects[1].get('width')), 0)
 
+    def test_zeros(self):
+        series = leather.Series([
+            (0, 'foo'),
+            (0, None),
+            (0, 'bing')
+        ])
+
+        linear = leather.Linear(0, 0)
+
+        group = self.shape.to_svg(200, 100, linear, self.ordinal, series, self.palette)
+        rects = list(group)
+
+        self.assertEqual(len(rects), 2)
+        self.assertEqual(float(rects[1].get('x')), 0)
+        self.assertEqual(float(rects[1].get('width')), 0)
+
 
 class TestColumns(leather.LeatherTestCase):
     def setUp(self):

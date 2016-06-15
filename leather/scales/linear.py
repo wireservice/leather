@@ -16,13 +16,24 @@ class Linear(Scale):
         The maximum value of the input domain.
     """
     def __init__(self, domain_min, domain_max):
-        if domain_min >= domain_max:
-            raise ValueError('Domain minimum must be less than domain maximum. Inverted domains are not currently supported.')
-
-        self._data_min = Decimal(domain_min)
-        self._data_max = Decimal(domain_max)
+        if domain_min > domain_max:
+            raise ValueError('Inverted domains are not currently supported.')
+        elif domain_min == domain_max:
+            # Default to unit scale
+            self._data_min = Decimal(0)
+            self._data_max = Decimal(1)
+        else:
+            self._data_min = Decimal(domain_min)
+            self._data_max = Decimal(domain_max)
 
         self._ticker = ScoreTicker(self._data_min, self._data_max)
+
+    def contains(self, v):
+        """
+        Return :code:`True` if a given value is contained within this scale's
+        domain.
+        """
+        return self._data_min <= v <= self._data_max
 
     def project(self, value, range_min, range_max):
         """
@@ -32,7 +43,7 @@ class Linear(Scale):
         range_min = Decimal(range_min)
         range_max = Decimal(range_max)
 
-        pos = (value - self._ticker._min) / (self._ticker._max - self._ticker._min)
+        pos = (value - self._ticker.min) / (self._ticker.max - self._ticker.min)
 
         return ((range_max - range_min) * pos) + range_min
 

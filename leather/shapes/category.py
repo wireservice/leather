@@ -21,14 +21,19 @@ class CategoryShape(Shape):
         """
         Generate a list of tuples with labels mappeds to colors for the legend.
         """
+        if self._fill_color is not None:
+            colors = self._fill_color
+        else:
+            colors = list(palette)
+
         label_colors = []
         legend_dimension = self._legend_dimension
 
         seen = set()
         legend_values = [v for v in series.values(self._legend_dimension) if v not in seen and not seen.add(v)]
 
-        if issequence(palette):
-            colors = list(palette)
+        if issequence(colors):
+            colors = list(colors)
             color_count = len(colors)
 
             for i, value in enumerate(legend_values):
@@ -37,7 +42,7 @@ class CategoryShape(Shape):
                     
                 label_colors.append((value, colors[i]))
 
-        elif callable(palette):
+        elif callable(colors):
             # TODO
             label_colors = []
 
@@ -50,12 +55,7 @@ class CategoryShape(Shape):
         """
         Render the legend entries for these shapes.
         """
-        if self._fill_color is not None:
-            colors = self._fill_color
-        else:
-            colors = list(palette)
-
-        label_colors = self.legend_labels(series, colors)
+        label_colors = self.legend_labels(series, palette)
         item_groups = []
         
         if hasattr(self, '_stroke_color'):

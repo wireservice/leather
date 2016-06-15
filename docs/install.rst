@@ -14,7 +14,7 @@ Developers
 
 If you are a developer that also wants to hack on leather, install it from git::
 
-    git clone git://github.com/onyxfish/leather.git
+    git clone git://github.com/wireservice/leather.git
     cd leather
     mkvirtualenv leather
 

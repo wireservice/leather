@@ -26,6 +26,13 @@ class Temporal(Scale):
 
         self._ticker = ScoreTimeTicker(self._data_min, self._data_max)
 
+    def contains(self, v):
+        """
+        Return :code:`True` if a given value is contained within this scale's
+        domain.
+        """
+        return self._data_min <= v <= self._data_max
+
     def project(self, value, range_min, range_max):
         """
         Project a value in this scale's domain to a target range.
