@@ -76,13 +76,4 @@ class CategorySeries(Series):
         """
         Return all unique values in the category field.
         """
-        z = self._keys[Z]
-        categories = []
-
-        for i, row in enumerate(self._data):
-            cat = z(row, i)
-
-            if cat not in categories:
-                categories.append(cat)
-
-        return categories
+        return self.unique_values(Z)

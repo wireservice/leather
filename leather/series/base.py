@@ -108,6 +108,21 @@ class Series(object):
 
         return [key(row, i) for i, row in enumerate(self._data)]
 
+    def unique_values(self, dimension):
+        """
+        Return all unique values in the category field.
+        """
+        z = self._keys[dimension]
+        unique_values = []
+
+        for i, row in enumerate(self._data):
+            value = z(row, i)
+
+            if value not in unique_values:
+                unique_values.append(value)
+
+        return unique_values
+
     def min(self, dimension):
         """
         Compute the minimum value of a given dimension.

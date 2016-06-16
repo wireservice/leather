@@ -28,9 +28,7 @@ class CategoryShape(Shape):
 
         label_colors = []
         legend_dimension = self._legend_dimension
-
-        seen = set()
-        legend_values = [v for v in series.values(self._legend_dimension) if v not in seen and not seen.add(v)]
+        legend_values = series.unique_values(legend_dimension)
 
         if issequence(colors):
             colors = list(colors)
