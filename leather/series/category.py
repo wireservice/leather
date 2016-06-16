@@ -61,7 +61,7 @@ class CategorySeries(Series):
             self._infer_type(self._keys[Z])
         ]
 
-    def data(self):
+    def data(self, reverse=False):
         """
         Return data for this series grouped for rendering.
         """
@@ -69,7 +69,12 @@ class CategorySeries(Series):
         y = self._keys[Y]
         z = self._keys[Z]
 
-        for i, row in enumerate(self._data):
+        if reverse:
+            increment = -1
+        else:
+            increment = 1
+
+        for i, row in enumerate(self._data[::increment]):
             yield Datum(i, x(row, i), y(row, i), z(row, i), row)
 
     def categories(self):

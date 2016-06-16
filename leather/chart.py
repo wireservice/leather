@@ -10,7 +10,7 @@ from leather.axis import Axis
 from leather.data_types import Date, DateTime
 from leather.scales import Scale, Linear, Temporal
 from leather.series import Series, CategorySeries
-from leather.shapes import Bars, Columns, Dots, Line, GroupedBars
+from leather.shapes import Bars, Columns, Dots, Line, GroupedBars, GroupedColumns
 import leather.svg as svg
 from leather import theme
 from leather.utils import X, Y, Z, DIMENSION_NAMES, Box, IPythonSVG, warn
@@ -174,6 +174,16 @@ class Chart(object):
         self.add_series(
             CategorySeries(data, x=x, y=y, z=z, name=name),
             GroupedBars(fill_color)
+        )
+
+    def add_grouped_columns(self, data, x=None, y=None, z=None, name=None, fill_color=None):
+        """
+        Create and add a :class:`.CategorySeries` rendered with
+        :class:`.GroupedColumns`.
+        """
+        self.add_series(
+            CategorySeries(data, x=x, y=y, z=z, name=name),
+            GroupedColumns(fill_color)
         )
 
     def _validate_dimension(self, dimension):

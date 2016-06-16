@@ -253,3 +253,75 @@ class TestGroupedBars(leather.LeatherTestCase):
         self.assertEqual(len(rects), 2)
         self.assertEqual(float(rects[0].get('x')), 0)
         self.assertEqual(float(rects[0].get('width')), 0)
+
+class TestGroupedColumns(leather.LeatherTestCase):
+    def setUp(self):
+        self.shape = leather.GroupedColumns()
+        self.linear = leather.Linear(0, 10)
+        self.ordinal = leather.Ordinal(['first', 'second', 'third'])
+        self.palette = (color for color in ['red', 'white', 'blue', 'yellow'])
+        self.rows = [
+            ('foo', 1, 'first'),
+            ('bar', 5, 'first'),
+            ('foo', 7, 'second'),
+            ('bing', 4, 'second'),
+            ('foo', 7, 'third'),
+            ('bar', 3, 'third'),
+            ('buzz', 4, 'third')
+        ]
+
+    def test_to_svg(self):
+        series = leather.CategorySeries(self.rows)
+
+        group = self.shape.to_svg(100, 200, self.ordinal, self.linear, series, self.palette)
+        rects = list(group)
+
+        self.assertEqual(len(rects), 7)
+        self.assertEqual(float(rects[1].get('y')), 100)
+        self.assertEqual(float(rects[1].get('height')), 100)
+        self.assertEqual(float(rects[3].get('y')), 120)
+        self.assertEqual(float(rects[3].get('height')), 80)
+        self.assertEqual(rects[1].get('fill'), 'white')
+
+    def test_invalid_fill_color(self):
+        series = leather.CategorySeries(self.rows)
+
+        with self.assertRaises(ValueError):
+            group = self.shape.to_svg(100, 200, self.ordinal, self.linear, series, ['one', 'two'])
+
+        with self.assertRaises(ValueError):
+            shape = leather.GroupedColumns('red')
+            shape.to_svg(100, 100, self.ordinal, self.linear, series, self.palette)
+
+    def test_style_function(self):
+        def color_code(d):
+            if d.x == 'foo':
+                return 'green'
+            else:
+                return 'black'
+
+        shape = leather.GroupedColumns(color_code)
+        series = leather.CategorySeries(self.rows)
+
+        group = shape.to_svg(100, 200, self.ordinal, self.linear, series, self.palette)
+        rects = list(group)
+
+        self.assertEqual(rects[0].get('fill'), 'green')
+        self.assertEqual(rects[1].get('fill'), 'black')
+        self.assertEqual(rects[2].get('fill'), 'green')
+        self.assertEqual(rects[3].get('fill'), 'black')
+        self.assertEqual(rects[4].get('fill'), 'green')
+
+    def test_nulls(self):
+        series = leather.CategorySeries([
+            ('foo', 0, 'first'),
+            (None, None, None),
+            ('bing', 10, 'third')
+        ])
+
+        group = self.shape.to_svg(100, 200, self.ordinal, self.linear, series, self.palette)
+        rects = list(group)
+
+        self.assertEqual(len(rects), 2)
+        self.assertEqual(float(rects[1].get('y')), 0)
+        self.assertEqual(float(rects[1].get('height')), 200)
