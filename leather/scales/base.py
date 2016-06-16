@@ -5,7 +5,7 @@ from datetime import date, datetime
 import six
 
 from leather.data_types import Date, DateTime, Number, Text
-from leather.shapes import Bars, Columns
+from leather.shapes import Bars, Columns, GroupedBars, GroupedColumns
 
 
 class Scale(object):
@@ -55,7 +55,7 @@ class Scale(object):
             data_max = None
 
             for series, shape in layers:
-                if isinstance(shape, (Bars, Columns)):
+                if isinstance(shape, (Bars, Columns, GroupedBars, GroupedColumns)):
                     force_zero = True
 
                 if data_min is None:
