@@ -37,7 +37,7 @@ class CategoryShape(Shape):
             for i, value in enumerate(legend_values):
                 if i >= color_count:
                     raise ValueError('Fill color must have length greater than or equal to the number of unique values in all categories.')
-                    
+
                 label_colors.append((value, colors[i]))
 
         elif callable(colors):
@@ -55,7 +55,7 @@ class CategoryShape(Shape):
         """
         label_colors = self.legend_labels(series, palette)
         item_groups = []
-        
+
         if hasattr(self, '_stroke_color'):
             if self._stroke_color:
                 if callable(self._stroke_color):

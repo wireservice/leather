@@ -184,6 +184,7 @@ class TestLine(leather.LeatherTestCase):
 
         self.assertEqual(len(paths), 2)
 
+
 class TestGroupedBars(leather.LeatherTestCase):
     def setUp(self):
         self.shape = leather.GroupedBars()
@@ -256,6 +257,7 @@ class TestGroupedBars(leather.LeatherTestCase):
         self.assertEqual(float(rects[0].get('x')), 0)
         self.assertEqual(float(rects[0].get('width')), 0)
 
+
 class TestGroupedColumns(leather.LeatherTestCase):
     def setUp(self):
         self.shape = leather.GroupedColumns()
@@ -289,7 +291,7 @@ class TestGroupedColumns(leather.LeatherTestCase):
         series = leather.CategorySeries(self.rows)
 
         with self.assertRaises(ValueError):
-            group = self.shape.to_svg(100, 200, self.ordinal, self.linear, series, ['one', 'two'])
+            group = self.shape.to_svg(100, 200, self.ordinal, self.linear, series, ['one', 'two'])  # noqa
 
         with self.assertRaises(ValueError):
             shape = leather.GroupedColumns('red')

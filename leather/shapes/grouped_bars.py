@@ -7,7 +7,6 @@ import six
 from leather.series import CategorySeries
 from leather.shapes.category import CategoryShape
 from leather.utils import Y, Z
-from leather import theme
 
 
 class GroupedBars(CategoryShape):
@@ -16,7 +15,7 @@ class GroupedBars(CategoryShape):
 
     :param fill_color:
         A sequence of colors to fill the bars. The sequence must have length
-        greater than or equal to the number of unique values in all categories. 
+        greater than or equal to the number of unique values in all categories.
         You may also specify a :func:`.style_function`.
     """
     def __init__(self, fill_color=None):
@@ -56,9 +55,9 @@ class GroupedBars(CategoryShape):
 
             y1, y2 = y_scale.project_interval(d.z, height, 0)
 
-            group_width = (y2 - y1) / category_counts[d.z]
-            y2 = y1 + (group_width * (seen_counts[d.z] + 1)) + 1
-            y1 = y1 + (group_width * seen_counts[d.z])
+            group_height = (y2 - y1) / category_counts[d.z]
+            y2 = y1 + (group_height * (seen_counts[d.z] + 1)) + 1
+            y1 = y1 + (group_height * seen_counts[d.z])
 
             proj_x = x_scale.project(d.x, 0, width)
 

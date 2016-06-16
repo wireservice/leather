@@ -7,7 +7,6 @@ import six
 from leather.series import CategorySeries
 from leather.shapes.category import CategoryShape
 from leather.utils import X, Z
-from leather import theme
 
 
 class GroupedColumns(CategoryShape):
@@ -16,7 +15,7 @@ class GroupedColumns(CategoryShape):
 
     :param fill_color:
         A sequence of colors to fill the columns. The sequence must have length
-        greater than or equal to the number of unique values in all categories. 
+        greater than or equal to the number of unique values in all categories.
         You may also specify a :func:`.style_function`.
     """
     def __init__(self, fill_color=None):
