@@ -209,6 +209,8 @@ class TestGroupedBars(leather.LeatherTestCase):
         self.assertEqual(len(rects), 7)
         self.assertEqual(float(rects[1].get('x')), 0)
         self.assertEqual(float(rects[1].get('width')), 100)
+        self.assertEqual(float(rects[3].get('y')), 36)
+        self.assertEqual(float(rects[3].get('height')), 14)
         self.assertEqual(rects[1].get('fill'), 'white')
 
     def test_invalid_fill_color(self):
@@ -279,8 +281,8 @@ class TestGroupedColumns(leather.LeatherTestCase):
         self.assertEqual(len(rects), 7)
         self.assertEqual(float(rects[1].get('y')), 100)
         self.assertEqual(float(rects[1].get('height')), 100)
-        self.assertEqual(float(rects[3].get('y')), 120)
-        self.assertEqual(float(rects[3].get('height')), 80)
+        self.assertEqual(float(rects[3].get('x')), 50)
+        self.assertEqual(float(rects[3].get('width')), 16)
         self.assertEqual(rects[1].get('fill'), 'white')
 
     def test_invalid_fill_color(self):

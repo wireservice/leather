@@ -56,9 +56,9 @@ class GroupedColumns(CategoryShape):
 
             x1, x2 = x_scale.project_interval(d.z, 0, width)
 
-            group_width = (x1 - x2) / category_counts[d.z]
-            x1 = x2 + (group_width * (seen_counts[d.z] + 1)) + 1
-            x2 = x2 + (group_width * seen_counts[d.z])
+            group_width = (x2 - x1) / category_counts[d.z]
+            x2 = x1 + (group_width * (seen_counts[d.z] + 1)) + 1
+            x1 = x1 + (group_width * seen_counts[d.z])
 
             proj_y = y_scale.project(d.y, height, 0)
 

@@ -56,9 +56,9 @@ class GroupedBars(CategoryShape):
 
             y1, y2 = y_scale.project_interval(d.z, height, 0)
 
-            group_height = (y1 - y2) / category_counts[d.z]
-            y1 = y2 + (group_height * (seen_counts[d.z] + 1)) - 1
-            y2 = y2 + (group_height * seen_counts[d.z])
+            group_width = (y2 - y1) / category_counts[d.z]
+            y2 = y1 + (group_width * (seen_counts[d.z] + 1)) + 1
+            y1 = y1 + (group_width * seen_counts[d.z])
 
             proj_x = x_scale.project(d.x, 0, width)
 
