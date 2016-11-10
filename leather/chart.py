@@ -364,6 +364,8 @@ class Chart(object):
         close = True
 
         if path:
+            f = None
+            
             try:
                 if hasattr(path, 'write'):
                     f = path

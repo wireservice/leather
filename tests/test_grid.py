@@ -74,7 +74,7 @@ class TestGrid(leather.LeatherTestCase):
         grid = leather.Grid()
         grid.add_many([chart1, chart2, chart1])
 
-        svg = grid.to_svg('.test.svg')
+        grid.to_svg('.test.svg')
 
         self.assertTrue(os.path.exists(TEST_SVG))
 
@@ -89,6 +89,6 @@ class TestGrid(leather.LeatherTestCase):
         grid.add_many([chart1, chart2, chart1])
 
         with open('.test.svg', 'w') as f:
-            svg = grid.to_svg(f)
+            grid.to_svg(f)
 
         self.assertTrue(os.path.exists(TEST_SVG))

@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 
+import os
 import warnings
 
 import leather
+
+
+TEST_SVG = '.test.svg'
 
 
 class TestChart(leather.LeatherTestCase):
@@ -21,6 +25,10 @@ class TestChart(leather.LeatherTestCase):
             (5, 6),
             (9, 10)
         ]
+
+    def tearDown(self):
+        if os.path.exists(TEST_SVG):
+            os.remove(TEST_SVG)
 
     def test_single_series(self):
         chart = leather.Chart()
@@ -100,3 +108,20 @@ class TestChart(leather.LeatherTestCase):
 
         self.assertTickLabels(svg, 'left', ['3', '6', '9'])
         self.assertTickLabels(svg, 'bottom', ['4', '8', '0'])
+
+    def test_to_svg_file_name(self):
+        chart = leather.Chart()
+        chart.add_dots(self.data1)
+
+        chart.to_svg('.test.svg')
+
+        self.assertTrue(os.path.exists(TEST_SVG))
+
+    def test_to_svg_file_handle(self):
+        chart = leather.Chart()
+        chart.add_dots(self.data1)
+
+        with open('.test.svg', 'w') as f:
+            chart.to_svg(f)
+
+        self.assertTrue(os.path.exists(TEST_SVG))
