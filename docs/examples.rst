@@ -149,12 +149,23 @@ Styling
 Changing theme values
 ---------------------
 
-TKTK
+Chart styles are set using a dead simple :mod:`.theme` system. Leather is meant for making quick and dirty charts. It is neither expected nor recommended for user's to customize these styles.
 
-Changing chart defaults
------------------------
+.. literalinclude:: ../examples/theme.py
+    :language: python
 
-TKTK
+.. figure:: ../examples/charts/theme.svg
+
+Changing series colors
+----------------------
+
+More practically, individual default :class:`.Series` colors can be overriden when they are created.
+
+.. literalinclude:: ../examples/series_color.py
+    :language: python
+
+.. figure:: ../examples/charts/series_color.svg
+
 
 Styling data based on value
 ---------------------------
