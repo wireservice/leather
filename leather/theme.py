@@ -119,7 +119,7 @@ tick_font_char_width = 8
 # SERIES
 
 #: Default sequence of :class:`.Shape` colors
-default_series_colors = ['#ffff99', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
+default_series_colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']
 
 #: Default :class:`.Dots` radius
 default_dot_radius = 3

@@ -103,17 +103,32 @@ Scales
 Linear
 ------
 
-TKTK
+When using numerical data :class:`.Linear` scales are created automatically and by default. You may override the domain by adding a scale manually.
+
+.. literalinclude:: ../examples/linear.py
+    :language: python
+
+.. figure:: ../examples/charts/linear.svg
 
 Ordinal
 -------
 
-TKTK
+When using text data :class:`.Ordinal` scales are created automatically and by default. It is generally not useful to override these defaults.
+
+.. literalinclude:: ../examples/ordinal.py
+    :language: python
+
+.. figure:: ../examples/charts/ordinal.svg
 
 Temporal
 --------
 
-TKTK
+When using date/time data :class:`.Temporal` scales are created automatically and by default. You may override the domain by adding a scale manually.
+
+.. literalinclude:: ../examples/temporal.py
+    :language: python
+
+.. figure:: ../examples/charts/temporal.svg
 
 Axes
 ====
