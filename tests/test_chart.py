@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf8 -*-
 
 import os
 import warnings
@@ -52,6 +53,15 @@ class TestChart(leather.LeatherTestCase):
         self.assertElementCount(svg, '.series', 2)
         self.assertElementCount(svg, '.dots', 2)
         self.assertElementCount(svg, 'circle', 9)
+
+    def test_unicode(self):
+        chart = leather.Chart()
+        chart.add_bars([(1, u'👍')])
+
+        svg = self.render_chart(chart)
+
+        self.assertElementCount(svg, '.axis', 2)
+        self.assertElementCount(svg, '.series', 1)
 
     def test_set_scales(self):
         chart = leather.Chart()

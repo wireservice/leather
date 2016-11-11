@@ -1,20 +1,15 @@
+# -*- coding: utf8 -*-
+
 import datetime
 
 import leather
 
 data = [
-    (0, 0),
-    (5, 5),
-    (10, 10)
+    (0, 'foo'),
+    (5, u'👍'),
+    (10, 'bar')
 ]
 
 chart = leather.Chart('Dots')
-chart.add_x_scale(7, 10)
-chart.add_y_scale(7, 10)
-chart.add_line(data)
+chart.add_bars(data)
 chart.to_svg('test.svg')
-
-foo = leather.Chart('Dots')
-foo.add_x_scale(7, 10)
-foo.add_line(data)
-foo.to_svg('test.svg')

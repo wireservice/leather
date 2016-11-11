@@ -27,8 +27,8 @@ master_doc = 'index'
 # Metadata
 project = u'leather'
 copyright = u'2016, Christopher Groskopf'
-version = '0.4.0'
-release = '0.4.0'
+version = '0.3.1'
+release = '0.3.1'
 
 exclude_patterns = ['_build']
 pygments_style = 'sphinx'

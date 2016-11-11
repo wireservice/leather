@@ -6,6 +6,7 @@ except ImportError:
     import unittest
 
 from lxml import etree
+import six
 
 
 class LeatherTestCase(unittest.TestCase):
@@ -22,7 +23,9 @@ class LeatherTestCase(unittest.TestCase):
 
     def parse_svg(self, text):
         text = text.replace(' xmlns="http://www.w3.org/2000/svg"', '')
-        text = text.encode('utf-8')
+
+        if six.PY3:
+            text = text.encode('utf-8')
 
         return etree.fromstring(text)
 

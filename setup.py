@@ -8,7 +8,7 @@ install_requires = [
 
 setup(
     name='leather',
-    version='0.4.0',
+    version='0.3.1',
     description='Python charting for 80% of humans.',
     long_description=open('README.rst').read(),
     author='Christopher Groskopf',

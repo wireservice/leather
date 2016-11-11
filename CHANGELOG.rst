@@ -1,6 +1,7 @@
-0.4.0
------
+0.3.1 - November 11, 2016
+-------------------------
 
+* Fix unicode rendering issue in Python2.7 and PyPy. (#74)
 
 0.3.0 - November 11, 2016
 -------------------------
