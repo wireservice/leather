@@ -5,10 +5,10 @@ Release process
 This is the release process for leather:
 
 1. Verify all unit tests pass with fresh environments: ``tox -r``.
-2. Verify 100% test coverage: ``nosetests --with-coverage tests``.
+2. Check test coverage: ``nosetests --with-coverage tests``.
 3. Ensure any new modules have been added to setup.py's ``packages`` list.
 #. Ensure any new public interfaces have been added to the documentation.
-#. Make sure the example script still works: ``python example.py``.
+#. Make sure the example scripts still work: ``./examples.sh``.
 #. Ensure ``CHANGELOG.rst`` is up to date. Add the release date and summary.
 #. Create a release tag: ``git tag -a x.y.z -m "x.y.z release."``
 #. Push tags upstream: ``git push --tags``

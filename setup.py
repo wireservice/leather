@@ -40,7 +40,9 @@ setup(
     packages=[
         'leather',
         'leather.scales',
-        'leather.shapes'
+        'leather.series',
+        'leather.shapes',
+        'leather.ticks'
     ],
     install_requires=install_requires
 )
