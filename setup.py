@@ -8,7 +8,7 @@ install_requires = [
 
 setup(
     name='leather',
-    version='0.3.1',
+    version='0.3.2',
     description='Python charting for 80% of humans.',
     long_description=open('README.rst').read(),
     author='Christopher Groskopf',
@@ -16,7 +16,7 @@ setup(
     url='http://leather.readthedocs.io/',
     license='MIT',
     classifiers=[
-        'Development Status :: 3 Alpha',
+        'Development Status :: 3 - Alpha',
         'Framework :: IPython',
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
