@@ -40,7 +40,12 @@ See previous example for note on strings from CSVs.
 Custom data
 -----------
 
-TKTK
+Completely custom data formats are also supported via accessor functions.
+
+.. literalinclude:: ../examples/custom_data.py
+    :language: python
+
+.. figure:: ../examples/charts/custom_data.svg
 
 Multiple series
 ---------------
@@ -133,15 +138,25 @@ When using date/time data :class:`.Temporal` scales are created automatically an
 Axes
 ====
 
-Changing tick count
--------------------
+Changing tick values
+--------------------
 
-TKTK
+You can change the list of ticks that are displayed using :meth:`.Chart.add_x_axis` and :meth:`.Chart.add_y_axis` methods. This will not adjust automatically adjust the scale, so it is possible to pick tick values that are not displayed.
+
+.. literalinclude:: ../examples/ticks.py
+    :language: python
+
+.. figure:: ../examples/charts/ticks.svg
 
 Customizing tick format
 -----------------------
 
-TKTK
+You can provide a tick formatter method to change how ticks are displayed using the :meth:`.Chart.add_x_axis` and :meth:`.Chart.add_y_axis` methods.
+
+.. literalinclude:: ../examples/tick_format.py
+    :language: python
+
+.. figure:: ../examples/charts/tick_format.svg
 
 Styling
 =======
