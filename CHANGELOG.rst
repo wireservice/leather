@@ -1,6 +1,10 @@
 0.3.0
 -----
 
+* Add examples for many more use-cases. (#11)
+* Fixed bars so that data are displayed top-down when using :meth:`.Chart.add_bars`. (#72)
+* Changed default colors. (#51)
+* Fixed a rare file handling bug when saving SVG files.
 * Leather will now issue a warning if you attempt to render a chart with data exceeding the scale domain. (#42)
 * Linear scales will now default to the domain :code:`[0, 1]` if no values are provided. (#66)
 * Axis no longer takes a number of ticks as an argument. Instead pass a list of custom tick values.
