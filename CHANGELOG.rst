@@ -1,5 +1,9 @@
-0.3.0
+0.4.0
 -----
+
+
+0.3.0 - November 11, 2016
+-------------------------
 
 * Add examples for many more use-cases. (#11)
 * Fixed bars so that data are displayed top-down when using :meth:`.Chart.add_bars`. (#72)
