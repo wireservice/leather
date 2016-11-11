@@ -41,8 +41,7 @@ class Bars(Shape):
         else:
             fill_color = next(palette)
 
-        # Bars display "top-down"
-        for d in series.data(reverse=True):
+        for d in series.data():
             if d.x is None or d.y is None:
                 continue
 

@@ -85,19 +85,14 @@ class Series(object):
     def name(self):
         return self._name
 
-    def data(self, reverse=False):
+    def data(self):
         """
         Return data for this series.
         """
         x = self._keys[X]
         y = self._keys[Y]
 
-        if reverse:
-            increment = -1
-        else:
-            increment = 1
-
-        for i, row in enumerate(self._data[::increment]):
+        for i, row in enumerate(self._data):
             yield Datum(i, x(row, i), y(row, i), None, row)
 
     def values(self, dimension):

@@ -21,8 +21,8 @@ class TestBars(leather.LeatherTestCase):
         rects = list(group)
 
         self.assertEqual(len(rects), 3)
-        self.assertEqual(float(rects[1].get('x')), 0)
-        self.assertEqual(float(rects[1].get('width')), 100)
+        self.assertEqual(float(rects[2].get('x')), 0)
+        self.assertEqual(float(rects[2].get('width')), 200)
 
     def test_nulls(self):
         series = leather.Series([
@@ -36,7 +36,7 @@ class TestBars(leather.LeatherTestCase):
 
         self.assertEqual(len(rects), 2)
         self.assertEqual(float(rects[1].get('x')), 0)
-        self.assertEqual(float(rects[1].get('width')), 0)
+        self.assertEqual(float(rects[1].get('width')), 200)
 
     def test_zeros(self):
         series = leather.Series([

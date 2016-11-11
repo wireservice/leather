@@ -110,6 +110,10 @@ class Chart(object):
         """
         Add a data :class:`.Series` to the chart. The data types of the new
         series must be consistent with any series that have already been added.
+
+        There are several shortcuts for adding different types of data series.
+        See :meth:`.Chart.add_bars`, :meth:`.Chart.add_columns`,
+        :meth:`.Chart.add_dots`, and :meth:`.Chart.add_lines`.
         """
         if self._layers and isinstance(self._layers[0][0], CategorySeries):
             raise RuntimeError('Additional series can not be added to a chart with a CategorySeries.')
@@ -133,9 +137,14 @@ class Chart(object):
     def add_bars(self, data, x=None, y=None, name=None, fill_color=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Bars`.
+
+        Note that when creating bars in this way the order of the series data
+        will be reversed so that the first item in the series is displayed
+        as the top-most bar in the graphic. If you don't want this to happen
+        use :meth:`.Chart.add_series` instead.
         """
         self.add_series(
-            Series(data, x=x, y=y, name=name),
+            Series(list(reversed(data)), x=x, y=y, name=name),
             Bars(fill_color)
         )
 
@@ -365,7 +374,7 @@ class Chart(object):
 
         if path:
             f = None
-            
+
             try:
                 if hasattr(path, 'write'):
                     f = path
