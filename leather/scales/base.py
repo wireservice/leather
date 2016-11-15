@@ -80,13 +80,25 @@ class Scale(object):
         elif data_type is Text:
             scale_values = None
 
-            for series, shape in layers:
-                if scale_values is None:
-                    scale_values = series.values(dimension)
-                    continue
+            # First case: a single set of ordinal labels
+            if len(layers) == 1:
+                scale_values = layers[0][0].values(dimension)
+            else:
+                first_series = set(layers[0][0].values(dimension))
+                data_series = [series.values(dimension) for series, shape in layers]
+                all_same = True
 
-                if series.values(dimension) != scale_values:
-                    raise ValueError('All series must have the same values for scale display.')
+                for series in data_series:
+                    if set(series) != first_series:
+                        all_same = False
+                        break
+
+                # Second case: multiple identical sets of ordinal labels
+                if all_same:
+                    scale_values = layers[0][0].values(dimension)
+                # Third case: multiple different sets of ordinal labels
+                else:
+                    scale_values = sorted(list(set().union(*data_series)))
 
             scale = Ordinal(scale_values)
 

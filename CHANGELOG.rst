@@ -1,7 +1,8 @@
 0.3.3
 -----
 
-
+* Ordinal scales can now display data from multiple series with different values. (#76)
+* Better error handling for data types supported by different shapes.
 
 0.3.2 - November 11, 2016
 -------------------------

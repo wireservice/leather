@@ -4,9 +4,11 @@ import xml.etree.ElementTree as ET
 
 import six
 
+from leather.data_types import Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
 from leather import theme
+from leather.utils import X, Y
 
 
 class Line(Shape):
@@ -29,6 +31,9 @@ class Line(Shape):
         """
         if isinstance(series, CategorySeries):
             raise ValueError('Line can not be used to render CategorySeries.')
+
+        if series.data_type(X) is Text or series.data_type(Y) is Text:
+            raise ValueError('Line does not support Text values.')
 
     def _new_path(self, stroke_color):
         """

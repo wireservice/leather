@@ -5,10 +5,11 @@ import xml.etree.ElementTree as ET
 
 import six
 
+from leather.data_types import Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
 from leather import theme
-from leather.utils import DummySeries
+from leather.utils import DummySeries, X, Y
 
 
 class Dots(Shape):
@@ -32,6 +33,9 @@ class Dots(Shape):
         """
         Verify this shape can be used to render a given series.
         """
+        if series.data_type(X) is Text or series.data_type(Y) is Text:
+            raise ValueError('Dots do not support Text values.')
+
         return True
 
     def to_svg(self, width, height, x_scale, y_scale, series, palette):

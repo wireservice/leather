@@ -40,3 +40,47 @@ class TestLattice(leather.LeatherTestCase):
         self.assertElementCount(svg, '.axis', 6)
         self.assertElementCount(svg, '.series', 3)
         self.assertElementCount(svg, '.lines', 3)
+
+    def test_bars(self):
+        data1 = [
+            (2, 'foo'),
+            (6, 'bar'),
+            (9, 'bing')
+        ]
+
+        data2 = [
+            (3, 'foo'),
+            (5, 'bar'),
+            (7, 'bing')
+        ]
+
+        lattice = leather.Lattice(shape=leather.Bars())
+        lattice.add_many([data1, data2])
+
+        svg = self.render_chart(lattice)
+
+        self.assertElementCount(svg, '.axis', 4)
+        self.assertElementCount(svg, '.series', 2)
+        self.assertElementCount(svg, '.bars', 2)
+
+    def test_bars_different(self):
+        data1 = [
+            (3, 'foo'),
+            (5, 'bar'),
+            (9, 'bing')
+        ]
+
+        data2 = [
+            (3, 'foo'),
+            (5, 'bar'),
+            (9, 'baz')
+        ]
+
+        lattice = leather.Lattice(shape=leather.Bars())
+        lattice.add_many([data1, data2])
+
+        svg = self.render_chart(lattice)
+
+        self.assertElementCount(svg, '.axis', 4)
+        self.assertElementCount(svg, '.series', 2)
+        self.assertElementCount(svg, '.bars', 2)

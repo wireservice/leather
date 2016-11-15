@@ -54,6 +54,20 @@ class TestBars(leather.LeatherTestCase):
         self.assertEqual(float(rects[1].get('x')), 0)
         self.assertEqual(float(rects[1].get('width')), 0)
 
+    def test_validate(self):
+        series = leather.Series([
+            (1, 'foo')
+        ])
+
+        self.shape.validate_series(series)
+
+        series = leather.Series([
+            ('foo', 1)
+        ])
+
+        with self.assertRaises(ValueError):
+            self.shape.validate_series(series)
+
 
 class TestColumns(leather.LeatherTestCase):
     def setUp(self):
@@ -89,6 +103,20 @@ class TestColumns(leather.LeatherTestCase):
         self.assertEqual(len(rects), 2)
         self.assertEqual(float(rects[1].get('y')), 0)
         self.assertEqual(float(rects[1].get('height')), 100)
+
+    def test_validate(self):
+        series = leather.Series([
+            ('foo', 1)
+        ])
+
+        self.shape.validate_series(series)
+
+        series = leather.Series([
+            (1, 'foo')
+        ])
+
+        with self.assertRaises(ValueError):
+            self.shape.validate_series(series)
 
 
 class TestDots(leather.LeatherTestCase):
@@ -140,6 +168,20 @@ class TestDots(leather.LeatherTestCase):
         self.assertEqual(float(circles[1].get('cx')), 200)
         self.assertEqual(float(circles[1].get('cy')), 0)
 
+    def test_validate(self):
+        series = leather.Series([
+            (1, 1)
+        ])
+
+        self.shape.validate_series(series)
+
+        series = leather.Series([
+            (1, 'foo')
+        ])
+
+        with self.assertRaises(ValueError):
+            self.shape.validate_series(series)
+
 
 class TestLine(leather.LeatherTestCase):
     def setUp(self):
@@ -183,3 +225,17 @@ class TestLine(leather.LeatherTestCase):
         paths = list(group)
 
         self.assertEqual(len(paths), 2)
+
+    def test_validate(self):
+        series = leather.Series([
+            (1, 1)
+        ])
+
+        self.shape.validate_series(series)
+
+        series = leather.Series([
+            (1, 'foo')
+        ])
+
+        with self.assertRaises(ValueError):
+            self.shape.validate_series(series)

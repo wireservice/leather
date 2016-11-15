@@ -4,8 +4,10 @@ import xml.etree.ElementTree as ET
 
 import six
 
+from leather.data_types import Number, Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
+from leather.utils import X, Y
 
 
 class Columns(Shape):
@@ -25,6 +27,12 @@ class Columns(Shape):
         """
         if isinstance(series, CategorySeries):
             raise ValueError('Columns can not be used to render CategorySeries.')
+
+        if series.data_type(X) is not Text:
+            raise ValueError('Bars only support Text values for the X axis.')
+
+        if series.data_type(Y) is not Number:
+            raise ValueError('Bars only support Number values for the Y axis.')
 
     def to_svg(self, width, height, x_scale, y_scale, series, palette):
         """

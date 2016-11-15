@@ -26,8 +26,6 @@ class Series(object):
 
         Or, a custom data format, in which case :code:`x` and :code:`y` must
         specify :func:`.key_function`.
-    :param shape:
-        An instance of :class:`.Shape` to use to render this data.
     :param x:
         If using sequence row data, then this may be either an integer index
         identifying the X column, or a :func:`.key_function`.
@@ -77,13 +75,19 @@ class Series(object):
                 break
 
         if v is None:
-            raise ValueError('All values in dimension was null.')
+            raise ValueError('All values in dimension were null.')
 
         return DataType.infer(v)
 
     @property
     def name(self):
         return self._name
+
+    def data_type(self, dimension):
+        """
+        Return the data type for a dimension of this series.
+        """
+        return self._types[dimension]
 
     def data(self):
         """
