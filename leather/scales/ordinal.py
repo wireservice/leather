@@ -28,7 +28,11 @@ class Ordinal(Scale):
 
         segments = len(self._domain)
         segment_size = (range_max - range_min) / segments
-        pos = range_min + (self._domain.index(value) * segment_size) + (segment_size / 2)
+
+        try:
+            pos = range_min + (self._domain.index(value) * segment_size) + (segment_size / 2)
+        except ValueError:
+            raise ValueError('Value "%s" is not present in Ordinal scale domain' % value)
 
         return pos
 
@@ -44,8 +48,11 @@ class Ordinal(Scale):
         segment_size = (range_max - range_min) / segments
         gap = segment_size / Decimal(20)
 
-        a = range_min + (self._domain.index(value) * segment_size) + gap
-        b = range_min + ((self._domain.index(value) + 1) * segment_size) - gap
+        try:
+            a = range_min + (self._domain.index(value) * segment_size) + gap
+            b = range_min + ((self._domain.index(value) + 1) * segment_size) - gap
+        except ValueError:
+            raise ValueError('Value "%s" is not present in Ordinal scale domain' % value)
 
         return (a, b)
 

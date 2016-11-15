@@ -22,8 +22,7 @@ import leather
 
 data1 = [
     (2, None),
-    (6, None),
-    (9, None)
+    (3, None)
 ]
 
 chart = leather.Chart()

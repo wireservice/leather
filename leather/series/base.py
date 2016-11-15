@@ -6,7 +6,7 @@ from functools import partial
 import six
 
 from leather.data_types import DataType
-from leather.utils import X, Y, Datum
+from leather.utils import DIMENSION_NAMES, X, Y, Datum
 
 
 class Series(object):
@@ -51,8 +51,8 @@ class Series(object):
         ]
 
         self._types = [
-            self._infer_type(self._keys[X]),
-            self._infer_type(self._keys[Y])
+            self._infer_type(X),
+            self._infer_type(Y)
         ]
 
     def _make_key(self, key):
@@ -64,10 +64,12 @@ class Series(object):
         else:
             return lambda row, index: row[key]
 
-    def _infer_type(self, key):
+    def _infer_type(self, dimension):
         """
         Infer the datatype of this column by sampling the data.
         """
+        key = self._keys[dimension]
+
         for i, row in enumerate(self._data):
             v = key(row, i)
 
@@ -75,7 +77,7 @@ class Series(object):
                 break
 
         if v is None:
-            raise ValueError('All values in dimension were null.')
+            raise ValueError('All values in %s dimension are null.' % DIMENSION_NAMES[dimension])
 
         return DataType.infer(v)
 

@@ -56,9 +56,9 @@ class CategorySeries(Series):
         ]
 
         self._types = [
-            self._infer_type(self._keys[X]),
-            self._infer_type(self._keys[Y]),
-            self._infer_type(self._keys[Z])
+            self._infer_type(X),
+            self._infer_type(Y),
+            self._infer_type(Z)
         ]
 
     def data(self):
