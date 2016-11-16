@@ -113,7 +113,7 @@ class Chart(object):
 
         There are several shortcuts for adding different types of data series.
         See :meth:`.Chart.add_bars`, :meth:`.Chart.add_columns`,
-        :meth:`.Chart.add_dots`, and :meth:`.Chart.add_lines`.
+        :meth:`.Chart.add_dots`, and :meth:`.Chart.add_line`.
         """
         if self._layers and isinstance(self._layers[0][0], CategorySeries):
             raise RuntimeError('Additional series can not be added to a chart with a CategorySeries.')
