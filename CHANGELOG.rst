@@ -1,5 +1,5 @@
-0.3.3
------
+0.3.3 - November 30, 2016
+-------------------------
 
 * Fix examples that used invalid column data. (#81)
 * lxml is no longer imported by default. (#83)
