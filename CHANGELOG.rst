@@ -1,6 +1,7 @@
 0.3.3
 -----
 
+* lxml is no longer imported by default. (#83)
 * Ordinal scales can now display data from multiple series with different values. (#76)
 * Better error handling for data types supported by different shapes.
 
