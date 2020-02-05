@@ -53,7 +53,7 @@ jobs:
 # command to install dependencies
 install:
   - >
-    if [[ "$TRAVIS_PYTHON_VERSION" == "2"* ]] || [[ "$TRAVIS_PYTHON_VERSION" == "pypy2"* ]]; then
+    if [[ "$TRAVIS_PYTHON_VERSION" == "2"* ]] || [[ "$TRAVIS_PYTHON_VERSION" == "pypy"* ]] && [[ "$TRAVIS_PYTHON_VERSION" != "pypy3"* ]]; then
       pip install -r requirements-py2.txt;
     else
       pip3 install -r requirements-py3.txt;
