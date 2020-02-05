@@ -1,12 +1,63 @@
 language: python
+os: linux
 python:
-  - "2.7"
-  - "3.3"
-  - "3.4"
+  - "3.8"
+  - "3.7"
+  - "3.6"
   - "3.5"
+  - "3.4"
+  - "3.3"
+  - "2.7"
+  - "pypy3"
+  - "pypy3.5-6.0"
+  - "pypy3.5-7.0"
+  - "pypy3.6-7.0.0"
+  - "pypy"
+  - "pypy2.7-6.0"
+  - "pypy2.7-7.0.0"
+jobs:
+  include:
+    - os: osx
+      python: "3.7"
+      osx_image: xcode11.2  # Python 3.7.4 running on macOS 10.14.4
+      language: shell       # 'language: python' is an error on Travis CI macOS
+      before_install:
+        - python3 -m pip install --upgrade pip
+        - python3 -m pip install --upgrade virtualenv
+        - virtualenv -p python3 --system-site-packages "$HOME/venv"
+        - source "$HOME/venv/bin/activate"
+        - CFLAGS="-O0" STATIC_DEPS=true python3 -m pip install lxml
+        - python3 --version
+        - python --version
+      env:
+        - HOMEBREW_NO_INSTALL_CLEANUP=1
+        - HOMEBREW_NO_ANALYTICS=1
+      before_cache:
+        - rm -f "$HOME/Library/Caches/pip/log/debug.log"
+      cache:
+        directories:
+          - "$HOME/Library/Caches/pip"
+    - os: windows           # Windows 10.0.17134 N/A Build 17134
+      python: "3.8"
+      language: shell       # 'language: python' is an error on Travis CI Windows
+      before_install:
+        - choco install python --version 3.8.0
+        - choco install sqlite
+        - python -m pip install --upgrade pip
+        - python --version
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
+  # allow failure on OSes other than Linux
+  allow_failures:
+    - os: osx
+    - os: windows
+  fast_finish: true
 # command to install dependencies
 install:
-    - if [[ $TRAVIS_PYTHON_VERSION == 3* ]]; then pip install -r requirements-py3.txt; else pip install -r requirements-py2.txt; fi
+  - >
+    if [[ "$TRAVIS_PYTHON_VERSION" == "2"* ]] || [[ "$TRAVIS_PYTHON_VERSION" == "pypy2"* ]]; then
+      pip install -r requirements-py2.txt;
+    else
+      pip3 install -r requirements-py3.txt;
+    fi
 # command to run tests
 script: nosetests tests
-sudo: false
