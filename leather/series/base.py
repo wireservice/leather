@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-from collections import Iterable, Sequence, Mapping
+try:
+    from collections.abc import Iterable, Sequence, Mapping
+except ImportError:
+    from collections import Iterable, Sequence, Mapping
 from functools import partial
 
 import six
