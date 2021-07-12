@@ -174,7 +174,7 @@ Chart styles are set using a dead simple :mod:`.theme` system. Leather is meant 
 Changing series colors
 ----------------------
 
-More practically, individual default :class:`.Series` colors can be overriden when they are created.
+More practically, individual default :class:`.Series` colors can be overridden when they are created.
 
 .. literalinclude:: ../examples/series_color.py
     :language: python
