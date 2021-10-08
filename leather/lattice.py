@@ -5,6 +5,7 @@ from leather.chart import Chart
 from leather.data_types import Date, DateTime
 from leather.grid import Grid
 from leather.scales import Scale, Linear
+from leather.scales.temporal import Temporal
 from leather.series import Series
 from leather.shapes import Line
 from leather import theme
