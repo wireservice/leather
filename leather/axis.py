@@ -83,6 +83,7 @@ class Axis(object):
             )
             title.set('text-anchor', 'middle')
             title.set('font-family', theme.axis_title_font_family)
+            title.set('font-size', six.text_type(theme.axis_title_font_size))
             title.text = self._name
 
             group.append(title)
@@ -164,6 +165,7 @@ class Axis(object):
             )
             label.set('text-anchor', text_anchor)
             label.set('font-family', theme.tick_font_family)
+            label.set('font-size', six.text_type(theme.tick_font_size))
 
             value = tick_formatter(value, i, tick_count)
             label.text = six.text_type(value)
