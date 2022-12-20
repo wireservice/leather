@@ -1,18 +1,13 @@
 #!/usr/bin/env python
 
-try:
-    from collections.abc import Iterable, Sequence, Mapping
-except ImportError:
-    from collections import Iterable, Sequence, Mapping
+from collections.abc import Iterable, Mapping, Sequence
 from functools import partial
 
-import six
-
 from leather.data_types import DataType
-from leather.utils import DIMENSION_NAMES, X, Y, Datum
+from leather.utils import DIMENSION_NAMES, Datum, X, Y
 
 
-class Series(object):
+class Series:
     """
     A series of data and its associated metadata.
 
@@ -64,8 +59,7 @@ class Series(object):
         """
         if callable(key):
             return key
-        else:
-            return lambda row, index: row[key]
+        return lambda row, index: row[key]
 
     def _infer_type(self, dimension):
         """

@@ -2,13 +2,10 @@
 
 import xml.etree.ElementTree as ET
 
-import six
-
-from leather import svg
-from leather import theme
+from leather import svg, theme
 
 
-class Axis(object):
+class Axis:
     """
     A horizontal or vertical chart axis.
 
@@ -22,7 +19,7 @@ class Axis(object):
     def __init__(self, ticks=None, tick_formatter=None, name=None):
         self._ticks = ticks
         self._tick_formatter = tick_formatter
-        self._name = six.text_type(name) if name is not None else None
+        self._name = str(name) if name is not None else None
 
     def _estimate_left_tick_width(self, scale):
         """
@@ -75,8 +72,8 @@ class Axis(object):
                 transform = ''
 
             title = ET.Element('text',
-                x=six.text_type(title_x),
-                y=six.text_type(title_y),
+                x=str(title_x),
+                y=str(title_y),
                 dy=dy,
                 fill=theme.axis_title_color,
                 transform=transform
@@ -134,13 +131,13 @@ class Axis(object):
                 x2 = projected_value
 
             tick = ET.Element('line',
-                x1=six.text_type(x1),
-                y1=six.text_type(y1),
-                x2=six.text_type(x2),
-                y2=six.text_type(y2),
+                x1=str(x1),
+                y1=str(y1),
+                x2=str(x2),
+                y2=str(y2),
                 stroke=tick_color
             )
-            tick.set('stroke-width', six.text_type(theme.tick_width))
+            tick.set('stroke-width', str(theme.tick_width))
 
             tick_group.append(tick)
 
@@ -157,8 +154,8 @@ class Axis(object):
                 text_anchor = 'middle'
 
             label = ET.Element('text',
-                x=six.text_type(x),
-                y=six.text_type(y),
+                x=str(x),
+                y=str(y),
                 dy=dy,
                 fill=theme.label_color
             )
@@ -166,7 +163,7 @@ class Axis(object):
             label.set('font-family', theme.tick_font_family)
 
             value = tick_formatter(value, i, tick_count)
-            label.text = six.text_type(value)
+            label.text = str(value)
 
             tick_group.append(label)
 
@@ -190,4 +187,4 @@ def tick_format_function(value, index, tick_count):
     :returns:
         A stringified tick value for display.
     """
-    return six.text_type(value)
+    return str(value)

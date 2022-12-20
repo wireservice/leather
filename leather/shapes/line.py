@@ -2,12 +2,10 @@
 
 import xml.etree.ElementTree as ET
 
-import six
-
+from leather import theme
 from leather.data_types import Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
-from leather import theme
 from leather.utils import X, Y
 
 
@@ -43,7 +41,7 @@ class Line(Shape):
             stroke=stroke_color,
             fill='none'
         )
-        path.set('stroke-width', six.text_type(self._width))
+        path.set('stroke-width', str(self._width))
 
         return path
 
@@ -83,8 +81,8 @@ class Line(Shape):
 
             path_d.extend([
                 command,
-                six.text_type(proj_x),
-                six.text_type(proj_y)
+                str(proj_x),
+                str(proj_y)
             ])
 
         if path_d:

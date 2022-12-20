@@ -2,8 +2,6 @@
 
 from datetime import datetime
 
-import six
-
 from leather.scales.base import Scale
 from leather.ticks.score_time import ScoreTimeTicker
 
@@ -37,19 +35,7 @@ class Temporal(Scale):
         """
         Project a value in this scale's domain to a target range.
         """
-        numerator = value - self._ticker.min
-        denominator = self._ticker.max - self._ticker.min
-
-        # Python 2 does not support timedelta division
-        if six.PY2:
-            if isinstance(self._ticker.min, datetime):
-                numerator = numerator.total_seconds()
-                denominator = denominator.total_seconds()
-            else:
-                numerator = float(numerator.days)
-                denominator = float(denominator.days)
-
-        pos = numerator / denominator
+        pos = (value - self._ticker.min) / (self._ticker.max - self._ticker.min)
 
         return ((range_max - range_min) * pos) + range_min
 

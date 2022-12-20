@@ -2,7 +2,6 @@ import random
 
 import leather
 
-
 dot_data = [(random.randint(0, 250), random.randint(0, 250)) for i in range(100)]
 
 def colorizer(d):

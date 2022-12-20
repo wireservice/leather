@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
+import math
+import sys
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 from functools import partial
-import math
-import sys
 
-from leather.ticks.score import ScoreTicker
 from leather import utils
-
+from leather.ticks.score import ScoreTicker
 
 #: The default number of ticks to produce
 DEFAULT_TICKS = 5

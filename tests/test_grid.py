@@ -4,7 +4,6 @@ import os
 
 import leather
 
-
 TEST_SVG = '.test.svg'
 
 

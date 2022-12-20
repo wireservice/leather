@@ -53,7 +53,7 @@ class TestSeries(leather.LeatherTestCase):
         self.assertSequenceEqual(series.values(Y), ['foo', 'bar', 'baz'])
 
     def test_custom(self):
-        class Obj(object):
+        class Obj:
             def __init__(self, a, b, c):
                 self.a = a
                 self.b = b

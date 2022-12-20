@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 
-from collections import defaultdict
 import xml.etree.ElementTree as ET
+from collections import defaultdict
 
-import six
-
+from leather import theme
 from leather.data_types import Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
-from leather import theme
 from leather.utils import DummySeries, X, Y
 
 
@@ -67,9 +65,9 @@ class Dots(Shape):
                 radius = self._radius
 
             group.append(ET.Element('circle',
-                cx=six.text_type(proj_x),
-                cy=six.text_type(proj_y),
-                r=six.text_type(radius),
+                cx=str(proj_x),
+                cy=str(proj_y),
+                r=str(radius),
                 fill=fill_color
             ))
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
 import math
 import sys
+from decimal import ROUND_CEILING, ROUND_FLOOR, Decimal
 
 from leather.ticks.base import Ticker
 from leather.utils import isclose

@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 
-from collections import namedtuple
-from datetime import date, datetime, timedelta
-from decimal import Decimal
 import math
 import sys
 import warnings
-
-import six
+from collections import namedtuple
+from datetime import date, datetime, timedelta
+from decimal import Decimal
 
 try:
     __IPYTHON__
