@@ -65,7 +65,8 @@ class Columns(Shape):
             else:
                 color = fill_color
 
-            group.append(ET.Element('rect',
+            group.append(ET.Element(
+                'rect',
                 x=str(x1),
                 y=str(column_y),
                 width=str(x2 - x1),

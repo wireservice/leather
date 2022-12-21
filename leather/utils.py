@@ -11,7 +11,8 @@ try:
     __IPYTHON__
     from IPython.display import SVG as IPythonSVG
 except (NameError, ImportError):
-    IPythonSVG = lambda x: x
+    def IPythonSVG(x):
+        return x
 
 
 # Shorthand

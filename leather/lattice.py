@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
-from leather import theme
 from leather.axis import Axis
 from leather.chart import Chart
 from leather.data_types import Date, DateTime
 from leather.grid import Grid
-from leather.scales import Linear, Scale
+from leather.scales import Linear, Scale, Temporal
 from leather.series import Series
 from leather.shapes import Line
 from leather.utils import X, Y
@@ -149,7 +148,7 @@ class Lattice:
             self._scales[X] = Scale.infer(layers, X, self._types[X])
 
         if not self._scales[Y]:
-            self._scales[Y]= Scale.infer(layers, Y, self._types[Y])
+            self._scales[Y] = Scale.infer(layers, Y, self._types[Y])
 
         if not self._axes[X]:
             self._axes[X] = Axis()

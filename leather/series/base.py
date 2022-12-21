@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-from collections.abc import Iterable, Mapping, Sequence
-from functools import partial
-
 from leather.data_types import DataType
 from leather.utils import DIMENSION_NAMES, Datum, X, Y
 

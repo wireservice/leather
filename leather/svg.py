@@ -17,6 +17,7 @@ def stringify(root):
     """
     return ET.tostring(root, encoding='unicode')
 
+
 def save(f, root):
     """
     Save an SVG XML tree to a file.
@@ -24,11 +25,13 @@ def save(f, root):
     f.write(HEADER)
     f.write(stringify(root))
 
+
 def translate(x, y):
     """
     Generate an SVG transform statement representing a simple translation.
     """
     return 'translate(%i %i)' % (x, y)
+
 
 def rotate(deg, x, y):
     """

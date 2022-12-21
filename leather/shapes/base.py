@@ -60,7 +60,8 @@ class Shape:
         item_group = ET.Element('g')
 
         # Bubble
-        bubble = ET.Element('rect',
+        bubble = ET.Element(
+            'rect',
             x=str(0),
             y=str(-theme.legend_font_char_height + theme.legend_bubble_offset),
             width=str(theme.legend_bubble_size),
@@ -75,7 +76,8 @@ class Shape:
         item_group.append(bubble)
 
         # Label
-        label = ET.Element('text',
+        label = ET.Element(
+            'text',
             x=str(bubble_width),
             y=str(0),
             fill=theme.legend_color

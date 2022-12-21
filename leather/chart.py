@@ -2,7 +2,6 @@
 
 import os
 import xml.etree.ElementTree as ET
-from copy import copy
 
 import leather.svg as svg
 from leather import theme
@@ -188,7 +187,10 @@ class Chart:
             for series, shape in self._layers:
                 if not scale.contains(series.min(dimension)) or not scale.contains(series.max(dimension)):
                     d = DIMENSION_NAMES[dimension]
-                    warn('Data contains values outside %s scale domain. All data points may not be visible on the chart.' % d)
+                    warn(
+                        'Data contains values outside %s scale domain. '
+                        'All data points may not be visible on the chart.' % d
+                    )
 
                     # Only display once per axis
                     break
@@ -230,7 +232,8 @@ class Chart:
         # Root / background
         root_group = ET.Element('g')
 
-        root_group.append(ET.Element('rect',
+        root_group.append(ET.Element(
+            'rect',
             x=str(0),
             y=str(0),
             width=str(width),
@@ -253,7 +256,8 @@ class Chart:
         header_margin = 0
 
         if self._title:
-            label = ET.Element('text',
+            label = ET.Element(
+                'text',
                 x=str(0),
                 y=str(0),
                 fill=theme.title_color
@@ -357,7 +361,8 @@ class Chart:
         width = width or theme.default_chart_width
         height = height or theme.default_chart_height
 
-        root = ET.Element('svg',
+        root = ET.Element(
+            'svg',
             width=str(width),
             height=str(height),
             version='1.1',

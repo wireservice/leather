@@ -64,7 +64,8 @@ class Dots(Shape):
             else:
                 radius = self._radius
 
-            group.append(ET.Element('circle',
+            group.append(ET.Element(
+                'circle',
                 cx=str(proj_x),
                 cy=str(proj_y),
                 r=str(radius),

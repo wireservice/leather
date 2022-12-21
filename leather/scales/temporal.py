@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-from datetime import datetime
-
 from leather.scales.base import Scale
 from leather.ticks.score_time import ScoreTimeTicker
 
@@ -17,7 +15,10 @@ class Temporal(Scale):
     """
     def __init__(self, domain_min, domain_max):
         if domain_min >= domain_max:
-            raise ValueError('Domain minimum must be less than domain maximum. Inverted domains are not currently supported.')
+            raise ValueError(
+                'Domain minimum must be less than domain maximum. '
+                'Inverted domains are not currently supported.'
+            )
 
         self._data_min = domain_min
         self._data_max = domain_max

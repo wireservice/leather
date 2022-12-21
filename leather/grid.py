@@ -48,7 +48,8 @@ class Grid:
             width = columns * theme.default_chart_width
             height = rows * theme.default_chart_height
 
-        root = ET.Element('svg',
+        root = ET.Element(
+            'svg',
             width=str(width),
             height=str(height),
             version='1.1',
@@ -58,7 +59,8 @@ class Grid:
         # Root /  background
         root_group = ET.Element('g')
 
-        root_group.append(ET.Element('rect',
+        root_group.append(ET.Element(
+            'rect',
             x=str(0),
             y=str(0),
             width=str(width),

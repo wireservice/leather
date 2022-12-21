@@ -37,7 +37,8 @@ class Line(Shape):
         """
         Start a new path.
         """
-        path = ET.Element('path',
+        path = ET.Element(
+            'path',
             stroke=stroke_color,
             fill='none'
         )

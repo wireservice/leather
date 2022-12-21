@@ -63,15 +63,16 @@ class Axis:
             if orient == 'left':
                 title_x = -(self._estimate_left_tick_width(scale) + theme.axis_title_gap)
                 title_y = height / 2
-                dy=''
+                dy = ''
                 transform = svg.rotate(270, title_x, title_y)
             elif orient == 'bottom':
                 title_x = width / 2
                 title_y = height + theme.tick_font_char_height + (theme.tick_size * 2) + theme.axis_title_gap
-                dy='1em'
+                dy = '1em'
                 transform = ''
 
-            title = ET.Element('text',
+            title = ET.Element(
+                'text',
                 x=str(title_x),
                 y=str(title_y),
                 dy=dy,
@@ -130,7 +131,8 @@ class Axis:
                 x1 = projected_value
                 x2 = projected_value
 
-            tick = ET.Element('line',
+            tick = ET.Element(
+                'line',
                 x1=str(x1),
                 y1=str(y1),
                 x2=str(x2),
@@ -153,7 +155,8 @@ class Axis:
                 dy = '1em'
                 text_anchor = 'middle'
 
-            label = ET.Element('text',
+            label = ET.Element(
+                'text',
                 x=str(x),
                 y=str(y),
                 dy=dy,

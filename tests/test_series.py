@@ -57,7 +57,7 @@ class TestSeries(leather.LeatherTestCase):
             def __init__(self, a, b, c):
                 self.a = a
                 self.b = b
-                self.c =c
+                self.c = c
 
         data = [
             Obj('foo', 1, 4),

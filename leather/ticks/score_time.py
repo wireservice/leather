@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import math
-import sys
-from datetime import date, datetime, timedelta
-from decimal import Decimal
+from datetime import date, datetime
 from functools import partial
 
 from leather import utils
