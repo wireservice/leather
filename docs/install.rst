@@ -18,11 +18,7 @@ If you are a developer that also wants to hack on leather, install it from git::
     cd leather
     mkvirtualenv leather
 
-    # If running Python 3 (strongly recommended for development)
     pip install -r requirements-py3.txt
-
-    # If running Python 2
-    pip install -r requirements-py2.txt
 
     python setup.py develop
     tox
@@ -31,7 +27,7 @@ If you are a developer that also wants to hack on leather, install it from git::
 
     To run the leather tests with coverage::
 
-        nosetests --with-coverage tests
+        pytest --cov leather
 
 Supported platforms
 -------------------

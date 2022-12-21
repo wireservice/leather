@@ -1,16 +1,14 @@
-#!/usr/bin/env python
+from setuptools import find_packages, setup
 
-from setuptools import setup
-
-install_requires = [
-    'six>=1.6.1'
-]
+with open('README.rst') as f:
+    long_description = f.read()
 
 setup(
     name='leather',
     version='0.3.4',
     description='Python charting for 80% of humans.',
-    long_description=open('README.rst').read(),
+    long_description=long_description,
+    long_description_content_type='text/x-rst',
     author='Christopher Groskopf',
     author_email='chrisgroskopf@gmail.com',
     url='http://leather.readthedocs.io/',
@@ -38,12 +36,17 @@ setup(
         'Topic :: Scientific/Engineering :: Visualization',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    packages=[
-        'leather',
-        'leather.scales',
-        'leather.series',
-        'leather.shapes',
-        'leather.ticks'
-    ],
-    install_requires=install_requires
+    packages=find_packages(exclude=['tests', 'tests.*']),
+    extras_require={
+        'test': [
+            'pytest',
+            'pytest-cov',
+            'lxml>=3.6.0',
+            'cssselect>=0.9.1',
+        ],
+        'docs': [
+            'Sphinx>=1.2.2',
+            'sphinx_rtd_theme>=0.1.6',
+        ],
+    }
 )

@@ -2,12 +2,9 @@
 
 import xml.etree.ElementTree as ET
 
-import six
-
 from leather.data_types import Number, Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
-from leather import theme
 from leather.utils import X, Y
 
 
@@ -68,11 +65,12 @@ class Bars(Shape):
             else:
                 color = fill_color
 
-            group.append(ET.Element('rect',
-                x=six.text_type(bar_x),
-                y=six.text_type(y2),
-                width=six.text_type(bar_width),
-                height=six.text_type(y1 - y2),
+            group.append(ET.Element(
+                'rect',
+                x=str(bar_x),
+                y=str(y2),
+                width=str(bar_width),
+                height=str(y1 - y2),
                 fill=color
             ))
 

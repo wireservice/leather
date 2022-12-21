@@ -6,7 +6,6 @@ import warnings
 
 import leather
 
-
 TEST_SVG = '.test.svg'
 
 
@@ -56,7 +55,7 @@ class TestChart(leather.LeatherTestCase):
 
     def test_unicode(self):
         chart = leather.Chart()
-        chart.add_bars([(1, u'👍')])
+        chart.add_bars([(1, '👍')])
 
         svg = self.render_chart(chart)
 

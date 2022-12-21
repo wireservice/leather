@@ -4,14 +4,13 @@ from leather.axis import Axis
 from leather.chart import Chart
 from leather.data_types import Date, DateTime
 from leather.grid import Grid
-from leather.scales import Scale, Linear
+from leather.scales import Linear, Scale, Temporal
 from leather.series import Series
 from leather.shapes import Line
-from leather import theme
 from leather.utils import X, Y
 
 
-class Lattice(object):
+class Lattice:
     """
     A grid of charts with synchronized shapes, scales, and axes.
 
@@ -149,7 +148,7 @@ class Lattice(object):
             self._scales[X] = Scale.infer(layers, X, self._types[X])
 
         if not self._scales[Y]:
-            self._scales[Y]= Scale.infer(layers, Y, self._types[Y])
+            self._scales[Y] = Scale.infer(layers, Y, self._types[Y])
 
         if not self._axes[X]:
             self._axes[X] = Axis()

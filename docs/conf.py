@@ -25,8 +25,8 @@ templates_path = ['_templates']
 master_doc = 'index'
 
 # Metadata
-project = u'leather'
-copyright = u'2016, Christopher Groskopf'
+project = 'leather'
+copyright = '2016, Christopher Groskopf'
 version = '0.3.4'
 release = '0.3.4'
 

@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
-
-import six
+import unittest
 
 
 class LeatherTestCase(unittest.TestCase):
@@ -23,10 +18,7 @@ class LeatherTestCase(unittest.TestCase):
     def parse_svg(self, text):
         from lxml import etree
 
-        text = text.replace(' xmlns="http://www.w3.org/2000/svg"', '')
-
-        if six.PY3:
-            text = text.encode('utf-8')
+        text = text.replace(' xmlns="http://www.w3.org/2000/svg"', '').encode('utf-8')
 
         return etree.fromstring(text)
 

@@ -1,16 +1,7 @@
 #!/usr/bin/env python
 
-try:
-    from collections.abc import Iterable, Sequence, Mapping
-except ImportError:
-    from collections import Iterable, Sequence, Mapping
-from functools import partial
-
-import six
-
-from leather.data_types import DataType
 from leather.series.base import Series
-from leather.utils import X, Y, Z, Datum
+from leather.utils import Datum, X, Y, Z
 
 
 class CategorySeries(Series):

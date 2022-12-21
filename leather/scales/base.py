@@ -2,13 +2,11 @@
 
 from datetime import date, datetime
 
-import six
-
 from leather.data_types import Date, DateTime, Number, Text
 from leather.shapes import Bars, Columns
 
 
-class Scale(object):
+class Scale:
     """
     Base class for various kinds of scale objects.
     """
@@ -137,4 +135,4 @@ class Scale(object):
         This method is used as a default which will be ignored if the user
         provides a custom tick formatter to the axis.
         """
-        return six.text_type(value)
+        return str(value)

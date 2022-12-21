@@ -7,8 +7,10 @@ data = [
     (8, 4)
 ]
 
+
 def tick_formatter(value, index, tick_count):
     return '%i (%i/%i)' % (value, index, tick_count)
+
 
 chart = leather.Chart('Line')
 chart.add_x_axis(tick_formatter=tick_formatter)
