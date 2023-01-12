@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-import math
-import sys
 import warnings
 from collections import namedtuple
 from datetime import date, datetime, timedelta
@@ -48,10 +46,6 @@ warnings.formatwarning = lambda message, category, filename, lineno, line=None: 
 warn = warnings.warn
 warnings.resetwarnings()
 warnings.simplefilter('always')
-
-
-# In Python 3.5 use builtin C implementation of `isclose`
-from math import isclose
 
 
 def to_year_count(d):

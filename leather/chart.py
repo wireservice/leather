@@ -122,7 +122,7 @@ class Chart:
                 if not self._types[dim]:
                     self._types[dim] = series._types[dim]
                 elif series._types[dim] is not self._types[dim]:
-                    raise TypeError('Can\'t mix axis-data types: {} and {}'.format(series._types[dim], self._types[dim]))
+                    raise TypeError(f'Can\'t mix axis-data types: {series._types[dim]} and {self._types[dim]}')
 
         shape.validate_series(series)
 

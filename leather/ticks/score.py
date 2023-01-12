@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 from decimal import ROUND_CEILING, ROUND_FLOOR, Decimal
+from math import isclose
 
 from leather.ticks.base import Ticker
-from leather.utils import isclose
 
 # Shorthand
 ZERO = Decimal('0')

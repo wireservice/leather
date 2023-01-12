@@ -96,7 +96,7 @@ class Scale:
                     scale_values = layers[0][0].values(dimension)
                 # Third case: multiple different sets of ordinal labels
                 else:
-                    scale_values = sorted(list(set().union(*data_series)))
+                    scale_values = sorted(set().union(*data_series))
 
             scale = Ordinal(scale_values)
 
