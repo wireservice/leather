@@ -106,7 +106,7 @@ class ScoreTimeTicker(ScoreTicker):
 
         for interval in candidate_intervals:
             ticks = []
-            ticks.append(int(math.floor((self._unit_min / interval))) * interval)
+            ticks.append(int(math.floor(self._unit_min / interval)) * interval)
 
             tick_num = 1
 

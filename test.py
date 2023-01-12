@@ -1,5 +1,3 @@
-# -*- coding: utf8 -*-
-
 import leather
 
 # data1 = [
