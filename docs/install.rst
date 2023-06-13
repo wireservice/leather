@@ -36,10 +36,10 @@ leather supports the following versions of Python:
 
 * Python 2.7
 * Python 3.3+
-* `PyPy <http://pypy.org/>`_
+* `PyPy <https://www.pypy.org/>`_
 
 It is tested primarily on OSX, but due to its minimal dependencies it should work on both Linux and Windows.
 
 .. note::
 
-    `iPython <http://ipython.org/>`_ or `Jupyter <https://jupyter.org/>`_ user? Leather works great there too.
+    `iPython <https://ipython.org/>`_ or `Jupyter <https://jupyter.org/>`_ user? Leather works great there too.

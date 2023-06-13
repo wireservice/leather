@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/wireservice/leather.png
-    :target: https://travis-ci.org/wireservice/leather
+.. image:: https://github.com/wireservice/leather/workflows/CI/badge.svg
+    :target: https://github.com/wireservice/leather/actions
     :alt: Build status
 
 .. image:: https://img.shields.io/pypi/dw/leather.svg
@@ -26,6 +26,6 @@ Get it?
 
 Important links:
 
-* Documentation:    http://leather.rtfd.io
+* Documentation:    https://leather.rtfd.io
 * Repository:       https://github.com/wireservice/leather
 * Issues:           https://github.com/wireservice/leather/issues

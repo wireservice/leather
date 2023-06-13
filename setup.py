@@ -11,7 +11,7 @@ setup(
     long_description_content_type='text/x-rst',
     author='Christopher Groskopf',
     author_email='chrisgroskopf@gmail.com',
-    url='http://leather.readthedocs.io/',
+    url='https://leather.readthedocs.io/',
     license='MIT',
     classifiers=[
         'Development Status :: 3 - Alpha',
