@@ -4,6 +4,7 @@ include *.sh
 include COPYING
 recursive-include docs *.py
 recursive-include docs *.rst
+recursive-include docs *.txt
 recursive-include docs Makefile
 recursive-include examples *.csv
 recursive-include examples *.md
@@ -11,3 +12,4 @@ recursive-include examples *.placeholder
 recursive-include examples *.py
 recursive-include examples *.svg
 recursive-include tests *.py
+exclude .readthedocs.yaml
