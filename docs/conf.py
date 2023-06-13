@@ -1,39 +1,43 @@
-#!/usr/bin/env python
-
+# Configuration file for the Sphinx documentation builder.
+#
+# For the full list of built-in configuration values, see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
 import os
 import sys
 
-# Path munging
 sys.path.insert(0, os.path.abspath('..'))
 
-# Extensions
+# -- Project information -----------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+
+project = 'leather'
+copyright = '2016, Christopher Groskopf'
+version = '0.3.4'
+release = version
+
+# -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+
 extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx'
 ]
-# autodoc_member_order = 'bysource'
+
+templates_path = ['_templates']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+
+
+# -- Options for HTML output -------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
+
+html_theme = 'furo'
+
+htmlhelp_basename = 'leatherdoc'
+
 autodoc_default_flags = ['members', 'show-inheritance']
 
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/3.5', None)
+    'python': ('https://docs.python.org/3', None)
 }
-
-# Templates
-templates_path = ['_templates']
-master_doc = 'index'
-
-# Metadata
-project = 'leather'
-copyright = '2016, Christopher Groskopf'
-version = '0.3.4'
-release = '0.3.4'
-
-exclude_patterns = ['_build']
-pygments_style = 'sphinx'
-
-# HTMl theming
-html_theme = 'furo'
-
-html_static_path = ['_static']
-htmlhelp_basename = 'leatherdoc'
