@@ -4,7 +4,7 @@ Release process
 
 This is the release process for leather:
 
-1. Verify all unit tests pass with fresh environments: ``tox -r``.
+1. Verify all tests pass.
 2. Check test coverage: ``pytest --cov leather``.
 3. Ensure any new modules have been added to setup.py's ``packages`` list.
 #. Ensure any new public interfaces have been added to the documentation.

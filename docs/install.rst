@@ -18,10 +18,9 @@ If you are a developer that also wants to hack on leather, install it from git::
     cd leather
     mkvirtualenv leather
 
-    pip install -r requirements-py3.txt
+    pip install -e .[test]
 
     python setup.py develop
-    tox
 
 .. note::
 
