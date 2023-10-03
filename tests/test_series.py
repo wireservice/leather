@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import leather
 from leather.utils import X, Y, Z
 

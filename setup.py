@@ -42,9 +42,5 @@ setup(
             'lxml>=3.6.0',
             'cssselect>=0.9.1',
         ],
-        'docs': [
-            'Sphinx>=1.2.2',
-            'sphinx_rtd_theme>=0.1.6',
-        ],
     }
 )
