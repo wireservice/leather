@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from decimal import ROUND_CEILING, ROUND_FLOOR, Decimal
 from math import isclose
 

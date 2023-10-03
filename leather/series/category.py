@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from leather.series.base import Series
 from leather.utils import Datum, X, Y, Z
 

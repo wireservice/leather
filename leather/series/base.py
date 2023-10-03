@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from leather.data_types import DataType
 from leather.utils import DIMENSION_NAMES, Datum, X, Y
 

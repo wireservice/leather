@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from leather import theme
 from leather.axis import Axis
 from leather.chart import Chart

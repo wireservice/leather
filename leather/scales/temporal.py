@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from leather.scales.base import Scale
 from leather.ticks.score_time import ScoreTimeTicker
 

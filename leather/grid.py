@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import math
 import os
 import xml.etree.ElementTree as ET

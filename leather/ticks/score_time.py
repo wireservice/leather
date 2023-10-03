@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import math
 from datetime import date, datetime
 from functools import partial

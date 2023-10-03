@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import xml.etree.ElementTree as ET
 
 from leather.data_types import Number, Text

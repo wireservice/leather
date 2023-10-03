@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from datetime import date, datetime
 
 from leather.data_types import Date, DateTime, Number, Text

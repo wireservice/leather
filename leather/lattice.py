@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from leather.axis import Axis
 from leather.chart import Chart
 from leather.data_types import Date, DateTime

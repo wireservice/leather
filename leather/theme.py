@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 This module contains all style configuration for rendering charts. Setting any
 of these variables will change how charts are rendered.

@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 Helpers for working with SVG.
 """

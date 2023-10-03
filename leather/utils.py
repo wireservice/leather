@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import warnings
 from collections import namedtuple
 from datetime import date, datetime, timedelta
