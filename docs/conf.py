@@ -34,7 +34,11 @@ html_theme = 'furo'
 
 htmlhelp_basename = 'leatherdoc'
 
-autodoc_default_flags = ['members', 'show-inheritance']
+autodoc_default_options = {
+    'members': None,
+    'member-order': 'bysource',
+    'show-inheritance': True,
+}
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None)
