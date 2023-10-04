@@ -20,3 +20,6 @@ jobs:
           cache-dependency-path: setup.py
       - run: pip install .[test]
       - run: pytest --cov leather
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: coveralls --service=github

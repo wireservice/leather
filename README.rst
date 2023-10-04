@@ -2,6 +2,10 @@
     :target: https://github.com/wireservice/leather/actions
     :alt: Build status
 
+.. image:: https://coveralls.io/repos/wireservice/leather/badge.svg?branch=master
+    :target: https://coveralls.io/r/wireservice/leather
+    :alt: Coverage status
+
 .. image:: https://img.shields.io/pypi/dw/leather.svg
     :target: https://pypi.python.org/pypi/leather
     :alt: PyPI downloads
