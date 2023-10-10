@@ -1,4 +1,3 @@
-
 class Ticker:
     """
     Base class for ticker implementations.
