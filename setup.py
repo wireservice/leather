@@ -1,19 +1,17 @@
-#!/usr/bin/env python
+from setuptools import find_packages, setup
 
-from setuptools import setup
-
-install_requires = [
-    'six>=1.6.1'
-]
+with open('README.rst') as f:
+    long_description = f.read()
 
 setup(
     name='leather',
-    version='0.3.4',
+    version='0.3.5',
     description='Python charting for 80% of humans.',
-    long_description=open('README.rst').read(),
+    long_description=long_description,
+    long_description_content_type='text/x-rst',
     author='Christopher Groskopf',
     author_email='chrisgroskopf@gmail.com',
-    url='http://leather.readthedocs.io/',
+    url='https://leather.readthedocs.io/',
     license='MIT',
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -21,29 +19,28 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
-        'Topic :: Multimedia :: Graphics',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
+        'Topic :: Multimedia :: Graphics',
         'Topic :: Scientific/Engineering :: Information Analysis',
         'Topic :: Scientific/Engineering :: Visualization',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    packages=[
-        'leather',
-        'leather.scales',
-        'leather.series',
-        'leather.shapes',
-        'leather.ticks'
-    ],
-    install_requires=install_requires
+    packages=find_packages(exclude=['tests', 'tests.*']),
+    extras_require={
+        'test': [
+            'pytest',
+            'pytest-cov',
+            'lxml>=3.6.0',
+            'cssselect>=0.9.1',
+        ],
+    }
 )

@@ -1,6 +1,6 @@
 import leather
 
-data1    = [
+data1 = [
     (0, 3),
     (4, 5),
     (7, 9),

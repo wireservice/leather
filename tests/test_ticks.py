@@ -1,12 +1,9 @@
-#!/usr/bin/env python
-
-
 from datetime import date, datetime
 from decimal import Decimal
 
 import leather
-from leather.ticks.score_time import ScoreTicker, ScoreTimeTicker
 from leather import utils
+from leather.ticks.score_time import ScoreTicker, ScoreTimeTicker
 
 
 class TestScoreTicker(leather.LeatherTestCase):

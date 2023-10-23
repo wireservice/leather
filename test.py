@@ -1,7 +1,3 @@
-# -*- coding: utf8 -*-
-
-import datetime
-
 import leather
 
 # data1 = [

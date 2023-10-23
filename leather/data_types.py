@@ -1,12 +1,8 @@
-#!/usr/bin/env python
-
 from datetime import date, datetime
 from decimal import Decimal
 
-import six
 
-
-class DataType(object):
+class DataType:
     """
     Base class for :class:`.Series` data types.
     """
@@ -44,4 +40,4 @@ class Text(DataType):
     """
     Data representing text/strings.
     """
-    types = six.string_types
+    types = (str,)

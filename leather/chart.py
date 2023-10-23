@@ -1,22 +1,18 @@
-#!/usr/bin/env python
-
-from copy import copy
 import os
+import warnings
 import xml.etree.ElementTree as ET
 
-import six
-
-from leather.axis import Axis
-from leather.data_types import Date, DateTime
-from leather.scales import Scale, Linear, Temporal
-from leather.series import Series, CategorySeries
-from leather.shapes import Bars, Columns, Dots, Line
 import leather.svg as svg
 from leather import theme
-from leather.utils import X, Y, DIMENSION_NAMES, Box, IPythonSVG, warn
+from leather.axis import Axis
+from leather.data_types import Date, DateTime
+from leather.scales import Linear, Scale, Temporal
+from leather.series import CategorySeries, Series
+from leather.shapes import Bars, Columns, Dots, Line
+from leather.utils import DIMENSION_NAMES, Box, IPythonSVG, X, Y
 
 
-class Chart(object):
+class Chart:
     """
     Container for all chart types.
 
@@ -125,7 +121,7 @@ class Chart(object):
                 if not self._types[dim]:
                     self._types[dim] = series._types[dim]
                 elif series._types[dim] is not self._types[dim]:
-                    raise TypeError('Can\'t mix axis-data types: %s and %s' % (series._types[dim], self._types[dim]))
+                    raise TypeError(f'Can\'t mix axis-data types: {series._types[dim]} and {self._types[dim]}')
 
         shape.validate_series(series)
 
@@ -190,7 +186,10 @@ class Chart(object):
             for series, shape in self._layers:
                 if not scale.contains(series.min(dimension)) or not scale.contains(series.max(dimension)):
                     d = DIMENSION_NAMES[dimension]
-                    warn('Data contains values outside %s scale domain. All data points may not be visible on the chart.' % d)
+                    warnings.warn(
+                        'Data contains values outside %s scale domain. '
+                        'All data points may not be visible on the chart.' % d
+                    )
 
                     # Only display once per axis
                     break
@@ -232,11 +231,12 @@ class Chart(object):
         # Root / background
         root_group = ET.Element('g')
 
-        root_group.append(ET.Element('rect',
-            x=six.text_type(0),
-            y=six.text_type(0),
-            width=six.text_type(width),
-            height=six.text_type(height),
+        root_group.append(ET.Element(
+            'rect',
+            x=str(0),
+            y=str(0),
+            width=str(width),
+            height=str(height),
             fill=theme.background_color
         ))
 
@@ -255,14 +255,15 @@ class Chart(object):
         header_margin = 0
 
         if self._title:
-            label = ET.Element('text',
-                x=six.text_type(0),
-                y=six.text_type(0),
+            label = ET.Element(
+                'text',
+                x=str(0),
+                y=str(0),
                 fill=theme.title_color
             )
             label.set('font-family', theme.title_font_family)
-            label.set('font-size', six.text_type(theme.title_font_size))
-            label.text = six.text_type(self._title)
+            label.set('font-size', str(theme.title_font_size))
+            label.text = str(self._title)
 
             header_group.append(label)
             header_margin += theme.title_font_char_height + theme.title_gap
@@ -359,9 +360,10 @@ class Chart(object):
         width = width or theme.default_chart_width
         height = height or theme.default_chart_height
 
-        root = ET.Element('svg',
-            width=six.text_type(width),
-            height=six.text_type(height),
+        root = ET.Element(
+            'svg',
+            width=str(width),
+            height=str(height),
             version='1.1',
             xmlns='http://www.w3.org/2000/svg'
         )

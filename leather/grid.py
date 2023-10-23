@@ -1,17 +1,13 @@
-#!/usr/bin/env python
-
 import math
 import os
 import xml.etree.ElementTree as ET
-
-import six
 
 import leather.svg as svg
 from leather import theme
 from leather.utils import IPythonSVG
 
 
-class Grid(object):
+class Grid:
     """
     A container for a set of :class:`.Chart` instances that are rendered in a
     grid layout.
@@ -50,9 +46,10 @@ class Grid(object):
             width = columns * theme.default_chart_width
             height = rows * theme.default_chart_height
 
-        root = ET.Element('svg',
-            width=six.text_type(width),
-            height=six.text_type(height),
+        root = ET.Element(
+            'svg',
+            width=str(width),
+            height=str(height),
             version='1.1',
             xmlns='http://www.w3.org/2000/svg'
         )
@@ -60,11 +57,12 @@ class Grid(object):
         # Root /  background
         root_group = ET.Element('g')
 
-        root_group.append(ET.Element('rect',
-            x=six.text_type(0),
-            y=six.text_type(0),
-            width=six.text_type(width),
-            height=six.text_type(height),
+        root_group.append(ET.Element(
+            'rect',
+            x=str(0),
+            y=str(0),
+            width=str(width),
+            height=str(height),
             fill=theme.background_color
         ))
 

@@ -1,9 +1,6 @@
-#!/usr/bin/env python
-
 import os
 
 import leather
-
 
 TEST_SVG = '.test.svg'
 

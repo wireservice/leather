@@ -18,7 +18,7 @@ Table from csv.reader
 
 Sequence row data, such as is returned by :func:`csv.reader` can be accessed by specifying the indices of the columns containing the :code:`x` and :code:`y` values.
 
-Note that leather does not automatically convert numerical strings, such as those stored in a CSV. If you want that you'll need to use a smarter table reader, such as `agate <http://agate.rtfd.io/>`_
+Note that leather does not automatically convert numerical strings, such as those stored in a CSV. If you want that you'll need to use a smarter table reader, such as `agate <https://agate.rtfd.io/>`_
 
 .. literalinclude:: ../examples/csv_reader.py
     :language: python

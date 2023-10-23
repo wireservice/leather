@@ -1,14 +1,10 @@
-#!/usr/bin/env python
-
 from datetime import date, datetime
-
-import six
 
 from leather.data_types import Date, DateTime, Number, Text
 from leather.shapes import Bars, Columns
 
 
-class Scale(object):
+class Scale:
     """
     Base class for various kinds of scale objects.
     """
@@ -98,7 +94,7 @@ class Scale(object):
                     scale_values = layers[0][0].values(dimension)
                 # Third case: multiple different sets of ordinal labels
                 else:
-                    scale_values = sorted(list(set().union(*data_series)))
+                    scale_values = sorted(set().union(*data_series))
 
             scale = Ordinal(scale_values)
 
@@ -137,4 +133,4 @@ class Scale(object):
         This method is used as a default which will be ignored if the user
         provides a custom tick formatter to the axis.
         """
-        return six.text_type(value)
+        return str(value)

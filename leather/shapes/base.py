@@ -1,12 +1,9 @@
-#!/usr/bin/env python
-
-import six
 import xml.etree.ElementTree as ET
 
 from leather import theme
 
 
-class Shape(object):
+class Shape:
     """
     Base class for shapes that can be used to render data :class:`.Series`.
     """
@@ -52,7 +49,7 @@ class Shape(object):
 
         bubble_width = theme.legend_bubble_size + theme.legend_bubble_offset
 
-        text = six.text_type(series.name) if series.name is not None else 'Unnamed series'
+        text = str(series.name) if series.name is not None else 'Unnamed series'
         text_width = (len(text) + 4) * theme.legend_font_char_width
 
         item_width = text_width + bubble_width
@@ -61,11 +58,12 @@ class Shape(object):
         item_group = ET.Element('g')
 
         # Bubble
-        bubble = ET.Element('rect',
-            x=six.text_type(0),
-            y=six.text_type(-theme.legend_font_char_height + theme.legend_bubble_offset),
-            width=six.text_type(theme.legend_bubble_size),
-            height=six.text_type(theme.legend_bubble_size)
+        bubble = ET.Element(
+            'rect',
+            x=str(0),
+            y=str(-theme.legend_font_char_height + theme.legend_bubble_offset),
+            width=str(theme.legend_bubble_size),
+            height=str(theme.legend_bubble_size)
         )
 
         if fill_color:
@@ -76,13 +74,14 @@ class Shape(object):
         item_group.append(bubble)
 
         # Label
-        label = ET.Element('text',
-            x=six.text_type(bubble_width),
-            y=six.text_type(0),
+        label = ET.Element(
+            'text',
+            x=str(bubble_width),
+            y=str(0),
             fill=theme.legend_color
         )
         label.set('font-family', theme.legend_font_family)
-        label.set('font-size', six.text_type(theme.legend_font_size))
+        label.set('font-size', str(theme.legend_font_size))
         label.text = text
 
         item_group.append(label)

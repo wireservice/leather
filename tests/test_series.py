@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import leather
 from leather.utils import X, Y, Z
 
@@ -53,11 +51,11 @@ class TestSeries(leather.LeatherTestCase):
         self.assertSequenceEqual(series.values(Y), ['foo', 'bar', 'baz'])
 
     def test_custom(self):
-        class Obj(object):
+        class Obj:
             def __init__(self, a, b, c):
                 self.a = a
                 self.b = b
-                self.c =c
+                self.c = c
 
         data = [
             Obj('foo', 1, 4),

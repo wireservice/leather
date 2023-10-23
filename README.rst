@@ -1,6 +1,10 @@
-.. image:: https://travis-ci.org/wireservice/leather.png
-    :target: https://travis-ci.org/wireservice/leather
+.. image:: https://github.com/wireservice/leather/workflows/CI/badge.svg
+    :target: https://github.com/wireservice/leather/actions
     :alt: Build status
+
+.. image:: https://coveralls.io/repos/wireservice/leather/badge.svg?branch=master
+    :target: https://coveralls.io/r/wireservice/leather
+    :alt: Coverage status
 
 .. image:: https://img.shields.io/pypi/dw/leather.svg
     :target: https://pypi.python.org/pypi/leather
@@ -26,6 +30,6 @@ Get it?
 
 Important links:
 
-* Documentation:    http://leather.rtfd.io
+* Documentation:    https://leather.rtfd.io
 * Repository:       https://github.com/wireservice/leather
 * Issues:           https://github.com/wireservice/leather/issues

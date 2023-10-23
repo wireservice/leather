@@ -1,14 +1,9 @@
-#!/usr/bin/env python
-
-from datetime import date, datetime, timedelta
-from decimal import Decimal
-from functools import partial
 import math
-import sys
+from datetime import date, datetime
+from functools import partial
 
-from leather.ticks.score import ScoreTicker
 from leather import utils
-
+from leather.ticks.score import ScoreTicker
 
 #: The default number of ticks to produce
 DEFAULT_TICKS = 5
@@ -109,7 +104,7 @@ class ScoreTimeTicker(ScoreTicker):
 
         for interval in candidate_intervals:
             ticks = []
-            ticks.append(int(math.floor((self._unit_min / interval))) * interval)
+            ticks.append(int(math.floor(self._unit_min / interval)) * interval)
 
             tick_num = 1
 

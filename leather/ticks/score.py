@@ -1,11 +1,7 @@
-#!/usr/bin/env python
-
-from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR
-import math
-import sys
+from decimal import ROUND_CEILING, ROUND_FLOOR, Decimal
+from math import isclose
 
 from leather.ticks.base import Ticker
-from leather.utils import isclose
 
 # Shorthand
 ZERO = Decimal('0')
@@ -97,9 +93,13 @@ class ScoreTicker(Ticker):
 
             if force_zero:
                 min_steps = (abs(self._domain_min) / interval).to_integral_exact(rounding=ROUND_CEILING)
-                ticks.append(self._round_tick(-min_steps * interval))
+                ticks.append(
+                    self._round_tick(-min_steps * interval)
+                )
             else:
-                ticks.append(self._round_tick((self._domain_min / interval).to_integral_exact(rounding=ROUND_FLOOR) * interval))
+                ticks.append(
+                    self._round_tick((self._domain_min / interval).to_integral_exact(rounding=ROUND_FLOOR) * interval)
+                )
 
             tick_num = 1
 

@@ -1,19 +1,13 @@
-#!/usr/bin/env python
-
 from collections import namedtuple
 from datetime import date, datetime, timedelta
 from decimal import Decimal
-import math
-import sys
-import warnings
-
-import six
 
 try:
     __IPYTHON__
     from IPython.display import SVG as IPythonSVG
 except (NameError, ImportError):
-    IPythonSVG = lambda x: x
+    def IPythonSVG(x):
+        return x
 
 
 # Shorthand
@@ -40,54 +34,6 @@ Datum = namedtuple('Datum', ['i', 'x', 'y', 'z', 'row'])
 
 #: Dummy object used in place of a series when rendering legends for categories
 DummySeries = namedtuple('DummySeries', ['name'])
-
-
-formatwarning_orig = warnings.formatwarning
-warnings.formatwarning = lambda message, category, filename, lineno, line=None: \
-    formatwarning_orig(message, category, filename, lineno, line='')
-
-warn = warnings.warn
-warnings.resetwarnings()
-warnings.simplefilter('always')
-
-
-# In Python 3.5 use builtin C implementation of `isclose`
-if sys.version_info >= (3, 5):
-    from math import isclose
-else:
-    def isclose(a, b, rel_tol=NINE_PLACES, abs_tol=ZERO):
-        """
-        Test if two floating points numbers are close enough to be considered
-        equal.
-
-        Via: https://github.com/PythonCHB/close_pep/blob/master/isclose.py
-
-        Verified against final CPython 3.5 implementation.
-
-        :param a:
-            The first number to check.
-        :param b:
-            The second number to check.
-        :param rel_tol:
-            Relative tolerance. The amount of error allowed, relative to the larger
-            input value. Defaults to nine decimal places of accuracy.
-        :param abs_tol:
-            Absolute minimum tolerance. Disabled by default.
-        """
-        if a == b:
-            return True
-
-        if rel_tol < ZERO or abs_tol < ZERO:
-            raise ValueError('Tolerances must be non-negative')
-
-        if math.isinf(abs(a)) or math.isinf(abs(b)):
-            return False
-
-        diff = abs(b - a)
-
-        return (((diff <= abs(rel_tol * b)) or
-                (diff <= abs(rel_tol * a))) or
-                (diff <= abs_tol))
 
 
 def to_year_count(d):
