@@ -1,6 +1,7 @@
-Unreleased
-----------
+0.3.5 - October 23, 2023
+------------------------
 
+* Leather no longer reconfigures Python warnings globally.
 * Add Python 3.11 and 3.12 support.
 * Drop Python 3.7 support (end-of-life was June 27, 2023).
 

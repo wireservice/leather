@@ -5,7 +5,7 @@ with open('README.rst') as f:
 
 setup(
     name='leather',
-    version='0.3.4',
+    version='0.3.5',
     description='Python charting for 80% of humans.',
     long_description=long_description,
     long_description_content_type='text/x-rst',
