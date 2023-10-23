@@ -1,4 +1,5 @@
 import os
+import warnings
 import xml.etree.ElementTree as ET
 
 import leather.svg as svg
@@ -8,7 +9,7 @@ from leather.data_types import Date, DateTime
 from leather.scales import Linear, Scale, Temporal
 from leather.series import CategorySeries, Series
 from leather.shapes import Bars, Columns, Dots, Line
-from leather.utils import DIMENSION_NAMES, Box, IPythonSVG, X, Y, warn
+from leather.utils import DIMENSION_NAMES, Box, IPythonSVG, X, Y
 
 
 class Chart:
@@ -185,7 +186,7 @@ class Chart:
             for series, shape in self._layers:
                 if not scale.contains(series.min(dimension)) or not scale.contains(series.max(dimension)):
                     d = DIMENSION_NAMES[dimension]
-                    warn(
+                    warnings.warn(
                         'Data contains values outside %s scale domain. '
                         'All data points may not be visible on the chart.' % d
                     )
