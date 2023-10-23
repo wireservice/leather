@@ -42,7 +42,7 @@ class Line(Shape):
             fill='none'
         )
         path.set('stroke-width', str(self._width))
-        if self._stroke_dasharray != theme.STROKE_DASHARRAY_NONE:
+        if self._stroke_dasharray != 'none':
             path.set('stroke-dasharray', self._stroke_dasharray)
 
         return path
