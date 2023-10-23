@@ -192,6 +192,17 @@ Style attributes of individual data points can be set by value using a :func:`.s
 
 .. figure:: ../examples/charts/colorized_dots.svg
 
+Creating dashed lines
+---------------------
+
+When using :meth:`.Chart.add_line`, you can set the `stroke_dasharray property <https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray>`_.
+
+.. literalinclude:: ../examples/lines_dashes.py
+    :language: python
+
+.. figure:: ../examples/charts/lines_dashes.svg
+
+
 Chart grids
 ===========
 

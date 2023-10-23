@@ -124,3 +124,6 @@ default_dot_radius = 3
 
 #: Default :class:`.Line` width
 default_line_width = 2
+
+#: Default stroke-dasharray property when using dashes on a line
+default_stroke_dasharray = 'none'

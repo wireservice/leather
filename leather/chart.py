@@ -162,13 +162,13 @@ class Chart:
             Dots(fill_color, radius)
         )
 
-    def add_line(self, data, x=None, y=None, name=None, stroke_color=None, width=None):
+    def add_line(self, data, x=None, y=None, name=None, stroke_color=None, width=None, stroke_dasharray=None):
         """
         Create and add a :class:`.Series` rendered with :class:`.Line`.
         """
         self.add_series(
             Series(data, x=x, y=y, name=name),
-            Line(stroke_color, width)
+            Line(stroke_color, width, stroke_dasharray)
         )
 
     def _validate_dimension(self, dimension):

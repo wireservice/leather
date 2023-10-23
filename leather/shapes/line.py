@@ -17,9 +17,10 @@ class Line(Shape):
     :param width:
         The width of the lines. Defaults to :data:`.theme.default_line_width`.
     """
-    def __init__(self, stroke_color=None, width=None):
+    def __init__(self, stroke_color=None, width=None, stroke_dasharray=None):
         self._stroke_color = stroke_color
         self._width = width or theme.default_line_width
+        self._stroke_dasharray = stroke_dasharray or theme.default_stroke_dasharray
 
     def validate_series(self, series):
         """
@@ -41,6 +42,8 @@ class Line(Shape):
             fill='none'
         )
         path.set('stroke-width', str(self._width))
+        if self._stroke_dasharray != 'none':
+            path.set('stroke-dasharray', self._stroke_dasharray)
 
         return path
 
