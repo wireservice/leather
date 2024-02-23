@@ -1,5 +1,5 @@
-0.4.0 - October 23, 2023
-------------------------
+0.4.0 - February 23, 2024
+-------------------------
 
 * feat: :meth:`.Chart.add_line` accepts a `stroke_dasharray argument <https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray>`_.
 * feat: Add a ``default_stroke_dasharray`` theme option.
