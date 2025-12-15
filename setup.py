@@ -5,7 +5,7 @@ with open('README.rst') as f:
 
 setup(
     name='leather',
-    version='0.4.0',
+    version='0.4.1',
     description='Python charting for 80% of humans.',
     long_description=long_description,
     long_description_content_type='text/x-rst',
@@ -22,11 +22,11 @@ setup(
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
+        'Programming Language :: Python :: 3.13',
+        'Programming Language :: Python :: 3.14',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Multimedia :: Graphics',
