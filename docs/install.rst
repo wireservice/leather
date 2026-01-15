@@ -20,8 +20,6 @@ If you are a developer that also wants to hack on leather, install it from git::
 
     pip install -e .[test]
 
-    python setup.py develop
-
 .. note::
 
     To run the leather tests with coverage::
