@@ -2,8 +2,8 @@
     :target: https://github.com/wireservice/leather/actions
     :alt: Build status
 
-.. image:: https://coveralls.io/repos/wireservice/leather/badge.svg?branch=master
-    :target: https://coveralls.io/r/wireservice/leather
+.. image:: https://codecov.io/github/wireservice/leather/graph/badge.svg
+    :target: https://codecov.io/github/wireservice/leather
     :alt: Coverage status
 
 .. image:: https://img.shields.io/pypi/dw/leather.svg
