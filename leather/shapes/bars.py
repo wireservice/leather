@@ -25,10 +25,10 @@ class Bars(Shape):
             raise ValueError('Bars can not be used to render CategorySeries.')
 
         if series.data_type(X) is not Number:
-            raise ValueError('Bars only support Number values for the Y axis.')
+            raise ValueError('Bars only support Number values for the X axis.')
 
         if series.data_type(Y) is not Text:
-            raise ValueError('Bars only support Text values for the X axis.')
+            raise ValueError('Bars only support Text values for the Y axis.')
 
     def to_svg(self, width, height, x_scale, y_scale, series, palette):
         """

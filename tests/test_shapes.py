@@ -59,11 +59,20 @@ class TestBars(leather.LeatherTestCase):
 
         self.shape.validate_series(series)
 
+        # Non-Number X values are reported against the X axis.
         series = leather.Series([
-            ('foo', 1)
+            ('foo', 'bar')
         ])
 
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegex(ValueError, 'Number values for the X axis'):
+            self.shape.validate_series(series)
+
+        # Non-Text Y values are reported against the Y axis.
+        series = leather.Series([
+            (1, 2)
+        ])
+
+        with self.assertRaisesRegex(ValueError, 'Text values for the Y axis'):
             self.shape.validate_series(series)
 
 
