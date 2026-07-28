@@ -43,5 +43,8 @@ test = [
 [tool.setuptools.packages.find]
 exclude = ["tests", "tests.*"]
 
+[tool.setuptools.package-data]
+leather = ["*.pyi", "py.typed"]
+
 [tool.isort]
 line_length = 119
