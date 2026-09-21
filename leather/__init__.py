@@ -1,10 +1,21 @@
-from leather import theme
-from leather.axis import Axis
-from leather.chart import Chart
-from leather.data_types import Number, Text
-from leather.grid import Grid
-from leather.lattice import Lattice
-from leather.scales import Linear, Ordinal, Scale, Temporal
-from leather.series import CategorySeries, Series, key_function
-from leather.shapes import Bars, Columns, Dots, Line, Shape, style_function
-from leather.testcase import LeatherTestCase
+from leather import theme as theme
+from leather.axis import Axis as Axis
+from leather.chart import Chart as Chart
+from leather.data_types import Number as Number
+from leather.data_types import Text as Text
+from leather.grid import Grid as Grid
+from leather.lattice import Lattice as Lattice
+from leather.scales import Linear as Linear
+from leather.scales import Ordinal as Ordinal
+from leather.scales import Scale as Scale
+from leather.scales import Temporal as Temporal
+from leather.series import CategorySeries as CategorySeries
+from leather.series import Series as Series
+from leather.series import key_function as key_function
+from leather.shapes import Bars as Bars
+from leather.shapes import Columns as Columns
+from leather.shapes import Dots as Dots
+from leather.shapes import Line as Line
+from leather.shapes import Shape as Shape
+from leather.shapes import style_function as style_function
+from leather.testcase import LeatherTestCase as LeatherTestCase

@@ -4,12 +4,12 @@ Helpers for working with SVG.
 
 import xml.etree.ElementTree as ET
 
-HEADER = '<?xml version="1.0" standalone="no"?>\n' + \
+HEADER: str = '<?xml version="1.0" standalone="no"?>\n' + \
     '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"\n' + \
     '"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
 
 
-def stringify(root):
+def stringify(root: ET.Element) -> str:
     """
     Convert an SVG XML tree to a unicode string.
     """
