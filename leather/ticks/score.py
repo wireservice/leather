@@ -1,4 +1,4 @@
-from decimal import ROUND_CEILING, ROUND_FLOOR, Decimal
+from decimal import InvalidOperation, ROUND_CEILING, ROUND_FLOOR, Decimal
 from math import isclose
 
 from leather.ticks.base import Ticker
@@ -166,7 +166,15 @@ class ScoreTicker(Ticker):
         """
         for r in range(0, 4):
             exp = pow(Decimal(10), Decimal(-r))
-            quantized = t.quantize(exp)
+
+            try:
+                quantized = t.quantize(exp)
+            except InvalidOperation:
+                # Quantization would produce more digits than the decimal
+                # context precision allows, which happens for very large
+                # ticks (1e27 and above with the default 28-digit
+                # precision), so leave the tick unquantized.
+                break
 
             if isclose(t, quantized):
                 return quantized
