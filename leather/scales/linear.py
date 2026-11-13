@@ -14,6 +14,12 @@ class Linear(Scale):
         The maximum value of the input domain.
     """
     def __init__(self, domain_min, domain_max):
+        domain_min = Decimal(domain_min)
+        domain_max = Decimal(domain_max)
+
+        if not domain_min.is_finite() or not domain_max.is_finite():
+            raise ValueError('Linear scales do not support non-finite domain values.')
+
         if domain_min > domain_max:
             raise ValueError('Inverted domains are not currently supported.')
         elif domain_min == domain_max:

@@ -1,3 +1,4 @@
+import math
 from collections import namedtuple
 from datetime import date, datetime, timedelta
 from decimal import Decimal
@@ -34,6 +35,20 @@ Datum = namedtuple('Datum', ['i', 'x', 'y', 'z', 'row'])
 
 #: Dummy object used in place of a series when rendering legends for categories
 DummySeries = namedtuple('DummySeries', ['name'])
+
+
+def is_non_finite(value):
+    """
+    Returns :code:`True` for values that can not be used in numeric scaling:
+    :code:`None`, NaN and infinity.
+    """
+    if value is None:
+        return True
+    if isinstance(value, Decimal):
+        return not value.is_finite()
+    if isinstance(value, float):
+        return not math.isfinite(value)
+    return False
 
 
 def to_year_count(d):
