@@ -4,7 +4,7 @@ from leather import theme
 from leather.data_types import Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
-from leather.utils import X, Y
+from leather.utils import X, Y, is_non_finite
 
 
 class Line(Shape):
@@ -63,7 +63,7 @@ class Line(Shape):
         path_d = []
 
         for d in series.data():
-            if d.x is None or d.y is None:
+            if is_non_finite(d.x) or is_non_finite(d.y):
                 if path_d:
                     path.set('d', ' '.join(path_d))
                     group.append(path)

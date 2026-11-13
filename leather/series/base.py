@@ -1,5 +1,5 @@
 from leather.data_types import DataType
-from leather.utils import DIMENSION_NAMES, Datum, X, Y
+from leather.utils import DIMENSION_NAMES, Datum, X, Y, is_non_finite
 
 
 class Series:
@@ -62,6 +62,11 @@ class Series:
         """
         key = self._keys[dimension]
 
+        if not len(self._data):
+            raise ValueError('Series contains no data.')
+
+        v = None
+
         for i, row in enumerate(self._data):
             v = key(row, i)
 
@@ -105,13 +110,23 @@ class Series:
         """
         Compute the minimum value of a given dimension.
         """
-        return min(v for v in self.values(dimension) if v is not None)
+        values = [v for v in self.values(dimension) if not is_non_finite(v)]
+
+        if not values:
+            raise ValueError('No plottable values in %s dimension.' % DIMENSION_NAMES[dimension])
+
+        return min(values)
 
     def max(self, dimension):
         """
         Compute the minimum value of a given dimension.
         """
-        return max(v for v in self.values(dimension) if v is not None)
+        values = [v for v in self.values(dimension) if not is_non_finite(v)]
+
+        if not values:
+            raise ValueError('No plottable values in %s dimension.' % DIMENSION_NAMES[dimension])
+
+        return max(values)
 
 
 def key_function(row, index):

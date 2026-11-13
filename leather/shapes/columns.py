@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from leather.data_types import Number, Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
-from leather.utils import X, Y
+from leather.utils import X, Y, is_non_finite
 
 
 class Columns(Shape):
@@ -45,7 +45,7 @@ class Columns(Shape):
             fill_color = next(palette)
 
         for d in series.data():
-            if d.x is None or d.y is None:
+            if is_non_finite(d.x) or is_non_finite(d.y):
                 continue
 
             x1, x2 = x_scale.project_interval(d.x, 0, width)

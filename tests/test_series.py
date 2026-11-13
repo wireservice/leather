@@ -94,3 +94,16 @@ class TestCategorySeries(leather.LeatherTestCase):
         self.assertSequenceEqual(series.values(X), ['foo', 'bar', 'baz'])
         self.assertSequenceEqual(series.values(Y), [1, 2, 3])
         self.assertSequenceEqual(series.values(Z), ['a', 'a', 'b'])
+
+
+class TestSeriesEdgeCases(leather.LeatherTestCase):
+    def test_empty_series_raises(self):
+        with self.assertRaisesRegex(ValueError, 'Series contains no data.'):
+            leather.Series([])
+
+    def test_all_null_raises(self):
+        with self.assertRaisesRegex(
+            ValueError,
+            'All values in X dimension are null.'
+        ):
+            leather.Series([(None, 1), (None, 2)])

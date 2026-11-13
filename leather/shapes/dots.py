@@ -5,7 +5,7 @@ from leather import theme
 from leather.data_types import Text
 from leather.series import CategorySeries
 from leather.shapes.base import Shape
-from leather.utils import DummySeries, X, Y
+from leather.utils import DummySeries, X, Y, is_non_finite
 
 
 class Dots(Shape):
@@ -44,7 +44,7 @@ class Dots(Shape):
         default_colors = defaultdict(lambda: next(palette))
 
         for d in series.data():
-            if d.x is None or d.y is None:
+            if is_non_finite(d.x) or is_non_finite(d.y):
                 continue
 
             proj_x = x_scale.project(d.x, 0, width)

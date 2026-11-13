@@ -131,3 +131,40 @@ class TestChart(leather.LeatherTestCase):
             chart.to_svg(f)
 
         self.assertTrue(os.path.exists(TEST_SVG))
+
+
+class TestChartNonFinite(leather.testcase.LeatherTestCase):
+    def test_nan_row_is_skipped_not_rendered(self):
+        nan = float('nan')
+
+        chart = leather.Chart()
+        chart.add_bars([(nan, 'a'), (2, 'b')])
+
+        self.assertNotIn('NaN', chart.to_svg())
+        svg = self.render_chart(chart)
+        # only the bar for the (2, 'b') row, plus the chart background
+        self.assertElementCount(svg, 'rect', 2)
+
+        chart = leather.Chart()
+        chart.add_line([(1, nan), (2, 2), (3, 3)])
+
+        self.assertNotIn('NaN', chart.to_svg())
+
+        chart = leather.Chart()
+        chart.add_dots([(1, 1), (2, float('inf'))])
+
+        self.assertNotIn('Infinity', chart.to_svg())
+        svg = self.render_chart(chart)
+        self.assertElementCount(svg, 'circle', 1)
+
+    def test_all_non_finite_dimension_raises(self):
+        nan = float('nan')
+
+        chart = leather.Chart()
+        chart.add_line([(nan, 1), (nan, 2)])
+
+        with self.assertRaisesRegex(
+            ValueError,
+            'No plottable values in X dimension.'
+        ):
+            chart.to_svg()
