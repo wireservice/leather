@@ -1,6 +1,8 @@
 import os
 import warnings
 
+from decimal import Decimal
+
 import leather
 
 TEST_SVG = '.test.svg'
@@ -131,3 +133,15 @@ class TestChart(leather.LeatherTestCase):
             chart.to_svg(f)
 
         self.assertTrue(os.path.exists(TEST_SVG))
+
+    def test_large_values(self):
+        # Rendering data with magnitudes of 1e27 and above used to raise
+        # decimal.InvalidOperation while rounding ticks.
+        data = [(1, Decimal(1).scaleb(30)), (2, Decimal(2).scaleb(30))]
+
+        chart = leather.Chart()
+        chart.add_dots(data)
+
+        svg = self.render_chart(chart)
+
+        self.assertElementCount(svg, 'circle', 2)

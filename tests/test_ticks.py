@@ -12,6 +12,32 @@ class TestScoreTicker(leather.LeatherTestCase):
 
         self.assertIsInstance(ticker.ticks[0], Decimal)
 
+    def test_large_magnitudes(self):
+        # Ticks at 1e27 and above can't be quantized within the default
+        # 28-digit decimal precision; they should be kept unquantized
+        # instead of raising decimal.InvalidOperation.
+        for exponent in range(27, 46):
+            ticker = ScoreTicker(
+                Decimal(1).scaleb(exponent), Decimal(3).scaleb(exponent)
+            )
+
+            self.assertTrue(ticker.ticks)
+            self.assertLessEqual(ticker.ticks[0], Decimal(1).scaleb(exponent))
+            self.assertGreaterEqual(
+                ticker.ticks[-1], Decimal(3).scaleb(exponent)
+            )
+
+    def test_large_magnitudes_negative(self):
+        ticker = ScoreTicker(Decimal(-3).scaleb(30), Decimal(-1).scaleb(30))
+
+        self.assertLessEqual(ticker.ticks[0], Decimal(-3).scaleb(30))
+        self.assertGreaterEqual(ticker.ticks[-1], Decimal(-1).scaleb(30))
+
+    def test_large_magnitudes_force_zero(self):
+        ticker = ScoreTicker(Decimal(-1).scaleb(30), Decimal(1).scaleb(30))
+
+        self.assertIn(Decimal(0), ticker.ticks)
+
 
 class TestScoreTimeTicker(leather.LeatherTestCase):
     def test_years(self):
